@@ -23,8 +23,7 @@ const requiredSreHeadings = [
     "Start the GitHub import in the background",
     "Review Azure resources and telemetry before connecting GitHub",
     "Connect the imported repository",
-    "Interact with the onboarding thread - maximum 5 minutes",
-    "First chat thread: discover the environment",
+    "Review the Getting started thread - maximum 5 minutes",
     "Update Web App configuration",
     "Debug a scenario",
     "Scheduled tasks: read-only weekly cost audit",
@@ -97,12 +96,12 @@ for (const lab of labs) {
         assert.ok(pages[3].indexOf("## Review Azure resources and telemetry") <
             pages[3].indexOf("## Connect the imported repository"));
         assert.ok(pages[3].indexOf("## Connect the imported repository") <
-            pages[3].indexOf("## Interact with the onboarding thread"));
+            pages[3].indexOf("## Review the Getting started thread"));
         assert.match(source, /After sign-in, keep the \*\*context wizard\*\* open/);
-        const onboarding = pages[3].split("## Interact with the onboarding thread")[1]
-            .split("## First chat thread")[0];
-        assert.match(onboarding, /continue to \*\*First chat thread: discover the environment\*\*/);
-        assert.doesNotMatch(onboarding, /continue to the configuration review/);
+        const gettingStarted = pages[3].split("## Review the Getting started thread")[1]
+            .split("## Update Web App configuration")[0];
+        assert.match(gettingStarted, /continue to \*\*Update Web App configuration\*\*/);
+        assert.doesNotMatch(gettingStarted, /continue to the configuration review/);
         assert.match(source, /confirm both the \*\*import\*\* and \*\*repository connection\*\* are ready/i);
         assert.match(source, /caldova-sreagent-<suffix>/);
         assert.match(source, /full actual name/);
@@ -113,7 +112,7 @@ for (const lab of labs) {
         const review = pages[3].split("## Review Azure resources and telemetry before connecting GitHub")[1]
             .split("## Connect the imported repository")[0];
         const connection = pages[3].split("## Connect the imported repository")[1]
-            .split("## Interact with the onboarding thread")[0];
+            .split("## Review the Getting started thread")[0];
         assert.match(review, /Review only in the \*\*context wizard\*\*/);
         assert.equal((review.match(/^\d\. /gm) || []).length, 3);
         assert.match(review, /\*\*subscription\*\* and \*\*resource group\*\*/);
@@ -128,8 +127,24 @@ for (const lab of labs) {
             /Azure Portal|Builder|Contributor|RBAC|managed identity|Grant permissions|Complete setup/i);
     });
 
+    test(`${lab.name}: Getting started is the main path, with optional navigation afterward and no repeated discovery`, () => {
+        const section = pages[3].split("## Review the Getting started thread")[1]
+            .split("## Update Web App configuration")[0];
+        const [main, guidance] = section.split("### Need guidance?");
+        assert.ok(guidance, "Missing optional guidance after the main steps");
+        assert.match(main, /select \*\*Done and go to agent\*\*\. The \*\*Getting started\*\* thread opens/);
+        assert.equal((main.match(/^\d\. /gm) || []).length, 4);
+        assert.match(main, /environment summary.*health and configuration findings/);
+        assert.doesNotMatch(main, /Favorites|Search Threads|Operations Hub|Otherwise|If absent/);
+        assert.match(guidance, /Operations Hub.*Overview > Complete setup/);
+        assert.match(guidance, /Favorites.*Team onboarding.*Search Threads/);
+        assert.match(guidance, /Import still running/);
+        assert.doesNotMatch(source, /## First chat thread|Discover all Azure resources|continue read-only discovery|Run read-only discovery/);
+        assert.match(source, /In the same Getting started thread, if its findings identified a missing health-check path/);
+    });
+
     test(`${lab.name}: all SRE activities retain evidence, approval, and verification gates`, () => {
-        assert.equal((source.match(/^```text$/gm) || []).length, 6);
+        assert.equal((source.match(/^```text$/gm) || []).length, 5);
         assert.match(source, /Health check path is an App Service configuration property/);
         assert.match(source, /Instead of deleting Catalog__AsOfDate/);
         assert.match(source, /repeat the same `jacket` search/);
@@ -146,10 +161,10 @@ for (const lab of labs) {
     test(`${lab.name}: screenshots are explicit, uniquely named placeholders rather than stale images`, () => {
         const ids = [...source.matchAll(/^\*\*Screenshot placeholder ([A-Z]+-\d+):/gm)]
             .map(match => match[1]);
-        assert.equal(ids.length, lab.name === "PREL38" ? 19 : 18);
+        assert.equal(ids.length, lab.name === "PREL38" ? 18 : 17);
         assert.equal(new Set(ids).size, ids.length);
         assert.deepEqual(ids.filter(id => id.startsWith("SRE-")),
-            Array.from({ length: 14 }, (_, i) => `SRE-${String(i + 1).padStart(2, "0")}`));
+            Array.from({ length: 13 }, (_, i) => `SRE-${String(i + 1).padStart(2, "0")}`));
         assert.doesNotMatch(source, /!IMAGE\[|!\[[^\]]*\]\(/);
         assert.match(source, /Do not show passwords or TAP values/);
     });

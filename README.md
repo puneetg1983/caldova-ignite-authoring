@@ -52,7 +52,10 @@ with the requested setup corrections, explicit import/connection prerequisites,
 and named screenshot placeholders. They do not update the Word files.
 The SRE sequence is background repository import, configuration review in the
 context wizard shown at sign-in, connection of the completed imported repository,
-then onboarding (at most five minutes) and the remaining exercises.
+then **Done and go to agent**, the Getting started thread (at most five minutes),
+and the remaining exercises. Environment/health findings are reviewed in that
+thread, not repeated as a separate discovery exercise. Optional thread-finding
+and wizard-navigation fallbacks appear after the main steps under **Need guidance?**.
 Configuration review and repository connection stay inside the SRE Agent context
 wizard; the review does not require an Azure Portal or Builder detour.
 
