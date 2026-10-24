@@ -39,14 +39,18 @@ Author Markdown in this repository, review it, then **manually publish** the
 approved content to Skillable. GitHub synchronization is not configured by this
 workflow. Saving or merging a file here does not change a live lab.
 
-| Lab | Unpublished working guide | Original instruction/media snapshot |
+| Lab | Working guide | Original instruction/media snapshot |
 | --- | --- | --- |
 | PREL38, pre-Ignite, 45 minutes | [PREL38.md](skillable/instructions/PREL38.md) | [2026-10-24 PREL38](skillable/instructions/backups/2026-10-24/PREL38/content.md) |
 | LAB720, Ignite-day, 25 minutes | [LAB720.md](skillable/instructions/LAB720.md) | [2026-10-24 LAB720](skillable/instructions/backups/2026-10-24/LAB720/content.md) |
 
 The working guides use native Skillable Markdown with this page order:
 **Start -> Modernization -> ARM/Azure Copilot -> SRE Agent**. No custom theme or
-JavaScript is required. Start orders VM login, SRE Agent, then Azure Portal.
+JavaScript is required. PREL38 keeps VM, Azure Portal, and shared GitHub/Copilot
+setup on Start; Azure SRE Agent sign-in belongs on the SRE Agent page. Its Azure
+sign-in steps use Temporary Access Pass (TAP) from Resources by default, with
+password guidance at the end and no inline Azure credential table.
+LAB720 and the shared reference retain their previous setup until reviewed.
 The guides contain the full SRE activities from the respective Word manuals,
 with the requested setup corrections, explicit import/connection prerequisites,
 and verified setup screenshots alongside the remaining named screenshot
@@ -98,10 +102,17 @@ Credentials use runtime tokens and native Type Text controls. TAP continues
 to use the existing Resources control; no unverified TAP token is introduced.
 Browser-opening commands run in the selected VM using Integration Services,
 with address-bar Type Text/manual-entry fallbacks rather than host-browser links.
+PREL38 now explicitly requests Edge in a visible PowerShell session. The revised
+links rendered, but a successful one-click VM launch has not been confirmed;
+do not treat publication or source checks as proof that command execution works.
 
 The existing native Resources cards, including the external SRE link, are
 unchanged. The new instructions provide in-VM opening controls; they do not
 change where an existing External Link resource opens.
+
+PREL38 was manually published as a live preview on 2026-10-24; the team-owned
+placeholders remain. LAB720 has not been published by this workflow. Revisions
+are reviewed section by section before updating the live PREL38 preview.
 
 ### Backups and rollback
 
