@@ -28,7 +28,8 @@ const requiredSreHeadings = [
     "Debug a scenario",
     "Scheduled tasks: read-only weekly cost audit",
     "Live reports: traffic and health",
-    "Complete"
+    "Complete",
+    "Additional guidance"
 ];
 
 for (const lab of labs) {
@@ -85,8 +86,9 @@ for (const lab of labs) {
     });
 
     test(`${lab.name}: setup dependencies and the requested five-minute cap are explicit`, () => {
-        assert.ok(pages[0].indexOf("background activities can take time") <
+        assert.ok(pages[0].indexOf("Need help? See **Additional guidance** at the end") <
             pages[0].indexOf("## 1. Sign in to the lab VM"));
+        assert.match(pages[0], /grouped by section, or ask the facilitator/);
         assert.match(source, /The URL for your source repository\\\*/);
         assert.doesNotMatch(source, /Your old repository's clone URL|is already connected to the Caldova GitHub/i);
         assert.match(source, /context wizard for the configuration review \*\*without waiting\*\*/);
@@ -127,11 +129,11 @@ for (const lab of labs) {
             /Azure Portal|Builder|Contributor|RBAC|managed identity|Grant permissions|Complete setup/i);
     });
 
-    test(`${lab.name}: Getting started is the main path, with optional navigation afterward and no repeated discovery`, () => {
-        const section = pages[3].split("## Review the Getting started thread")[1]
+    test(`${lab.name}: Getting started is the main path, with guidance at the end and no repeated discovery`, () => {
+        const main = pages[3].split("## Review the Getting started thread")[1]
             .split("## Update Web App configuration")[0];
-        const [main, guidance] = section.split("### Need guidance?");
-        assert.ok(guidance, "Missing optional guidance after the main steps");
+        const guidance = source.split("## Additional guidance")[1];
+        assert.ok(guidance, "Missing guidance at the end of the guide");
         assert.match(main, /select \*\*Done and go to agent\*\*\. The \*\*Getting started\*\* thread opens/);
         assert.equal((main.match(/^\d\. /gm) || []).length, 4);
         assert.match(main, /environment summary.*health and configuration findings/);
@@ -141,6 +143,39 @@ for (const lab of labs) {
         assert.match(guidance, /Import still running/);
         assert.doesNotMatch(source, /## First chat thread|Discover all Azure resources|continue read-only discovery|Run read-only discovery/);
         assert.match(source, /In the same Getting started thread, if its findings identified a missing health-check path/);
+    });
+
+    test(`${lab.name}: optional help is grouped by section after all exercises, not interleaved`, () => {
+        const [main, guidance, duplicate] = source.split("## Additional guidance");
+        assert.ok(guidance);
+        assert.equal(duplicate, undefined);
+        assert.ok(main.indexOf("## Complete") > main.indexOf("## Live reports: traffic and health"));
+        assert.doesNotMatch(guidance, /^## /m);
+        assert.doesNotMatch(main, /### Need guidance|Operations Hub|Search Threads|Browser did not open|If enterprise sign-in|Some lab versions|If search already succeeds|Estimates are not actual billing|Data delayed or empty/);
+        assert.deepEqual([...guidance.matchAll(/^### (.+)$/gm)].map(match => match[1]), [
+            "Start: VM sign-in",
+            "Start: Azure SRE Agent",
+            "Start: Azure Portal",
+            "Start: GitHub and Copilot",
+            "Background activities",
+            "Review Azure resources and telemetry",
+            "Connect the imported repository",
+            "Review the Getting started thread",
+            "Update Web App configuration",
+            "Debug a scenario",
+            "Scheduled tasks: read-only weekly cost audit",
+            "Live reports: traffic and health"
+        ]);
+        assert.match(guidance, /TAP requested/);
+        assert.match(guidance, /require working VM Integration Services/);
+        assert.match(guidance, /Automation > New task/);
+        assert.match(guidance, /Run now absent/);
+        assert.match(guidance, /Estimates are not actual billing/);
+        assert.match(guidance, /Treat unavailable geographic data or failed queries as limitations/);
+        assert.match(main, /Select \*\*Approve action\*\* only for the intended lab Web App change/);
+        assert.match(main, /repeat the same `jacket` search/);
+        assert.match(main, /Keep the task in \*\*Review\*\* mode/);
+        assert.match(main, /Confirm the Web App itself emits telemetry/);
     });
 
     test(`${lab.name}: all SRE activities retain evidence, approval, and verification gates`, () => {

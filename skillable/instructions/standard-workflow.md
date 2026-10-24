@@ -8,7 +8,7 @@ Keep native Resources, profile durations, cloud configuration and VM profiles un
 
 # Start
 
-> [!Note] Agent responses, repository imports, and other background activities can take time. Continue with independent exercises instead of waiting for processing to finish. Return before a later step that requires the result.
+> [!Note] Need help? See **Additional guidance** at the end, grouped by section, or ask the facilitator.
 
 ## 1. Sign in to the lab VM
 
@@ -23,15 +23,11 @@ Keep native Resources, profile durations, cloud configuration and VM profiles un
 
 4. Complete Windows sign-in and open a browser **inside the VM**.
 
-> [!Note] Click-to-type controls send text to the current cursor position in the selected VM. Open the browser or sign-in screen first, then focus the destination field before clicking a value here or in Resources. VM credentials and Azure credentials are different.
-
 ## 2. Azure SRE Agent
 
 With the lab VM selected and Windows signed in, use this native VM command:
 
 @[Open Azure SRE Agent in the VM](`Start-Process 'https://sre.azure.com'`){PowerShell}
-
-If the browser does not open, use the browser already running **inside the VM**: focus its address bar, click +++https://sre.azure.com+++, then press **Enter inside the VM**. Do not paste the URL into your own computer's browser.
 
 1. Select **Sign in** on the SRE Agent page.
 2. Use the **same Azure account and sign-in method shown in Resources > Azure Portal**, not the VM account.
@@ -41,8 +37,6 @@ If the browser does not open, use the browser already running **inside the VM**:
 | --- | --- |
 | Azure username | +++@lab.CloudPortalCredential(User1).Username+++ |
 | Azure password | +++@lab.CloudPortalCredential(User1).Password+++ |
-
-For **Temporary Access Pass (TAP)** sign-in, focus the TAP field inside the VM, open **Resources > Azure Portal**, and click its existing **TAP** control. Return to Instructions afterward. Do not enter the TAP in a password-only field unless the sign-in flow requests that method.
 
 4. Select your assigned agent, named `caldova-sreagent-<suffix>`. Use the full name displayed in your lab; `<suffix>` represents a generated suffix, not text to type.
 5. Reuse this selected agent throughout the lab. Do not create another agent.
@@ -57,11 +51,7 @@ Keep the existing **Resources > Azure Portal** card and its credentials unchange
 
 @[Open Azure Portal in the VM](`Start-Process 'https://portal.azure.com/#home'`){PowerShell}
 
-If the command does not open the browser, focus the browser address bar **inside the VM**, click +++https://portal.azure.com/#home+++, then press **Enter inside the VM**.
-
 Use the existing Azure Portal username, password, or TAP controls in **Resources** after focusing the appropriate field inside the VM. Select only the lab subscription and resource group.
-
-> [!Note] The open-in-VM commands require working VM Integration Services. If a command fails, use the Type Text fallback above. If Type Text also fails, type the URL manually inside the VM and notify the facilitator; do not change VM or Azure permissions.
 
 Use the lab's **Next** control to continue to Modernization.
 
@@ -134,14 +124,6 @@ Review only in the **context wizard**. GitHub is **not connected yet**. You will
 
 **Screenshot placeholder: Done and go to agent and the Getting started thread's environment and health findings.**
 
-### Need guidance?
-
-- **Wizard closed?** In the agent's Operations Hub, open **Overview > Complete setup**, if available.
-- **Thread not open?** Under **Favorites**, select **Team onboarding**. If absent, use **Search Threads**, search `get to know`, and open the greeting for your lab user.
-- **Import still running?** Continue independent exercises and return to connect the repository before debugging.
-- **Repository already connected?** Keep it and do not add a duplicate.
-- **Sign-in or connection failed?** Notify the facilitator; do not use a personal account.
-
 ## Continue the SRE exercise
 
 Continue with the approved SRE exercise for your session: reviewing and approving a reversible Web App configuration change, debugging, and the scheduled-task/live-report activities appropriate to its time budget. Use the findings already provided in the Getting started thread; do not repeat discovery in a new chat.
@@ -155,3 +137,37 @@ AUTHOR: Merge the remaining approved SRE exercises from the relevant PREL38
 or LAB720 manual here before publication. This shared setup draft deliberately
 does not replace those exercises or change the profile's duration.
 -->
+
+## Additional guidance
+
+### Start: VM sign-in
+
+Click-to-type controls send text to the current cursor position in the selected VM. Open the destination screen and focus its field first, then click the matching value here or in Resources. VM credentials and Azure credentials are different.
+
+### Start: Azure SRE Agent
+
+- **Browser did not open?** Focus the address bar **inside the VM**, click +++https://sre.azure.com+++, then press **Enter inside the VM**. Do not paste the URL into your own computer's browser.
+- **TAP requested?** For **Temporary Access Pass (TAP)** sign-in, focus the TAP field inside the VM, open **Resources > Azure Portal**, and click its existing **TAP** control. Return to Instructions afterward. Do not substitute a TAP into an unrelated password field.
+
+### Start: Azure Portal
+
+- **Browser did not open?** Focus the address bar **inside the VM**, click +++https://portal.azure.com/#home+++, then press **Enter inside the VM**.
+- The open-in-VM commands require working VM Integration Services. If a command fails, use the Type Text fallback. If Type Text also fails, type the URL manually inside the VM and notify the facilitator; do not change VM or Azure permissions.
+
+### Background activities
+
+Agent responses, repository imports, and other background activities can take time. Continue independent exercises while processing runs. Return before a later step that requires the result. Do not start a second copy of the same operation.
+
+### Review Azure resources and telemetry
+
+**Wizard closed?** In the agent's Operations Hub, open **Overview > Complete setup**, if available.
+
+### Connect the imported repository
+
+- **Import still running?** Continue independent exercises and return to connect the repository before debugging.
+- **Repository already connected?** Keep it and do not add a duplicate.
+- **Sign-in or connection failed?** Notify the facilitator; do not use a personal account.
+
+### Review the Getting started thread
+
+**Thread not open?** Under **Favorites**, select **Team onboarding**. If absent, use **Search Threads**, search `get to know`, and open the greeting for your lab user.

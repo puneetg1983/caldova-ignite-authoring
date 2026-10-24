@@ -79,7 +79,8 @@ test("keeps pending team content explicit and enforces SRE setup dependencies", 
     assert.equal((setup.match(/^\d\. /gm) || []).length, 7);
     const gettingStarted = pages[3].split("## Review the Getting started thread")[1]
         .split("## Continue the SRE exercise")[0];
-    const [main, guidance] = gettingStarted.split("### Need guidance?");
+    const main = gettingStarted;
+    const guidance = source.split("## Additional guidance")[1];
     assert.match(main, /select \*\*Done and go to agent\*\*\. The \*\*Getting started\*\* thread opens/);
     assert.match(main, /continue with the SRE exercise below/);
     assert.equal((main.match(/^\d\. /gm) || []).length, 4);
@@ -89,4 +90,27 @@ test("keeps pending team content explicit and enforces SRE setup dependencies", 
     assert.doesNotMatch(source, /## First chat thread|Discover all Azure resources|continue read-only discovery/);
     assert.match(pages[3], /confirm both the \*\*import\*\* and \*\*repository connection\*\*/);
     assert.match(source, /caldova-sreagent-<suffix>/);
+});
+
+test("points to section-grouped help at the end without interrupting the main flow", () => {
+    const [main, guidance, duplicate] = source.split("## Additional guidance");
+    assert.ok(guidance);
+    assert.equal(duplicate, undefined);
+    assert.match(pages[0], /Need help\? See \*\*Additional guidance\*\* at the end, grouped by section, or ask the facilitator/);
+    assert.ok(main.indexOf("Need help?") < main.indexOf("## 1. Sign in to the lab VM"));
+    assert.ok(main.includes("## Continue the SRE exercise"));
+    assert.doesNotMatch(main, /### Need guidance|Operations Hub|Search Threads|Browser did not open/);
+    assert.doesNotMatch(guidance, /^## /m);
+    assert.deepEqual([...guidance.matchAll(/^### (.+)$/gm)].map(match => match[1]), [
+        "Start: VM sign-in",
+        "Start: Azure SRE Agent",
+        "Start: Azure Portal",
+        "Background activities",
+        "Review Azure resources and telemetry",
+        "Connect the imported repository",
+        "Review the Getting started thread"
+    ]);
+    assert.match(guidance, /TAP requested/);
+    assert.match(guidance, /require working VM Integration Services/);
+    assert.match(guidance, /Repository already connected/);
 });
