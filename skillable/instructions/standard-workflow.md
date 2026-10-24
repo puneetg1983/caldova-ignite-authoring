@@ -47,6 +47,8 @@ For **Temporary Access Pass (TAP)** sign-in, focus the TAP field inside the VM, 
 4. Select your assigned agent, named `caldova-sreagent-<suffix>`. Use the full name displayed in your lab; `<suffix>` represents a generated suffix, not text to type.
 5. Reuse this selected agent throughout the lab. Do not create another agent.
 
+The context wizard opens after sign-in. Keep its tab open. In the SRE Agent module, start the background repository import in a separate VM browser tab, then return to review configuration and connect the imported repository before onboarding.
+
 **Screenshot placeholder: SRE Agent Sign in button and agent selection with an example generated suffix; hide all credentials.**
 
 ## 3. Azure Portal
@@ -98,30 +100,22 @@ Use the assigned `caldova-sreagent-<suffix>` selected on Start. Resource names c
 +++https://github.com/puneetg1983/caldova-ignite-authoring.git+++
 
 4. Set **Owner** to the lab GitHub account, use repository name `caldova-ignite-authoring`, and select **Private** visibility.
-5. Select **Begin import**, leave its status tab open, and continue immediately. Do not wait here for the import to finish.
+5. Select **Begin import**, leave its status tab open, and return to the SRE Agent context wizard for the configuration review. Do not wait here for the import to finish.
 
 **Screenshot placeholder: GitHub importer source-repository field, owner, and visibility; hide account-specific information.**
 
-## Interact with onboarding - maximum 5 minutes
-
-1. Return to your selected SRE Agent in the VM.
-2. If the onboarding conversation is open, read it. Otherwise, select **Team onboarding** under **Favorites**.
-3. If it is not listed, select **Search Threads**, search for `get to know`, and open the greeting addressed to your lab user.
-4. Review the environment summary and any missing connections. Reply as the on-call engineer for Caldova Retail Co.; do not enter personal or confidential information.
-5. Keep the interaction read-only. At **5 minutes**, or while the agent is processing, continue to the configuration review below. Return later to read the response.
-
-**Screenshot placeholder: Favorites, Team onboarding, Search Threads, and the read-only conversation.**
-
 ## Review Azure resources and telemetry before connecting GitHub
 
-1. In the agent's Operations Hub, select **Overview**, then **Complete setup** if it is offered. Review the **Azure resources** card and its connected-scope summary.
+Review the existing configuration first, then connect the imported repository before onboarding.
+
+1. Return to the **context wizard** opened at SRE Agent sign-in. If it is no longer open, in the agent's Operations Hub select **Overview**, then **Complete setup** if it is offered. Review the **Azure resources** card and its connected-scope summary.
 2. Identify the lab subscription and the resource group containing the Caldova Web App. In Azure Portal, select that subscription and resource group to inspect their resources. Do not add or remove scopes or change role assignments.
 3. In SRE Agent, open **Builder > Connectors**. Inspect any **Log Analytics** and **Application Insights** entries and their connection status.
 4. If a telemetry connector is present, verify that it refers to the lab's actual workspace or Application Insights resource. Do not substitute the agent's own telemetry resource for the Web App's telemetry.
 5. If a connector is missing, record that observation. Do not assume that telemetry is already connected: built-in Azure access and an explicitly configured telemetry connector are different. Follow the facilitator's approved setup before activities that require a connector.
 6. If the documented navigation is not available in this lab's UI, ask the facilitator to confirm the current path rather than changing unrelated settings.
 
-**Screenshot placeholder: Overview > Complete setup and the connected Azure subscription/resource group summary.**
+**Screenshot placeholder: Sign-in context wizard and the connected Azure subscription/resource group summary, with Overview > Complete setup as a fallback.**
 
 **Screenshot placeholder: Builder > Connectors showing the lab's Log Analytics and Application Insights entries or their absence.**
 
@@ -141,6 +135,16 @@ GitHub is **not assumed to be connected** just because a repository import was s
 10. If enterprise authorization or account provisioning blocks the connection, stop this setup step and notify the facilitator. Continue independent activities; do not use a personal account or weaken permissions.
 
 **Screenshot placeholder: Builder > Knowledge base > Add repository, OAuth account confirmation, imported repository selection, and saved connection.**
+
+## Interact with onboarding - maximum 5 minutes
+
+1. After reviewing configuration and connecting the imported repository, return to your selected SRE Agent in the VM.
+2. If the onboarding conversation is open, read it. Otherwise, select **Team onboarding** under **Favorites**.
+3. If it is not listed, select **Search Threads**, search for `get to know`, and open the greeting addressed to your lab user.
+4. Review the environment summary and any missing connections. Reply as the on-call engineer for Caldova Retail Co.; do not enter personal or confidential information.
+5. Keep the interaction read-only. At **5 minutes**, or while the agent is processing, continue with the SRE exercise below. Return later to read the response.
+
+**Screenshot placeholder: Favorites, Team onboarding, Search Threads, and the read-only conversation.**
 
 ## Continue the SRE exercise
 

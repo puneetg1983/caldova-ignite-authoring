@@ -21,9 +21,9 @@ const requiredSreHeadings = [
     "Welcome to Caldova operations",
     "What you will accomplish",
     "Start the GitHub import in the background",
-    "Interact with the onboarding thread - maximum 5 minutes",
     "Review Azure resources and telemetry before connecting GitHub",
     "Connect the imported repository",
+    "Interact with the onboarding thread - maximum 5 minutes",
     "First chat thread: discover the environment",
     "Update Web App configuration",
     "Debug a scenario",
@@ -90,11 +90,19 @@ for (const lab of labs) {
             pages[0].indexOf("## 1. Sign in to the lab VM"));
         assert.match(source, /The URL for your source repository\\\*/);
         assert.doesNotMatch(source, /Your old repository's clone URL|is already connected to the Caldova GitHub/i);
-        assert.match(source, /continue to onboarding \*\*without waiting\*\*/);
+        assert.match(source, /context wizard for the configuration review \*\*without waiting\*\*/);
         assert.match(source, /At \*\*5 minutes\*\*/);
         assert.match(source, /GitHub is \*\*not assumed to be connected\*\*/);
         assert.ok(pages[3].indexOf("## Review Azure resources and telemetry") <
             pages[3].indexOf("## Connect the imported repository"));
+        assert.ok(pages[3].indexOf("## Connect the imported repository") <
+            pages[3].indexOf("## Interact with the onboarding thread"));
+        assert.match(source, /context wizard opens after sign-in/);
+        assert.match(pages[3], /Return to the \*\*context wizard\*\* opened at SRE Agent sign-in/);
+        const onboarding = pages[3].split("## Interact with the onboarding thread")[1]
+            .split("## First chat thread")[0];
+        assert.match(onboarding, /continue to \*\*First chat thread: discover the environment\*\*/);
+        assert.doesNotMatch(onboarding, /continue to the configuration review/);
         assert.match(source, /confirm both the \*\*import\*\* and \*\*repository connection\*\* are ready/i);
         assert.match(source, /caldova-sreagent-<suffix>/);
         assert.match(source, /full actual name/);
@@ -122,7 +130,8 @@ for (const lab of labs) {
             .map(match => match[1]);
         assert.equal(ids.length, lab.name === "PREL38" ? 19 : 18);
         assert.equal(new Set(ids).size, ids.length);
-        for (let i = 1; i <= 14; i++) assert.ok(ids.includes(`SRE-${String(i).padStart(2, "0")}`));
+        assert.deepEqual(ids.filter(id => id.startsWith("SRE-")),
+            Array.from({ length: 14 }, (_, i) => `SRE-${String(i + 1).padStart(2, "0")}`));
         assert.doesNotMatch(source, /!IMAGE\[|!\[[^\]]*\]\(/);
         assert.match(source, /Do not show passwords or TAP values/);
     });
