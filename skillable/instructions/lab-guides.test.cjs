@@ -41,6 +41,7 @@ const requiredSreHeadings = [
 ];
 
 for (const lab of labs) {
+    const revisedStart = lab.name === "PREL38";
     const source = readFileSync(join(__dirname, `${lab.name}.md`), "utf8");
     const pages = source.split(/\r?\n===\r?\n/);
     const backup = join(__dirname, "backups", "2026-10-24", lab.name);
@@ -48,14 +49,23 @@ for (const lab of labs) {
 
     test(`${lab.name}: complete guide has the correct identity, duration, and native page order`, () => {
         assert.match(source, new RegExp(`profile ${lab.profile}, instruction set ${lab.instructions}`));
-        assert.match(source, new RegExp(`SRE lab duration: ${lab.duration} minutes`));
+        if (revisedStart) {
+            assert.doesNotMatch(source, /SRE lab duration:|No new per-exercise time estimates/);
+            assert.match(pages[0], /Sign in to the lab VM and prepare the shared tools/);
+            assert.doesNotMatch(pages[0], /## \d\. Azure SRE Agent|Open Azure SRE Agent/);
+            assert.match(pages[3], /## Sign in to Azure SRE Agent/);
+        } else {
+            assert.match(source, new RegExp(`SRE lab duration: ${lab.duration} minutes`));
+        }
         assert.equal(pages.length, 4);
         assert.deepEqual(pages.map(page => page.match(/^# (.+)$/m)?.[1]),
             ["Start", "Modernization", "ARM/Azure Copilot", "SRE Agent"]);
         assert.deepEqual([...pages[0].matchAll(/^## \d\. (.+)$/gm)].map(match => match[1]),
-            ["Sign in to the lab VM", "Azure SRE Agent", "Azure Portal"]);
+            revisedStart ? ["Sign in to the lab VM", "Azure Portal"] :
+                ["Sign in to the lab VM", "Azure SRE Agent", "Azure Portal"]);
         assert.deepEqual([...pages[3].matchAll(/^## (.+)$/gm)].map(match => match[1]),
-            requiredSreHeadings);
+            revisedStart ? [...requiredSreHeadings.slice(0, 2), "Sign in to Azure SRE Agent",
+                ...requiredSreHeadings.slice(2)] : requiredSreHeadings);
         assert.match(pages[1], /Authoring placeholder/);
         assert.match(pages[2], /Authoring placeholder/);
         assert.match(source, /UNPUBLISHED AUTHORING DRAFT/);
@@ -63,25 +73,39 @@ for (const lab of labs) {
 
     test(`${lab.name}: VM sign-in uses runtime credentials and field focus, not stored values`, () => {
         const tokens = source.match(/@lab\.[A-Za-z][A-Za-z0-9_]*(?:\([^\r\n)]+\))?(?:\.[A-Za-z][A-Za-z0-9_]*)*/g);
-        assert.ok(tokens.length >= 6);
+        assert.ok(tokens.length >= (revisedStart ? 4 : 6));
         for (const token of tokens) assert.ok(allowedTokens.has(token), `Unexpected token: ${token}`);
-        for (const token of [...allowedTokens].filter(token => /\.(Username|Password)$/.test(token))) {
+        for (const token of [...allowedTokens].filter(token => /\.(Username|Password)$/.test(token) &&
+            (!revisedStart || token.startsWith("@lab.VirtualMachine")))) {
             assert.ok(source.includes(`+++${token}+++`), `Missing Type Text control: ${token}`);
         }
         assert.match(source, /focus its field first/);
-        assert.match(source, /same Azure account and sign-in method shown in Resources > Azure Portal/);
-        assert.match(source, /Resources > Azure Portal.*existing.*TAP/);
+        if (revisedStart) {
+            assert.doesNotMatch(source, /@lab.CloudPortalCredential|Azure password \|/);
+            const signIn = pages[3].split("## Sign in to Azure SRE Agent")[1]
+                .split("## Start the GitHub import")[0];
+            assert.match(signIn, /At \*\*Temporary Access Pass\*\*.*\*\*TAP\*\* control in Resources/);
+            assert.match(signIn, /Open \*\*Resources > Azure Portal\*\*/);
+            assert.match(source, /Password requested instead of TAP/);
+        } else {
+            assert.match(source, /same Azure account and sign-in method shown in Resources > Azure Portal/);
+            assert.match(source, /Resources > Azure Portal.*existing.*TAP/);
+        }
         assert.doesNotMatch(source, /@lab\.[^\s+]*TAP/i);
         assert.match(source, /Do not enable GitHub sync/);
     });
 
     test(`${lab.name}: destination URLs target the VM and retain manual fallbacks`, () => {
-        const commands = [...source.matchAll(/@\[[^\]]+\]\(`([^`]+)`\)\{PowerShell\}/g)]
+        const commands = [...source.matchAll(/@\[[^\]]+\]\(`([^`]+)`\)\{PowerShell(?: visible)?\}/g)]
             .map(match => match[1]);
-        assert.deepEqual(commands, [
+        assert.deepEqual(commands, revisedStart ? [
+            "Start-Process msedge.exe -ArgumentList 'https://portal.azure.com/#home'",
+            "Start-Process msedge.exe -ArgumentList 'https://sre.azure.com'"
+        ] : [
             "Start-Process 'https://sre.azure.com'",
             "Start-Process 'https://portal.azure.com/#home'"
         ]);
+        if (revisedStart) assert.equal((source.match(/\{PowerShell visible\}/g) || []).length, 2);
         for (const url of ["https://sre.azure.com", "https://portal.azure.com/#home",
             "https://github.com/new/import", "https://github.com/enterprises/skillable-events/sso"]) {
             assert.ok(source.includes(`+++${url}+++`));
@@ -176,9 +200,10 @@ for (const lab of labs) {
         assert.doesNotMatch(main, /### Need guidance|Operations Hub|Search Threads|Browser did not open|If enterprise sign-in|Some lab versions|If search already succeeds|Estimates are not actual billing|Data delayed or empty/);
         assert.deepEqual([...guidance.matchAll(/^### (.+)$/gm)].map(match => match[1]), [
             "Start: VM sign-in",
-            "Start: Azure SRE Agent",
+            ...(!revisedStart ? ["Start: Azure SRE Agent"] : []),
             "Start: Azure Portal",
             "Start: GitHub and Copilot",
+            ...(revisedStart ? ["Sign in to Azure SRE Agent"] : []),
             "Background activities",
             "Review Azure resources and telemetry",
             "Connect the imported repository",
@@ -188,7 +213,7 @@ for (const lab of labs) {
             "Scheduled tasks: read-only weekly cost audit",
             "Live reports: traffic and health"
         ]);
-        assert.match(guidance, /TAP requested/);
+        assert.match(guidance, revisedStart ? /Password requested instead of TAP/ : /TAP requested/);
         assert.match(guidance, /require working VM Integration Services/);
         assert.match(guidance, /Automation > New task/);
         assert.match(guidance, /Run now absent/);
@@ -221,7 +246,8 @@ for (const lab of labs) {
         assert.equal(ids.length, lab.name === "PREL38" ? 18 : 17);
         assert.equal(new Set(ids).size, ids.length);
         assert.deepEqual(ids.filter(id => id.startsWith("SRE-")),
-            Array.from({ length: 13 }, (_, i) => `SRE-${String(i + 1).padStart(2, "0")}`));
+            Array.from({ length: revisedStart ? 14 : 13 },
+                (_, i) => `SRE-${String(i + (revisedStart ? 0 : 1)).padStart(2, "0")}`));
         assert.equal((source.match(/^\*\*Screenshot placeholder /gm) || []).length,
             lab.name === "PREL38" ? 15 : 14);
         assert.deepEqual([...source.matchAll(/!\[[^\]]+\]\(([^)]+)\)/g)].map(match => match[1]),

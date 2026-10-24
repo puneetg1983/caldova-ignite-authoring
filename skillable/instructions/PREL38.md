@@ -11,7 +11,7 @@ Do not enable GitHub sync or change Resources, themes, infrastructure or permiss
 
 **PREL38 - Pre-Ignite-Day Lab: Operating Caldova Retail Ops with Azure SRE Agent**
 
-**SRE lab duration: 45 minutes.** No new per-exercise time estimates are assigned.
+Sign in to the lab VM and prepare the shared tools used in this lab.
 
 > [!Note] Need help? See **Additional guidance** at the end, grouped by section, or ask the facilitator.
 
@@ -30,37 +30,15 @@ Do not enable GitHub sync or change Resources, themes, infrastructure or permiss
 
 **Screenshot placeholder START-01: Windows sign-in and the focused destination field. Do not show passwords or TAP values.**
 
-## 2. Azure SRE Agent
-
-With Windows signed in and the lab VM selected, use:
-
-@[Open Azure SRE Agent in the VM](`Start-Process 'https://sre.azure.com'`){PowerShell}
-
-1. Select **Sign in** on the SRE Agent page.
-2. Use the **same Azure account and sign-in method shown in Resources > Azure Portal**, not the VM account.
-3. Focus the username field in the VM, then click the Azure username below.
-4. If password sign-in is requested, focus its password field, then click the Azure password below.
-
-| Field | Click to type into the focused VM field |
-| --- | --- |
-| Azure username | +++@lab.CloudPortalCredential(User1).Username+++ |
-| Azure password | +++@lab.CloudPortalCredential(User1).Password+++ |
-
-5. Select your assigned agent, named `caldova-sreagent-<suffix>`. The suffix is generated for your lab; use the actual full name shown.
-6. Reuse this agent throughout the lab. Do not create another agent.
-
-After sign-in, keep the **context wizard** open. Review configuration and connect the imported repository before selecting **Done and go to agent**.
-
-**Screenshot placeholder START-02: SRE Agent Sign in, Azure sign-in field focus, and the assigned agent selection. Hide account-specific information and all credentials.**
-
-## 3. Azure Portal
+## 2. Azure Portal
 
 Keep the existing **Resources > Azure Portal** card and its username, password, and TAP controls unchanged. To open the portal inside the VM, use:
 
-@[Open Azure Portal in the VM](`Start-Process 'https://portal.azure.com/#home'`){PowerShell}
+@[Open Azure Portal in the VM](`Start-Process msedge.exe -ArgumentList 'https://portal.azure.com/#home'`){PowerShell visible}
 
-1. Sign in using the credentials in **Resources > Azure Portal**, with the VM destination field focused before clicking each value.
-2. Confirm you are using the lab account and subscription, not a personal account.
+1. In **Resources > Azure Portal**, use the lab Azure username, not the VM username. Focus the username field inside the VM before clicking the value.
+2. At **Temporary Access Pass**, focus the field inside the VM and use the **TAP** control in Resources.
+3. Confirm you are using the lab account and subscription, not a personal account.
 
 **Screenshot placeholder START-03: Azure Portal inside the VM and selection of the assigned lab subscription; hide credentials.**
 
@@ -117,7 +95,7 @@ Select **Next** to continue to SRE Agent, the final module.
 
 Act as the on-call engineer for Caldova Retail Co., a storefront and operations app running on Azure App Service. Review the environment, approve a reversible configuration change, investigate a customer-visible search failure, and verify the fix without a code deployment.
 
-Use the assigned `caldova-sreagent-<suffix>` selected on Start. The Web App, resource group, and telemetry resources may also have generated suffixes. Whenever this guide says **Caldova Web App**, use the full actual name in your lab; do not type `<suffix>` or assume a fixed example name.
+Use the assigned `caldova-sreagent-<suffix>`. The Web App, resource group, and telemetry resources may also have generated suffixes. Whenever this guide says **Caldova Web App**, use the full actual name in your lab; do not type `<suffix>` or assume a fixed example name.
 
 ## What you will accomplish
 
@@ -129,6 +107,23 @@ Use the assigned `caldova-sreagent-<suffix>` selected on Start. The Web App, res
 6. Reproduce the product-search failure, investigate its configuration cause, approve a precise fix, and verify search recovery.
 7. Create and run a recurring, read-only cost audit.
 8. Build and check a reusable live traffic-and-health report.
+
+## Sign in to Azure SRE Agent
+
+Open your assigned agent using the lab Azure account.
+
+With Windows signed in and the lab VM selected, use:
+
+@[Open Azure SRE Agent in the VM](`Start-Process msedge.exe -ArgumentList 'https://sre.azure.com'`){PowerShell visible}
+
+1. Select **Sign in**. If already signed in with the lab Azure account, continue to agent selection.
+2. Open **Resources > Azure Portal**. Focus the username field inside the VM, then click the lab Azure username.
+3. At **Temporary Access Pass**, focus the field inside the VM and use the **TAP** control in Resources. Return to **Instructions** afterward.
+4. Select your assigned `caldova-sreagent-<suffix>` using its full actual name. Reuse this agent throughout the lab; do not create another.
+
+After sign-in, keep the **context wizard** open. Review configuration and connect the imported repository before selecting **Done and go to agent**.
+
+**Screenshot placeholder SRE-00: SRE Agent Sign in, Temporary Access Pass sign-in, and assigned agent selection. Hide account-specific information and all credentials.**
 
 ## Start the GitHub import in the background
 
@@ -283,19 +278,20 @@ Keep the lab's existing cleanup policy. Do not delete shared resources, change r
 
 Click-to-type sends text to the current cursor position in the selected VM. Open the destination screen and focus its field first, then click the matching value in Instructions or Resources. VM credentials and Azure credentials are different.
 
-### Start: Azure SRE Agent
-
-- **Browser did not open?** Focus the address bar **inside the VM**, click +++https://sre.azure.com+++, then press **Enter inside the VM**. Do not use an external Resources link that opens on your own computer.
-- **TAP requested?** For **Temporary Access Pass (TAP)** sign-in, focus the TAP field inside the VM, open **Resources > Azure Portal**, and click its existing **TAP** control. Return to Instructions afterward. Do not substitute a TAP into an unrelated password field.
-
 ### Start: Azure Portal
 
 - **Browser did not open?** Focus the address bar **inside the VM**, click +++https://portal.azure.com/#home+++, then press **Enter inside the VM**.
 - The open-in-VM commands require working VM Integration Services. If a command fails, use the Type Text fallback. If Type Text also fails, type the URL manually inside the VM and notify the facilitator. Do not change VM settings or permissions to work around a failure.
+- **Password requested instead of TAP?** Use the Azure password in **Resources > Azure Portal**, not the VM password. Focus the password field inside the VM first.
 
 ### Start: GitHub and Copilot
 
 If enterprise sign-in or account provisioning is blocked, notify the facilitator. Do not substitute a personal GitHub account or change access policies.
+
+### Sign in to Azure SRE Agent
+
+- **Browser did not open?** Focus the address bar **inside the VM**, click +++https://sre.azure.com+++, then press **Enter inside the VM**. Do not use an external Resources link that opens on your own computer.
+- **Password requested instead of TAP?** Use the Azure password in **Resources > Azure Portal**, not the VM password. Focus the password field inside the VM first.
 
 ### Background activities
 
