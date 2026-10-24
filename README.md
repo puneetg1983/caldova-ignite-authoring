@@ -49,7 +49,8 @@ The working guides use native Skillable Markdown with this page order:
 JavaScript is required. Start orders VM login, SRE Agent, then Azure Portal.
 The guides contain the full SRE activities from the respective Word manuals,
 with the requested setup corrections, explicit import/connection prerequisites,
-and named screenshot placeholders. They do not update the Word files.
+and verified setup screenshots alongside the remaining named screenshot
+placeholders. They do not update the Word files.
 The SRE sequence is background repository import, configuration review in the
 context wizard shown at sign-in, connection of the completed imported repository,
 then **Done and go to agent**, the Getting started thread (at most five minutes),
@@ -62,6 +63,25 @@ than interrupting the main instructions. Required approval and verification
 steps stay in the main flow.
 Configuration review and repository connection stay inside the SRE Agent context
 wizard; the review does not require an Azure Portal or Builder detour.
+The verified review uses **Full setup -> Azure resources -> Show details**,
+then **Logs -> Show details**. Repository setup uses **Code -> + -> GitHub**,
+the imported repository URL, **OAuth -> Sign in to GitHub**, consent,
+**Next -> Save**, and **Code -> Show details** to verify the saved entry.
+
+The four images in `skillable/instructions/images/context-wizard/` are cropped
+from the existing authorized PREL38 learner VM on 2026-10-24. Browser chrome,
+account headers, and credentials are excluded; the subscription value and
+saved repository URL are masked in black. The import completed with source files
+visible, OAuth showed **Connected to GitHub** after user-approved consent,
+and the saved repository survived a reload. Its Status cell showed a dash;
+this does not establish completed indexing or source-code retrieval.
+LAB720 reuses explicitly labelled PREL38 examples and still needs its own
+runtime check before publication. Other screenshot placeholders remain.
+
+PREL38 already has the GHE group assignment and GH-Sync action used by LAB720;
+enterprise SSO worked for the running PREL38 lab account. No provisioning
+groups or lifecycle scripts were changed. LAB720's additional `_Skillable-E7`
+group has not been established as necessary for this flow and was not copied.
 
 The existing shared GitHub/Copilot setup is retained for each lab. PREL38 also
 retains its ARM MCP setup and the owning team's existing placeholder. Neither
@@ -107,8 +127,8 @@ infrastructure or profile configuration.
 
 ### Manual publication
 
-1. Finish the team-owned pages and review the screenshot placeholders. Placeholders
-   are intentional in these drafts; replacing them with captures is deferred.
+1. Finish the team-owned pages and replace the remaining screenshot placeholders.
+   Review the PREL38 setup captures and verify the same flow in LAB720.
    Confirm the intended lab's duration and activity scope before delivery.
 2. Use an existing authorized lab in corporate Edge. For PREL38, the running
    lab's **Settings -> Developer Tools -> Edit Instructions** route opened a
@@ -129,7 +149,10 @@ infrastructure or profile configuration.
    establish any of these runtime behaviors.
 5. In **Edit Instructions -> Code**, publish only the approved lab's Markdown.
    Upload new screenshots through the media control and use Skillable's returned
-   image references. Do not paste local disk paths or assume an upload succeeded.
+   image references. Repository-relative `images/context-wizard/...` paths are
+   for source preview only: replace each with the actual hosted reference
+   returned by Skillable before publication. Do not invent hosted paths, paste
+   local disk paths, or assume an upload succeeded.
    Account for autosave: a paste can affect live instructions before a separate
    Save Changes click. Do not paste an unapproved or incomplete draft.
 6. Allow autosave to finish, use **Save Changes** if enabled, reopen the editor,
