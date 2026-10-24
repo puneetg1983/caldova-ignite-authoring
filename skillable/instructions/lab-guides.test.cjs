@@ -97,8 +97,7 @@ for (const lab of labs) {
             pages[3].indexOf("## Connect the imported repository"));
         assert.ok(pages[3].indexOf("## Connect the imported repository") <
             pages[3].indexOf("## Interact with the onboarding thread"));
-        assert.match(source, /context wizard opens after sign-in/);
-        assert.match(pages[3], /Return to the \*\*context wizard\*\* opened at SRE Agent sign-in/);
+        assert.match(source, /After sign-in, keep the \*\*context wizard\*\* open/);
         const onboarding = pages[3].split("## Interact with the onboarding thread")[1]
             .split("## First chat thread")[0];
         assert.match(onboarding, /continue to \*\*First chat thread: discover the environment\*\*/);
@@ -107,7 +106,25 @@ for (const lab of labs) {
         assert.match(source, /caldova-sreagent-<suffix>/);
         assert.match(source, /full actual name/);
         assert.match(source, /do not add a duplicate/);
-        assert.match(source, /already-running lab may differ/);
+    });
+
+    test(`${lab.name}: configuration review is concise, review-only, and stays in the context wizard`, () => {
+        const review = pages[3].split("## Review Azure resources and telemetry before connecting GitHub")[1]
+            .split("## Connect the imported repository")[0];
+        const connection = pages[3].split("## Connect the imported repository")[1]
+            .split("## Interact with the onboarding thread")[0];
+        assert.match(review, /Review only in the \*\*context wizard\*\*/);
+        assert.equal((review.match(/^\d\. /gm) || []).length, 3);
+        assert.match(review, /\*\*subscription\*\* and \*\*resource group\*\*/);
+        assert.match(review, /\*\*Log Analytics\*\* and \*\*Application Insights\*\*/);
+        assert.match(review, /Do not change these settings/);
+        assert.ok(review.trim().split(/\s+/).length <= 100);
+        assert.match(connection, /same context wizard/);
+        assert.equal((connection.match(/^\d\. /gm) || []).length, 4);
+        assert.match(connection, /Confirm the repository connection is ready/);
+        assert.ok(connection.trim().split(/\s+/).length <= 160);
+        assert.doesNotMatch(review + connection,
+            /Azure Portal|Builder|Contributor|RBAC|managed identity|Grant permissions|Complete setup/i);
     });
 
     test(`${lab.name}: all SRE activities retain evidence, approval, and verification gates`, () => {

@@ -53,6 +53,8 @@ and named screenshot placeholders. They do not update the Word files.
 The SRE sequence is background repository import, configuration review in the
 context wizard shown at sign-in, connection of the completed imported repository,
 then onboarding (at most five minutes) and the remaining exercises.
+Configuration review and repository connection stay inside the SRE Agent context
+wizard; the review does not require an Azure Portal or Builder detour.
 
 The existing shared GitHub/Copilot setup is retained for each lab. PREL38 also
 retains its ARM MCP setup and the owning team's existing placeholder. Neither

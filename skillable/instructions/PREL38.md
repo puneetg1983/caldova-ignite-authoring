@@ -55,7 +55,7 @@ For **Temporary Access Pass (TAP)** sign-in, focus the TAP field inside the VM, 
 5. Select your assigned agent, named `caldova-sreagent-<suffix>`. The suffix is generated for your lab; use the actual full name shown.
 6. Reuse this agent throughout the lab. Do not create another agent.
 
-The context wizard opens after sign-in. Keep its tab open. In the SRE Agent module, start the repository import in a separate VM browser tab, then return to the wizard to review configuration and connect the imported repository **before onboarding**.
+After sign-in, keep the **context wizard** open. Use it to review configuration and connect the imported repository **before onboarding**.
 
 **Screenshot placeholder START-02: SRE Agent Sign in, Azure sign-in field focus, and the assigned agent selection. Hide account-specific information and all credentials.**
 
@@ -158,36 +158,26 @@ Use the assigned `caldova-sreagent-<suffix>` selected on Start. The Web App, res
 
 ## Review Azure resources and telemetry before connecting GitHub
 
-GitHub is **not assumed to be connected**. Review the existing configuration in the context wizard first, then connect the repository you imported. Do this before the onboarding conversation.
+Review only in the **context wizard**. GitHub is **not assumed to be connected**.
 
-1. Return to the **context wizard** opened at SRE Agent sign-in. If it is no longer open, in the agent's Operations Hub select **Overview**, then **Complete setup** if offered.
-2. Open the **Azure resources** card and review its connected scopes. Identify the assigned subscription and the resource group containing the Caldova Web App.
-3. In Azure Portal, open that subscription and resource group. Identify the Web App, its Log Analytics workspace, and its Application Insights component using the actual full resource names.
-4. Where the SRE resource-mode summary is shown, review the existing subscription **Reader** and resource-group **Privileged** entries. These are agent resource modes, not a complete list of the managed identity's Azure RBAC permissions. Do not change the entries to match an example if the lab differs.
-5. PREL38's updated deployment template grants the SRE Agent managed identity **Contributor at subscription scope for future deployments**. An already-running lab may differ. This is not a request to grant roles or change learner access.
-6. In SRE Agent, open **Builder > Connectors**. Inspect **Log Analytics** and **Application Insights** entries and their status. Confirm they refer to the Web App's telemetry resources, not merely the agent's own telemetry.
-7. If a connector is missing or unhealthy, record that observation and notify the facilitator before activities that require it. Built-in Azure access and explicit telemetry connectors are different; do not assume a connector exists.
-8. Keep changes in **Review** mode. If an authorization prompt appears, review its account and scope. Ask the facilitator if it requests unexpected access; do not grant broad permissions simply to continue.
+1. Review the selected **subscription** and **resource group**.
+2. Review the existing resource access modes. **Do not change these settings.**
+3. Review the **Log Analytics** and **Application Insights** configuration.
 
-If these documented navigation labels differ in the lab, ask the facilitator to confirm the current path rather than changing unrelated settings.
+**Screenshot placeholder SRE-02: Context wizard showing the subscription, resource group, and access modes.**
 
-**Screenshot placeholder SRE-02: Sign-in context wizard and Azure resources, with the assigned subscription/resource-group scope; include the Overview > Complete setup fallback.**
-
-**Screenshot placeholder SRE-03: Builder > Connectors and the actual Log Analytics/Application Insights connection status.**
+**Screenshot placeholder SRE-03: Context wizard showing Log Analytics and Application Insights configuration.**
 
 ## Connect the imported repository
 
-1. Return to the GitHub import tab. Confirm completion, open the imported repository, and confirm its source files are visible.
-2. If import is still running, continue independent read-only discovery below and return later. **Do not begin source-code debugging until both import and repository connection are ready.**
-3. In the agent, open **Builder > Knowledge base** and inspect existing repositories. If the imported lab repository is already connected, keep it and do not add a duplicate.
-4. Otherwise, select **Add repository > GitHub**, choose the OAuth sign-in option, then select **Sign in to GitHub**.
-5. Sign in using the lab GitHub account, confirm the account, then select **Next**.
-6. In **Repository URL**, select or enter the imported repository under the lab account, not the original source repository.
-7. Select **Add repository**. Wait for a ready/connected state; do not assume that submitting the form completed ingestion.
-8. Ask: "What does the Caldova repository I just connected do, and which services does it contain?" Review the repository/tool evidence in the answer.
-9. If enterprise authorization blocks the connection, notify the facilitator and continue independent tasks. Do not use a personal account, create an unrequested token, remove another repository, or weaken permissions.
+1. Confirm the GitHub import is complete and its source files are visible.
+2. In the **same context wizard**, use the GitHub repository connection to sign in with the **lab GitHub account**.
+3. Select the imported repository under your lab account, not the original source repository, and save. If it is already connected, keep it and do not add a duplicate.
+4. Confirm the repository connection is ready before source-code debugging.
 
-**Screenshot placeholder SRE-04: Add repository, OAuth account confirmation, imported repository selection, and the ready connection.**
+If import is still running, continue read-only discovery and return here later. If sign-in or connection fails, notify the facilitator; do not use a personal account.
+
+**Screenshot placeholder SRE-04: Context wizard showing the imported GitHub repository connection.**
 
 ## Interact with the onboarding thread - maximum 5 minutes
 
@@ -242,7 +232,7 @@ For the Caldova Web App identified in this conversation, configure the App Servi
 
 ### Debug it with the agent
 
-1. Confirm both the **import** and **repository connection** are ready, including visible repository files and a successful repository-grounded answer.
+1. Confirm both the **import** and **repository connection** are ready, with source files visible in the imported repository.
 2. Start a new chat and describe only the symptom:
 
 ```text

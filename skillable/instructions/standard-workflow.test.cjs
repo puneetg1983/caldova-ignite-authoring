@@ -70,7 +70,12 @@ test("keeps pending team content explicit and enforces SRE setup dependencies", 
         pages[3].indexOf("## Connect the imported repository"));
     assert.ok(pages[3].indexOf("## Connect the imported repository") <
         pages[3].indexOf("## Interact with onboarding"));
-    assert.match(pages[3], /Return to the \*\*context wizard\*\* opened at SRE Agent sign-in/);
+    const setup = pages[3].split("## Review Azure resources and telemetry before connecting GitHub")[1]
+        .split("## Interact with onboarding")[0];
+    assert.match(setup, /Review only in the \*\*context wizard\*\*/);
+    assert.match(setup, /same context wizard/);
+    assert.doesNotMatch(setup, /Azure Portal|Builder|Contributor|RBAC|Complete setup/i);
+    assert.equal((setup.match(/^\d\. /gm) || []).length, 7);
     const onboarding = pages[3].split("## Interact with onboarding")[1]
         .split("## Continue the SRE exercise")[0];
     assert.match(onboarding, /continue with the SRE exercise below/);
