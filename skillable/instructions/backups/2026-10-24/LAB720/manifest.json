@@ -1,0 +1,17 @@
+{
+  "lab": "LAB720",
+  "profile_id": 226801,
+  "instruction_set_id": 362436,
+  "exported_instruction_set_id": 0,
+  "instruction_set_id_source": "Original hosted-media namespace; portable export resets Id to 0. Reconfirm in the live editor before publication.",
+  "snapshot_date": "2026-10-24",
+  "status": "Unmodified instruction-only export snapshot; not a full-profile backup.",
+  "source_archive_sha256": "d31b7604f7a9aa63928aec2f3f4d24231914b853cac0378aa244d5c8b3d3ff77",
+  "content_sha256": "cf82e4a22485e3cb8378a991c9c1e1b4091feed031bfb5e921e5b2376006b825",
+  "media": [
+    {
+      "path": "instructions362436/6wflfew4.png",
+      "sha256": "d5f5573f6345d8b2ec47518520c57aa842499c776db2085e5723f968e08f7795"
+    }
+  ]
+}

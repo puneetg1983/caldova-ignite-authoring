@@ -1,0 +1,173 @@
+{
+  "lab": "PREL38",
+  "profile_id": 224911,
+  "instruction_set_id": 359549,
+  "exported_instruction_set_id": 0,
+  "instruction_set_id_source": "Original hosted-media namespace and separately verified profile instruction-set mapping; portable export resets Id to 0.",
+  "snapshot_date": "2026-10-24",
+  "status": "Unmodified instruction-only export snapshot; not a full-profile backup.",
+  "source_archive_sha256": "5963ae15131c10088338ebbcdfa8f76f128bdf297525b564fa3d3200e0cc6cdd",
+  "content_sha256": "2fe20d993e2996ab99c60d5a9ae69e8b9e0bb3e96ca1e5b907c59cd1c66e2a91",
+  "media": [
+    {
+      "path": "instructions359549/01-portal-prepared-state.png",
+      "sha256": "006bfef821dd743393726bccd9f1b56546c92ad3ffab5706ec68c26d4d71b924"
+    },
+    {
+      "path": "instructions359549/02-configure-onboarding-before.png",
+      "sha256": "64b4402406a15fe93d15e82d158bf93adbbc1976d22d4d3334adb306bcfb2242"
+    },
+    {
+      "path": "instructions359549/03-configure-build-setup-before.png",
+      "sha256": "efd2cb2bdc59d47db6da445dae68566a492238ce6727ead3719bb626a331a409"
+    },
+    {
+      "path": "instructions359549/04-configure-no-guided-skill.png",
+      "sha256": "ff270147e717cac0fbf6f1f2eb1c5b779c620418232d410969a8ec0a8ab6729b"
+    },
+    {
+      "path": "instructions359549/05-configure-no-guided-agent.png",
+      "sha256": "8a183285fbdd60deddf9dcccaad915efdb6d9ab472d6ec91a92a81195bbb3c46"
+    },
+    {
+      "path": "instructions359549/07-configure-incidents-before.png",
+      "sha256": "3539af0f13ac698e0fa9e1d57a216b40a6b7916fe64e0b8b408df7526856d690"
+    },
+    {
+      "path": "instructions359549/08-configure-no-guided-plan.png",
+      "sha256": "59398b233b1f350e4083a0f32de37d324fd013a1bdaf3108fe89f5fa52c2864a"
+    },
+    {
+      "path": "instructions359549/09-configure-symptom-prompt.png",
+      "sha256": "0ce5010165db3ae4f1539f7824f62658df48b7321562b08325f8650b5881555e"
+    },
+    {
+      "path": "instructions359549/10-configure-manual-investigation.png",
+      "sha256": "98e57783655aa8992052f15df2ca5d6fc53a3db66a573b86236912d46a57c4a4"
+    },
+    {
+      "path": "instructions359549/11-configure-corrected-draft-contract.png",
+      "sha256": "153565f57f2e31ce9b89e2231f97d813f96457edf2ed20910a6f08607ebf9ce9"
+    },
+    {
+      "path": "instructions359549/12-configure-skill-draft.png",
+      "sha256": "0030ae02cdd28214e332344617e0da94de89dd8f6f14241d92fefa72d237bb5c"
+    },
+    {
+      "path": "instructions359549/14-configure-link-enable-timing.png",
+      "sha256": "970ba0dc87d70a152c2084cd6344782b3f364bfe33ca9f04e3246853f5c18274"
+    },
+    {
+      "path": "instructions359549/15-configure-custom-agent-form.png",
+      "sha256": "5036d91b4e2166cad38ad85bd566668b4b6252aaa154756f1840768c5fb8f3e3"
+    },
+    {
+      "path": "instructions359549/16-configure-agent-owned-tools.png",
+      "sha256": "ec1b06529c430e25c0ddf04346264d142ffa37401a21d6b676ace2be7e3cc6e0"
+    },
+    {
+      "path": "instructions359549/17-configure-skill-form.png",
+      "sha256": "cb7382015a23d4ad6a8af8d9c800eb71ee9fb6fd8b1838e4f0e0454507121be3"
+    },
+    {
+      "path": "instructions359549/18-configure-response-plan-form.png",
+      "sha256": "58f8590fdec37def54b52a3ce288cdad420a16e9ed224d7c5880e7aa9374a255"
+    },
+    {
+      "path": "instructions359549/19-preconfigured-guided-alert-disabled.png",
+      "sha256": "8d4bf1cf98837c63ed90c04fa29898113b268c95d14118fdca0f3830ff60b575"
+    },
+    {
+      "path": "instructions359549/21-preconfigured-five-weekly-tasks.png",
+      "sha256": "0744ff37edb6faff5d4ce04625959e5fffd61c5183b61f3b908e04c8144d3305"
+    },
+    {
+      "path": "instructions359549/22-preconfigured-code-access.png",
+      "sha256": "969a685c7bc6409e3e93f30c7e2ce49813fe76f0836733a25335443261bff7b4"
+    },
+    {
+      "path": "instructions359549/23-preconfigured-knowledge-sources.png",
+      "sha256": "acac43cbb496d3cd5146392ffb3f43afcb46cff9f0b81d6879e681a30347b3ce"
+    },
+    {
+      "path": "instructions359549/24-preconfigured-managed-resources.png",
+      "sha256": "f9886c7231fbc4f0545904e057e4d632d6c1f5dcd114564a0af8060af8a281be"
+    },
+    {
+      "path": "instructions359549/26-preconfigured-session-insights.png",
+      "sha256": "7158ca8813dbca1a06c10b5800f67581d99c3aade0bb2700ae852784773e9ba2"
+    },
+    {
+      "path": "instructions359549/27-preconfigured-guided-skill.png",
+      "sha256": "f1b789b67c669d89a372de82de5508098c7ca17c4ba14a1efd0670babf530e87"
+    },
+    {
+      "path": "instructions359549/28-preconfigured-custom-agents.png",
+      "sha256": "34ff886d9832a7c0216d0396b7fcc51a2259d99ed727fff1910ed994f2c4228e"
+    },
+    {
+      "path": "instructions359549/29-preconfigured-guided-agent-detail.png",
+      "sha256": "c16af57e2ac0fb76f51ece39a1294068dd6012662c0405d044bcb1e58062c464"
+    },
+    {
+      "path": "instructions359549/30-preconfigured-connector-list.png",
+      "sha256": "ed4f8bb8c0fe96ee10f80f513a771b796c4f29a3ce3b356461eba0e9bdc73b17"
+    },
+    {
+      "path": "instructions359549/31-preconfigured-guided-connector.png",
+      "sha256": "ed4f8bb8c0fe96ee10f80f513a771b796c4f29a3ce3b356461eba0e9bdc73b17"
+    },
+    {
+      "path": "instructions359549/32-preconfigured-response-plans.png",
+      "sha256": "bd5f2153205d6cd16525ea2bd8fc0401034525b16f9b93d9100a23186fcd2154"
+    },
+    {
+      "path": "instructions359549/33-preconfigured-guided-plan-detail.png",
+      "sha256": "fb17bbd12b8e6b6106f9415ea5853f153b7deb7ba8dcd2f54ad16829b736ce6d"
+    },
+    {
+      "path": "instructions359549/34-preconfigured-incidents-zero-open.png",
+      "sha256": "49666bf25b4ca12ebfc2f90465de0b53e7151e2a30217049af128356f84de69f"
+    },
+    {
+      "path": "instructions359549/35-guided-incident-created.png",
+      "sha256": "7a93b2094bcd3bd34441d686cf995eeba1c748248ba442b26b2eb81d50d8fc7e"
+    },
+    {
+      "path": "instructions359549/36-guided-active-investigation.png",
+      "sha256": "7c327463ee24a1b0d0b68a00e00822969fea439739ff4a8570131f2b43443760"
+    },
+    {
+      "path": "instructions359549/39-guided-alert-resolved-completed.png",
+      "sha256": "0878cf83c907cb63a32554a2c83142f37fcc811d58393b61817ea58903184bdb"
+    },
+    {
+      "path": "instructions359549/40-preconfigured-live-reports-v2.png",
+      "sha256": "77af9d29ece507afc8aad0f2a7d73dbf751a113a10158b775ee23ceca83f7d18"
+    },
+    {
+      "path": "instructions359549/41-preconfigured-finops-v2.png",
+      "sha256": "bb734f00067104423c3b5d525ece24595ec4b97c61f271b45f2cc1d0d9cdf06c"
+    },
+    {
+      "path": "instructions359549/42-occ-operations-overview.png",
+      "sha256": "ba700a56741c5049aa51bbb015d4132318a2b6b9707e63eb8ec820267d39af36"
+    },
+    {
+      "path": "instructions359549/43-occ-dependency-mapping.png",
+      "sha256": "57f5b081fdeb3cfa6e9380b787b00dfad32f5c553c86180181ca6cbce90b4bf3"
+    },
+    {
+      "path": "instructions359549/44-occ-resource-explorer.png",
+      "sha256": "185876a73183d5ba0c49aa0afb38e815c3c5df6020538039fe6fba5aa1cfdd8f"
+    },
+    {
+      "path": "instructions359549/45-preconfigured-agent-consumption.png",
+      "sha256": "537c94d1834272f72cac14fa0ee2cedb9e3ff14ec3bd3f37cd4b33e09ba850d6"
+    },
+    {
+      "path": "instructions359549/cfaawkpc.png",
+      "sha256": "d5f5573f6345d8b2ec47518520c57aa842499c776db2085e5723f968e08f7795"
+    }
+  ]
+}
