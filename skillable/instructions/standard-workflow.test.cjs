@@ -65,7 +65,8 @@ test("keeps pending team content explicit and enforces SRE setup dependencies", 
     assert.match(pages[3], /maximum 5 minutes/);
     assert.match(pages[3], /The URL for your source repository\\\*/);
     assert.match(pages[3], /Do not wait here/);
-    assert.match(pages[3], /GitHub is \*\*not assumed to be connected\*\*/);
+    assert.match(pages[3], /GitHub is \*\*not connected yet\*\*\. You will connect the imported repository later in this section\./);
+    assert.doesNotMatch(source, /not assumed to be connected/);
     assert.ok(pages[3].indexOf("Review Azure resources and telemetry") <
         pages[3].indexOf("## Connect the imported repository"));
     assert.ok(pages[3].indexOf("## Connect the imported repository") <
