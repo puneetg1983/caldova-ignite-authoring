@@ -92,7 +92,8 @@ for (const lab of labs) {
         assert.doesNotMatch(source, /Your old repository's clone URL|is already connected to the Caldova GitHub/i);
         assert.match(source, /context wizard for the configuration review \*\*without waiting\*\*/);
         assert.match(source, /At \*\*5 minutes\*\*/);
-        assert.match(source, /GitHub is \*\*not assumed to be connected\*\*/);
+        assert.match(source, /GitHub is \*\*not connected yet\*\*\. You will connect the imported repository later in this section\./);
+        assert.doesNotMatch(source, /not assumed to be connected/);
         assert.ok(pages[3].indexOf("## Review Azure resources and telemetry") <
             pages[3].indexOf("## Connect the imported repository"));
         assert.ok(pages[3].indexOf("## Connect the imported repository") <
