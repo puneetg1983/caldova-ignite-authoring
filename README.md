@@ -67,8 +67,12 @@ than interrupting the main instructions. Required approval and verification
 steps stay in the main flow.
 Configuration review and repository connection stay inside the SRE Agent context
 wizard; the review does not require an Azure Portal or Builder detour.
-The verified review uses **Full setup -> Azure resources -> Show details**,
-then **Logs -> Show details**. Repository setup uses **Code -> + -> GitHub**,
+PREL38 stays on **Quickstart** for **Azure resources -> Show details** and
+**Logs -> Show details**. Learners review only the configured resource group and
+connected log sources. An optional note lets them explore **+** under either card,
+then close or cancel without adding scopes or connectors. LAB720 and the shared
+reference retain the earlier Full setup review pending approval.
+Repository setup uses **Code -> + -> GitHub**,
 the imported repository URL, **OAuth -> Sign in to GitHub**, consent,
 **Next -> Save**, and **Code -> Show details** to verify the saved entry.
 
