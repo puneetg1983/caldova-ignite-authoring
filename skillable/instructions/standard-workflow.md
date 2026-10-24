@@ -47,7 +47,7 @@ For **Temporary Access Pass (TAP)** sign-in, focus the TAP field inside the VM, 
 4. Select your assigned agent, named `caldova-sreagent-<suffix>`. Use the full name displayed in your lab; `<suffix>` represents a generated suffix, not text to type.
 5. Reuse this selected agent throughout the lab. Do not create another agent.
 
-The context wizard opens after sign-in. Keep its tab open. In the SRE Agent module, start the background repository import in a separate VM browser tab, then return to review configuration and connect the imported repository before onboarding.
+After sign-in, keep the **context wizard** open. Use it to review configuration and connect the imported repository before onboarding.
 
 **Screenshot placeholder: SRE Agent Sign in button and agent selection with an example generated suffix; hide all credentials.**
 
@@ -106,35 +106,26 @@ Use the assigned `caldova-sreagent-<suffix>` selected on Start. Resource names c
 
 ## Review Azure resources and telemetry before connecting GitHub
 
-Review the existing configuration first, then connect the imported repository before onboarding.
+Review only in the **context wizard**. GitHub is **not assumed to be connected**.
 
-1. Return to the **context wizard** opened at SRE Agent sign-in. If it is no longer open, in the agent's Operations Hub select **Overview**, then **Complete setup** if it is offered. Review the **Azure resources** card and its connected-scope summary.
-2. Identify the lab subscription and the resource group containing the Caldova Web App. In Azure Portal, select that subscription and resource group to inspect their resources. Do not add or remove scopes or change role assignments.
-3. In SRE Agent, open **Builder > Connectors**. Inspect any **Log Analytics** and **Application Insights** entries and their connection status.
-4. If a telemetry connector is present, verify that it refers to the lab's actual workspace or Application Insights resource. Do not substitute the agent's own telemetry resource for the Web App's telemetry.
-5. If a connector is missing, record that observation. Do not assume that telemetry is already connected: built-in Azure access and an explicitly configured telemetry connector are different. Follow the facilitator's approved setup before activities that require a connector.
-6. If the documented navigation is not available in this lab's UI, ask the facilitator to confirm the current path rather than changing unrelated settings.
+1. Review the selected **subscription** and **resource group**.
+2. Review the existing resource access modes. **Do not change these settings.**
+3. Review the **Log Analytics** and **Application Insights** configuration.
 
-**Screenshot placeholder: Sign-in context wizard and the connected Azure subscription/resource group summary, with Overview > Complete setup as a fallback.**
+**Screenshot placeholder: Context wizard showing the subscription, resource group, and access modes.**
 
-**Screenshot placeholder: Builder > Connectors showing the lab's Log Analytics and Application Insights entries or their absence.**
+**Screenshot placeholder: Context wizard showing Log Analytics and Application Insights configuration.**
 
 ## Connect the imported repository
 
-GitHub is **not assumed to be connected** just because a repository import was started.
+1. Confirm the GitHub import is complete and its source files are visible.
+2. In the **same context wizard**, use the GitHub repository connection to sign in with the **lab GitHub account**.
+3. Select the imported repository under your lab account, not the original source repository, and save. If it is already connected, keep it and do not add a duplicate.
+4. Confirm the repository connection is ready before source-code debugging.
 
-1. Return to the GitHub import tab and confirm the import completed. Open the imported repository and confirm its source files are visible.
-2. If the import is not ready, continue independent read-only activities and check again later. Do not begin source-code debugging until the import and connection are ready.
-3. In your selected agent, open **Builder > Knowledge base > Add repository**.
-4. Review existing connections first. If your imported repository is already connected, keep that connection and do not add a duplicate.
-5. Otherwise, choose **GitHub**, select the OAuth sign-in option, and select **Sign in to GitHub**. Use the lab GitHub account.
-6. Confirm the connected account is the lab account, then select **Next**.
-7. In **Repository URL**, select the imported `caldova-ignite-authoring` repository under your lab account. If needed, enter that imported repository's actual URL, not the original source repository URL.
-8. Select **Add repository** to save the connection. Do not remove other repositories or create a personal access token unless the facilitator explicitly requires a different approved authentication method.
-9. Ask the agent: "What does the Caldova repository I just connected do, and which services does it contain?" Review the repository/tool evidence, not only a generic answer.
-10. If enterprise authorization or account provisioning blocks the connection, stop this setup step and notify the facilitator. Continue independent activities; do not use a personal account or weaken permissions.
+If import is still running, continue read-only discovery and return here later. If sign-in or connection fails, notify the facilitator; do not use a personal account.
 
-**Screenshot placeholder: Builder > Knowledge base > Add repository, OAuth account confirmation, imported repository selection, and saved connection.**
+**Screenshot placeholder: Context wizard showing the imported GitHub repository connection.**
 
 ## Interact with onboarding - maximum 5 minutes
 
