@@ -147,16 +147,31 @@ for (const lab of labs) {
             .split("## Connect the imported repository")[0];
         const connection = pages[3].split("## Connect the imported repository")[1]
             .split("## Review the Getting started thread")[0];
-        assert.match(review, /Review only in the \*\*context wizard\*\*/);
+        assert.match(review, revisedStart ? /Stay on \*\*Quickstart\*\* in the \*\*context wizard\*\*/ :
+            /Review only in the \*\*context wizard\*\*/);
         assert.match(review, /After sign-in, you should see the \*\*context wizard\*\*\. If not, follow \*\*Additional guidance > Review Azure resources and telemetry\*\* at the end to open it\./);
-        assert.equal((review.match(/^\d\. /gm) || []).length, 3);
-        assert.match(review, /Click \*\*Full setup\*\*/);
+        assert.equal((review.match(/^\d\. /gm) || []).length, revisedStart ? 2 : 3);
+        if (revisedStart) {
+            const [main, optional] = review.split("> [!Note]");
+            assert.match(main, /\*\*Goal:\*\* Understand which resource group and log sources/);
+            assert.match(main, /Review the configured \*\*Resource group\*\*\. Leave it unchanged/);
+            assert.doesNotMatch(main, /Full setup|review.*Subscription/i);
+            assert.match(optional, /Optional - explore connection options/);
+            assert.match(optional, /Click \*\*\+\*\* under \*\*Azure resources\*\*/);
+            assert.match(optional, /management group, subscription, or another resource group/);
+            assert.match(optional, /Click \*\*\+\*\* under \*\*Logs\*\*/);
+            assert.equal((optional.match(/Close or cancel without adding anything/g) || []).length, 2);
+            assert.ok(instructionWords(main) <= 130);
+            assert.ok(instructionWords(optional) <= 85);
+        } else {
+            assert.match(review, /Click \*\*Full setup\*\*/);
+            assert.match(review, /\*\*Resource group scope\*\*.*\*\*Resource group\*\* and \*\*Subscription\*\*/);
+            assert.match(review, /Do not change these settings/);
+            assert.ok(instructionWords(review) <= 130);
+        }
         assert.match(review, /Under \*\*Azure resources\*\*, click \*\*Show details\*\*/);
-        assert.match(review, /\*\*Resource group scope\*\*.*\*\*Resource group\*\* and \*\*Subscription\*\*/);
         assert.match(review, /Under \*\*Logs\*\*, click \*\*Show details\*\*/);
         assert.match(review, /\*\*Application Insights\*\* and \*\*Log Analytics\*\* both show \*\*Connected\*\*/);
-        assert.match(review, /Do not change these settings/);
-        assert.ok(instructionWords(review) <= 130);
         assert.match(connection, /same context wizard/);
         assert.equal((connection.match(/^\d\. /gm) || []).length, 5);
         assert.match(connection, /under \*\*Code\*\*, click \*\*\+\*\*/);
@@ -278,7 +293,7 @@ for (const lab of labs) {
     });
 }
 
-test("setup assets are real cropped PNGs and all guides use the same verified click sequence", () => {
+test("setup assets are real cropped PNGs and all guides retain the same repository connection steps", () => {
     for (const image of setupImages) {
         const png = readFileSync(join(__dirname, ...image.split("/")));
         assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
@@ -290,9 +305,12 @@ test("setup assets are real cropped PNGs and all guides use the same verified cl
         setupImages.map(path => path.split("/").at(-1)).sort());
     const guides = ["standard-workflow", "PREL38", "LAB720"].map(name =>
         readFileSync(join(__dirname, `${name}.md`), "utf8"));
-    const steps = source => source.split("## Review Azure resources and telemetry before connecting GitHub")[1]
+    const steps = source => source.split("## Connect the imported repository")[1]
         .split("## Review the Getting started thread")[0].match(/^\d\. .+$/gm);
     for (const guide of guides.slice(1)) assert.deepEqual(steps(guide), steps(guides[0]));
+    const reviewSteps = source => source.split("## Review Azure resources and telemetry before connecting GitHub")[1]
+        .split("## Connect the imported repository")[0].match(/^\d\. .+$/gm);
+    assert.deepEqual(reviewSteps(guides[2]), reviewSteps(guides[0]));
 });
 
 test("retains each lab's existing shared setup and PREL38's ARM-team placeholder", () => {

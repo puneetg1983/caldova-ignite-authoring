@@ -100,7 +100,7 @@ Use the assigned `caldova-sreagent-<suffix>`. The Web App, resource group, and t
 ## What you will accomplish
 
 1. Start a GitHub import in the background.
-2. Review the existing configuration in the sign-in context wizard: subscription, resource group, Log Analytics, and Application Insights, without changing their access scope.
+2. Review the configured resource group and connected log sources in Quickstart, without changing them.
 3. Connect the completed imported repository to the agent.
 4. Review the environment and health findings in the Getting started thread for at most **5 minutes**.
 5. Review and approve a reversible App Service health-check configuration change.
@@ -140,13 +140,14 @@ After sign-in, keep the **context wizard** open. Review configuration and connec
 
 ## Review Azure resources and telemetry before connecting GitHub
 
+**Goal:** Understand which resource group and log sources the agent uses.
+
 After sign-in, you should see the **context wizard**. If not, follow **Additional guidance > Review Azure resources and telemetry** at the end to open it.
 
-Review only in the **context wizard**. GitHub is **not connected yet**. You will connect the imported repository later in this section.
+Stay on **Quickstart** in the **context wizard**. GitHub is **not connected yet**. You will connect the imported repository later in this section.
 
-1. Click **Full setup**.
-2. Under **Azure resources**, click **Show details**. In **Resource group scope**, review the **Resource group** and **Subscription**. **Do not change these settings.**
-3. Under **Logs**, click **Show details**. Confirm **Application Insights** and **Log Analytics** both show **Connected**.
+1. Under **Azure resources**, click **Show details**. Review the configured **Resource group**. Leave it unchanged.
+2. Under **Logs**, click **Show details**. Confirm **Application Insights** and **Log Analytics** both show **Connected**.
 
 **Screenshot SRE-02: Azure resource details; subscription value redacted.**
 
@@ -155,6 +156,14 @@ Review only in the **context wizard**. GitHub is **not connected yet**. You will
 **Screenshot SRE-03: Both log providers connected.**
 
 ![Logs details with Application Insights and Log Analytics Connected](images/context-wizard/logs-connected.png)
+
+> [!Note] **Optional - explore connection options**
+>
+> Click **+** under **Azure resources** to see how you could connect a management group, subscription, or another resource group. Close or cancel without adding anything.
+>
+> Click **+** under **Logs** to explore the available log connectors. Close or cancel without adding anything.
+
+Continue to **Connect the imported repository**.
 
 ## Connect the imported repository
 
