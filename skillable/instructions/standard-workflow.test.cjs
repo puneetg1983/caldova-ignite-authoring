@@ -68,6 +68,13 @@ test("keeps pending team content explicit and enforces SRE setup dependencies", 
     assert.match(pages[3], /GitHub is \*\*not assumed to be connected\*\*/);
     assert.ok(pages[3].indexOf("Review Azure resources and telemetry") <
         pages[3].indexOf("## Connect the imported repository"));
+    assert.ok(pages[3].indexOf("## Connect the imported repository") <
+        pages[3].indexOf("## Interact with onboarding"));
+    assert.match(pages[3], /Return to the \*\*context wizard\*\* opened at SRE Agent sign-in/);
+    const onboarding = pages[3].split("## Interact with onboarding")[1]
+        .split("## Continue the SRE exercise")[0];
+    assert.match(onboarding, /continue with the SRE exercise below/);
+    assert.doesNotMatch(onboarding, /continue to the configuration review/);
     assert.match(pages[3], /confirm both the \*\*import\*\* and \*\*repository connection\*\*/);
     assert.match(source, /caldova-sreagent-<suffix>/);
 });

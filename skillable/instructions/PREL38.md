@@ -55,6 +55,8 @@ For **Temporary Access Pass (TAP)** sign-in, focus the TAP field inside the VM, 
 5. Select your assigned agent, named `caldova-sreagent-<suffix>`. The suffix is generated for your lab; use the actual full name shown.
 6. Reuse this agent throughout the lab. Do not create another agent.
 
+The context wizard opens after sign-in. Keep its tab open. In the SRE Agent module, start the repository import in a separate VM browser tab, then return to the wizard to review configuration and connect the imported repository **before onboarding**.
+
 **Screenshot placeholder START-02: SRE Agent Sign in, Azure sign-in field focus, and the assigned agent selection. Hide account-specific information and all credentials.**
 
 ## 3. Azure Portal
@@ -131,14 +133,15 @@ Use the assigned `caldova-sreagent-<suffix>` selected on Start. The Web App, res
 
 ## What you will accomplish
 
-1. Start a GitHub import in the background and connect the completed lab repository before source-code debugging.
-2. Spend at most **5 minutes** on the onboarding conversation.
-3. Review the lab subscription, resource group, Log Analytics, and Application Insights connections without changing their access scope.
-4. Run read-only discovery and review the agent's evidence.
-5. Review and approve a reversible App Service health-check configuration change.
-6. Reproduce the product-search failure, investigate its configuration cause, approve a precise fix, and verify search recovery.
-7. Create and run a recurring, read-only cost audit.
-8. Build and check a reusable live traffic-and-health report.
+1. Start a GitHub import in the background.
+2. Review the existing configuration in the sign-in context wizard: subscription, resource group, Log Analytics, and Application Insights, without changing their access scope.
+3. Connect the completed imported repository to the agent.
+4. Spend at most **5 minutes** on the onboarding conversation.
+5. Run read-only discovery and review the agent's evidence.
+6. Review and approve a reversible App Service health-check configuration change.
+7. Reproduce the product-search failure, investigate its configuration cause, approve a precise fix, and verify search recovery.
+8. Create and run a recurring, read-only cost audit.
+9. Build and check a reusable live traffic-and-health report.
 
 ## Start the GitHub import in the background
 
@@ -149,26 +152,15 @@ Use the assigned `caldova-sreagent-<suffix>` selected on Start. The Web App, res
 +++https://github.com/puneetg1983/caldova-ignite-authoring.git+++
 
 4. Under **Owner**, select the lab GitHub account. Set **Repository Name** to `caldova-ignite-authoring` and visibility to **Private**.
-5. Select **Begin import**, leave the status tab open, and continue to onboarding **without waiting**.
+5. Select **Begin import**, leave the status tab open, and return to the SRE Agent's context wizard for the configuration review **without waiting**.
 
 **Screenshot placeholder SRE-01: GitHub Importer with the exact source-repository label, lab owner, repository name, and Private visibility.**
 
-## Interact with the onboarding thread - maximum 5 minutes
-
-1. Return to the assigned SRE Agent in the VM. If the onboarding conversation is open, read it.
-2. Otherwise, in the left navigation under **Favorites**, select **Team onboarding**.
-3. If it is not listed, select **Search Threads**, enter `get to know`, and open the greeting addressed to your lab user.
-4. Read the environment summary, saved knowledge, missing connections, and proposed next steps.
-5. Reply as the on-call engineer for Caldova Retail Co. Ask a follow-up if useful, but keep the interaction read-only and do not enter personal or confidential information.
-6. At **5 minutes**, or while the agent is processing, continue to the configuration review. Return later to read its response.
-
-**Screenshot placeholder SRE-02: Favorites > Team onboarding, the Search Threads fallback, and the onboarding conversation.**
-
 ## Review Azure resources and telemetry before connecting GitHub
 
-GitHub is **not assumed to be connected**. First review Azure and telemetry; connect the imported repository afterward.
+GitHub is **not assumed to be connected**. Review the existing configuration in the context wizard first, then connect the repository you imported. Do this before the onboarding conversation.
 
-1. In the agent's Operations Hub, select **Overview**, then **Complete setup** if offered.
+1. Return to the **context wizard** opened at SRE Agent sign-in. If it is no longer open, in the agent's Operations Hub select **Overview**, then **Complete setup** if offered.
 2. Open the **Azure resources** card and review its connected scopes. Identify the assigned subscription and the resource group containing the Caldova Web App.
 3. In Azure Portal, open that subscription and resource group. Identify the Web App, its Log Analytics workspace, and its Application Insights component using the actual full resource names.
 4. Where the SRE resource-mode summary is shown, review the existing subscription **Reader** and resource-group **Privileged** entries. These are agent resource modes, not a complete list of the managed identity's Azure RBAC permissions. Do not change the entries to match an example if the lab differs.
@@ -179,9 +171,9 @@ GitHub is **not assumed to be connected**. First review Azure and telemetry; con
 
 If these documented navigation labels differ in the lab, ask the facilitator to confirm the current path rather than changing unrelated settings.
 
-**Screenshot placeholder SRE-03: Overview > Complete setup > Azure resources, with the assigned subscription/resource-group scope.**
+**Screenshot placeholder SRE-02: Sign-in context wizard and Azure resources, with the assigned subscription/resource-group scope; include the Overview > Complete setup fallback.**
 
-**Screenshot placeholder SRE-04: Builder > Connectors and the actual Log Analytics/Application Insights connection status.**
+**Screenshot placeholder SRE-03: Builder > Connectors and the actual Log Analytics/Application Insights connection status.**
 
 ## Connect the imported repository
 
@@ -195,7 +187,18 @@ If these documented navigation labels differ in the lab, ask the facilitator to 
 8. Ask: "What does the Caldova repository I just connected do, and which services does it contain?" Review the repository/tool evidence in the answer.
 9. If enterprise authorization blocks the connection, notify the facilitator and continue independent tasks. Do not use a personal account, create an unrequested token, remove another repository, or weaken permissions.
 
-**Screenshot placeholder SRE-05: Add repository, OAuth account confirmation, imported repository selection, and the ready connection.**
+**Screenshot placeholder SRE-04: Add repository, OAuth account confirmation, imported repository selection, and the ready connection.**
+
+## Interact with the onboarding thread - maximum 5 minutes
+
+1. After reviewing configuration and connecting the imported repository, return to the assigned SRE Agent in the VM. If the onboarding conversation is open, read it.
+2. Otherwise, in the left navigation under **Favorites**, select **Team onboarding**.
+3. If it is not listed, select **Search Threads**, enter `get to know`, and open the greeting addressed to your lab user.
+4. Read the environment summary, saved knowledge, missing connections, and proposed next steps.
+5. Reply as the on-call engineer for Caldova Retail Co. Ask a follow-up if useful, but keep the interaction read-only and do not enter personal or confidential information.
+6. At **5 minutes**, or while the agent is processing, continue to **First chat thread: discover the environment**. Return later to read its response.
+
+**Screenshot placeholder SRE-05: Favorites > Team onboarding, the Search Threads fallback, and the onboarding conversation.**
 
 ## First chat thread: discover the environment
 

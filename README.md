@@ -50,6 +50,9 @@ JavaScript is required. Start orders VM login, SRE Agent, then Azure Portal.
 The guides contain the full SRE activities from the respective Word manuals,
 with the requested setup corrections, explicit import/connection prerequisites,
 and named screenshot placeholders. They do not update the Word files.
+The SRE sequence is background repository import, configuration review in the
+context wizard shown at sign-in, connection of the completed imported repository,
+then onboarding (at most five minutes) and the remaining exercises.
 
 The existing shared GitHub/Copilot setup is retained for each lab. PREL38 also
 retains its ARM MCP setup and the owning team's existing placeholder. Neither
