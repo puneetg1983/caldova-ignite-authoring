@@ -100,22 +100,31 @@ After sign-in, you should see the **context wizard**. If not, follow **Additiona
 
 Review only in the **context wizard**. GitHub is **not connected yet**. You will connect the imported repository later in this section.
 
-1. Review the selected **subscription** and **resource group**.
-2. Review the existing resource access modes. **Do not change these settings.**
-3. Review the **Log Analytics** and **Application Insights** configuration.
+1. Click **Full setup**.
+2. Under **Azure resources**, click **Show details**. In **Resource group scope**, review the **Resource group** and **Subscription**. **Do not change these settings.**
+3. Under **Logs**, click **Show details**. Confirm **Application Insights** and **Log Analytics** both show **Connected**.
 
-**Screenshot placeholder: Context wizard showing the subscription, resource group, and access modes.**
+**Screenshot: Azure resource details; PREL38 example, subscription value redacted.**
 
-**Screenshot placeholder: Context wizard showing Log Analytics and Application Insights configuration.**
+![Azure resources expanded to show Resource group scope](images/context-wizard/azure-resource-scope.png)
+
+**Screenshot: Both log providers connected; PREL38 example.**
+
+![Logs details with Application Insights and Log Analytics Connected](images/context-wizard/logs-connected.png)
 
 ## Connect the imported repository
 
-1. Confirm the GitHub import is complete and its source files are visible.
-2. In the **same context wizard**, use the GitHub repository connection to sign in with the **lab GitHub account**.
-3. Select the imported repository under your lab account, not the original source repository, and save.
-4. Confirm the repository connection is ready before source-code debugging.
+1. Confirm the GitHub import is complete and its source files are visible. Copy the imported repository's URL, not the original source URL.
+2. In the **same context wizard**, under **Code**, click **+**. Select **GitHub** and paste your URL into **Repository URL**.
+3. Scroll to **Connection method**. Keep **OAuth**, then click **Sign in to GitHub**. Confirm the **lab GitHub account**, review access, and click **Authorize Azure-SRE-Agent**. When **Connected to GitHub** appears, click **Next**.
+4. Under **Add repositories**, confirm your imported repository's URL, then click **Save**.
+5. Under **Code**, click **Show details** and confirm the imported repository appears. Confirm the repository connection is ready before source-code debugging.
 
-**Screenshot placeholder: Context wizard showing the imported GitHub repository connection.**
+**Screenshot: OAuth controls and saved repository; PREL38 example, URL redacted.**
+
+![OAuth connection method and Sign in to GitHub](images/context-wizard/github-oauth.png)
+
+![Code details with one saved repository](images/context-wizard/repository-saved.png)
 
 ## Review the Getting started thread - maximum 5 minutes
 
@@ -164,10 +173,14 @@ Agent responses, repository imports, and other background activities can take ti
 
 **Wizard not open?** In the agent's Operations Hub, open **Overview > Complete setup**, if available.
 
+**Empty broader scopes?** Leave management-group and subscription scopes unchanged. Review the existing **Resource group scope** only; do not add broader access.
+
 ### Connect the imported repository
 
 - **Import still running?** Continue independent exercises and return to connect the repository before debugging.
 - **Repository already connected?** Keep it and do not add a duplicate.
+- **Organization access requested?** Leave the organization **Request** buttons untouched; this exercise uses the private repository under your lab account.
+- **Status shows a dash?** A saved repository is not proof that indexing or source-code retrieval has finished. Confirm the agent can retrieve source files before debugging; ask the facilitator if it cannot.
 - **Sign-in or connection failed?** Notify the facilitator; do not use a personal account.
 
 ### Review the Getting started thread

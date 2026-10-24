@@ -77,7 +77,7 @@ test("keeps pending team content explicit and enforces SRE setup dependencies", 
     assert.match(setup, /After sign-in, you should see the \*\*context wizard\*\*\. If not, follow \*\*Additional guidance > Review Azure resources and telemetry\*\* at the end to open it\./);
     assert.match(setup, /same context wizard/);
     assert.doesNotMatch(setup, /Azure Portal|Builder|Contributor|RBAC|Complete setup/i);
-    assert.equal((setup.match(/^\d\. /gm) || []).length, 7);
+    assert.equal((setup.match(/^\d\. /gm) || []).length, 8);
     const gettingStarted = pages[3].split("## Review the Getting started thread")[1]
         .split("## Continue the SRE exercise")[0];
     const main = gettingStarted;

@@ -9,6 +9,14 @@ const labs = [
     { name: "LAB720", duration: 25, profile: 226801, instructions: 362436, images: 1 }
 ];
 const hash = buffer => createHash("sha256").update(buffer).digest("hex");
+const instructionWords = section => section.replace(/^\*\*Screenshot.*$|^!\[.*$/gm, "")
+    .trim().split(/\s+/).length;
+const setupImages = [
+    "azure-resource-scope.png",
+    "logs-connected.png",
+    "github-oauth.png",
+    "repository-saved.png"
+].map(name => `images/context-wizard/${name}`);
 const allowedTokens = new Set([
     "@lab.VirtualMachine(Win11-Pro-Base).SelectLink",
     "@lab.VirtualMachine(Win11-Pro-Base).Username",
@@ -118,16 +126,26 @@ for (const lab of labs) {
         assert.match(review, /Review only in the \*\*context wizard\*\*/);
         assert.match(review, /After sign-in, you should see the \*\*context wizard\*\*\. If not, follow \*\*Additional guidance > Review Azure resources and telemetry\*\* at the end to open it\./);
         assert.equal((review.match(/^\d\. /gm) || []).length, 3);
-        assert.match(review, /\*\*subscription\*\* and \*\*resource group\*\*/);
-        assert.match(review, /\*\*Log Analytics\*\* and \*\*Application Insights\*\*/);
+        assert.match(review, /Click \*\*Full setup\*\*/);
+        assert.match(review, /Under \*\*Azure resources\*\*, click \*\*Show details\*\*/);
+        assert.match(review, /\*\*Resource group scope\*\*.*\*\*Resource group\*\* and \*\*Subscription\*\*/);
+        assert.match(review, /Under \*\*Logs\*\*, click \*\*Show details\*\*/);
+        assert.match(review, /\*\*Application Insights\*\* and \*\*Log Analytics\*\* both show \*\*Connected\*\*/);
         assert.match(review, /Do not change these settings/);
-        assert.ok(review.trim().split(/\s+/).length <= 130);
+        assert.ok(instructionWords(review) <= 130);
         assert.match(connection, /same context wizard/);
-        assert.equal((connection.match(/^\d\. /gm) || []).length, 4);
+        assert.equal((connection.match(/^\d\. /gm) || []).length, 5);
+        assert.match(connection, /under \*\*Code\*\*, click \*\*\+\*\*/);
+        assert.match(connection, /\*\*GitHub\*\*.*\*\*Repository URL\*\*/);
+        assert.match(connection, /\*\*OAuth\*\*.*\*\*Sign in to GitHub\*\*/);
+        assert.match(connection, /review access.*\*\*Authorize Azure-SRE-Agent\*\*/);
+        assert.match(connection, /\*\*Connected to GitHub\*\*.*\*\*Next\*\*/);
+        assert.match(connection, /Under \*\*Add repositories\*\*.*\*\*Save\*\*/);
+        assert.match(connection, /Under \*\*Code\*\*, click \*\*Show details\*\*/);
         assert.match(connection, /Confirm the repository connection is ready/);
-        assert.ok(connection.trim().split(/\s+/).length <= 160);
+        assert.ok(instructionWords(connection) <= 160);
         assert.doesNotMatch(review + connection,
-            /Azure Portal|Builder|Contributor|RBAC|managed identity|Grant permissions|Complete setup/i);
+            /Azure Portal|Builder|Contributor|RBAC|managed identity|Grant permissions|Complete setup|access modes/i);
     });
 
     test(`${lab.name}: Getting started is the main path, with guidance at the end and no repeated discovery`, () => {
@@ -142,6 +160,9 @@ for (const lab of labs) {
         assert.match(guidance, /Operations Hub.*Overview > Complete setup/);
         assert.match(guidance, /Favorites.*Team onboarding.*Search Threads/);
         assert.match(guidance, /Import still running/);
+        assert.match(guidance, /do not add broader access/);
+        assert.match(guidance, /organization \*\*Request\*\* buttons untouched/);
+        assert.match(guidance, /not proof that indexing or source-code retrieval has finished/);
         assert.doesNotMatch(source, /## First chat thread|Discover all Azure resources|continue read-only discovery|Run read-only discovery/);
         assert.match(source, /In the same Getting started thread, if its findings identified a missing health-check path/);
     });
@@ -194,14 +215,19 @@ for (const lab of labs) {
         assert.doesNotMatch(source, /temporarily borrows your own credentials|Build \+ setup|Extensions > Connectors/);
     });
 
-    test(`${lab.name}: screenshots are explicit, uniquely named placeholders rather than stale images`, () => {
-        const ids = [...source.matchAll(/^\*\*Screenshot placeholder ([A-Z]+-\d+):/gm)]
+    test(`${lab.name}: screenshot slots retain unique IDs with verified setup images and remaining placeholders`, () => {
+        const ids = [...source.matchAll(/^\*\*Screenshot(?: placeholder)? ([A-Z]+-\d+):/gm)]
             .map(match => match[1]);
         assert.equal(ids.length, lab.name === "PREL38" ? 18 : 17);
         assert.equal(new Set(ids).size, ids.length);
         assert.deepEqual(ids.filter(id => id.startsWith("SRE-")),
             Array.from({ length: 13 }, (_, i) => `SRE-${String(i + 1).padStart(2, "0")}`));
-        assert.doesNotMatch(source, /!IMAGE\[|!\[[^\]]*\]\(/);
+        assert.equal((source.match(/^\*\*Screenshot placeholder /gm) || []).length,
+            lab.name === "PREL38" ? 15 : 14);
+        assert.deepEqual([...source.matchAll(/!\[[^\]]+\]\(([^)]+)\)/g)].map(match => match[1]),
+            setupImages);
+        assert.doesNotMatch(source, /!IMAGE\[|User1-\d+|[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}/i);
+        if (lab.name === "LAB720") assert.match(source, /PREL38 example/);
         assert.match(source, /Do not show passwords or TAP values/);
     });
 
@@ -225,6 +251,23 @@ for (const lab of labs) {
             ["content.md", `instructions${lab.instructions}`, "manifest.json"].sort());
     });
 }
+
+test("setup assets are real cropped PNGs and all guides use the same verified click sequence", () => {
+    for (const image of setupImages) {
+        const png = readFileSync(join(__dirname, ...image.split("/")));
+        assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+        assert.ok(png.readUInt32BE(16) >= 600, image);
+        assert.ok(png.readUInt32BE(20) >= 250, image);
+        assert.ok(png.readUInt32BE(16) < 1779, `Uncropped capture: ${image}`);
+    }
+    assert.deepEqual(readdirSync(join(__dirname, "images", "context-wizard")).sort(),
+        setupImages.map(path => path.split("/").at(-1)).sort());
+    const guides = ["standard-workflow", "PREL38", "LAB720"].map(name =>
+        readFileSync(join(__dirname, `${name}.md`), "utf8"));
+    const steps = source => source.split("## Review Azure resources and telemetry before connecting GitHub")[1]
+        .split("## Review the Getting started thread")[0].match(/^\d\. .+$/gm);
+    for (const guide of guides.slice(1)) assert.deepEqual(steps(guide), steps(guides[0]));
+});
 
 test("retains each lab's existing shared setup and PREL38's ARM-team placeholder", () => {
     const prel = readFileSync(join(__dirname, "PREL38.md"), "utf8");
