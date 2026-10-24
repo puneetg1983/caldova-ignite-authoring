@@ -12,6 +12,27 @@ review daily sales, and manage checkout and recommendations.
   backend's JSON endpoints.
 - Both are hosted together as a single ASP.NET Core app.
 
+## Skillable deployment sources
+
+| Lab profile | Cloud template | Versioned source |
+|-------------|----------------|------------------|
+| [LAB720 (226801)](https://labondemand.com/LabProfile/226801) | [6961](https://labondemand.com/CloudTemplate/6961) | `skillable/LAB720-Caldova-WebAppP1v3-with-SREAgent.json` |
+| PREL38 | [6969](https://labondemand.com/CloudTemplate/6969) | `skillable/Caldova-WebAppP1v3-with-SREAgent-MI.json` |
+
+LAB720's source is based on its own served template, not PREL38's template
+or the generic files in `skillable/`. Preserve its profile-specific settings.
+Template 6961's Used By list contained only LAB720 when updated on 2026-10-24;
+check that list again before making future changes.
+
+For future LAB720 deployments, the SRE Agent's user-assigned managed identity
+receives Azure Contributor at the lab subscription scope. The deployment
+principal therefore needs permission to create subscription-level role
+assignments. Telemetry roles, the managed resource group, Review/Low agent
+settings, and the separate learner-access lifecycle script are unchanged.
+Agent Reader/Privileged resource modes are distinct from Azure RBAC.
+Updating this template does not grant roles in existing lab instances or
+publish the DOCX lab instructions to Skillable.
+
 ## Running locally
 
 ```powershell
