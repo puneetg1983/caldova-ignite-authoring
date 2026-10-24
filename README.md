@@ -54,8 +54,12 @@ The SRE sequence is background repository import, configuration review in the
 context wizard shown at sign-in, connection of the completed imported repository,
 then **Done and go to agent**, the Getting started thread (at most five minutes),
 and the remaining exercises. Environment/health findings are reviewed in that
-thread, not repeated as a separate discovery exercise. Optional thread-finding
-and wizard-navigation fallbacks appear after the main steps under **Need guidance?**.
+thread, not repeated as a separate discovery exercise. A short note at the top
+points learners to **Additional guidance** at the end or to the facilitator.
+Optional help is collected there by section, including sign-in and browser
+fallbacks, thread/wizard navigation, and task/report troubleshooting, rather
+than interrupting the main instructions. Required approval and verification
+steps stay in the main flow.
 Configuration review and repository connection stay inside the SRE Agent context
 wizard; the review does not require an Azure Portal or Builder detour.
 
