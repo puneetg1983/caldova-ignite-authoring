@@ -47,7 +47,7 @@ For **Temporary Access Pass (TAP)** sign-in, focus the TAP field inside the VM, 
 4. Select your assigned agent, named `caldova-sreagent-<suffix>`. Use the full name displayed in your lab; `<suffix>` represents a generated suffix, not text to type.
 5. Reuse this selected agent throughout the lab. Do not create another agent.
 
-After sign-in, keep the **context wizard** open. Use it to review configuration and connect the imported repository before onboarding.
+After sign-in, keep the **context wizard** open. Review configuration and connect the imported repository before selecting **Done and go to agent**.
 
 **Screenshot placeholder: SRE Agent Sign in button and agent selection with an example generated suffix; hide all credentials.**
 
@@ -120,26 +120,31 @@ Review only in the **context wizard**. GitHub is **not connected yet**. You will
 
 1. Confirm the GitHub import is complete and its source files are visible.
 2. In the **same context wizard**, use the GitHub repository connection to sign in with the **lab GitHub account**.
-3. Select the imported repository under your lab account, not the original source repository, and save. If it is already connected, keep it and do not add a duplicate.
+3. Select the imported repository under your lab account, not the original source repository, and save.
 4. Confirm the repository connection is ready before source-code debugging.
-
-If import is still running, continue read-only discovery and return here later. If sign-in or connection fails, notify the facilitator; do not use a personal account.
 
 **Screenshot placeholder: Context wizard showing the imported GitHub repository connection.**
 
-## Interact with onboarding - maximum 5 minutes
+## Review the Getting started thread - maximum 5 minutes
 
-1. After reviewing configuration and connecting the imported repository, return to your selected SRE Agent in the VM.
-2. If the onboarding conversation is open, read it. Otherwise, select **Team onboarding** under **Favorites**.
-3. If it is not listed, select **Search Threads**, search for `get to know`, and open the greeting addressed to your lab user.
-4. Review the environment summary and any missing connections. Reply as the on-call engineer for Caldova Retail Co.; do not enter personal or confidential information.
-5. Keep the interaction read-only. At **5 minutes**, or while the agent is processing, continue with the SRE exercise below. Return later to read the response.
+1. In the context wizard, select **Done and go to agent**. The **Getting started** thread opens.
+2. Read its environment summary and the Web App's health and configuration findings.
+3. Reply as Caldova's on-call engineer and ask a follow-up if useful. Keep it read-only; do not enter personal or confidential information.
+4. At **5 minutes**, or while the agent is processing, continue with the SRE exercise below. Return later to read the response.
 
-**Screenshot placeholder: Favorites, Team onboarding, Search Threads, and the read-only conversation.**
+**Screenshot placeholder: Done and go to agent and the Getting started thread's environment and health findings.**
+
+### Need guidance?
+
+- **Wizard closed?** In the agent's Operations Hub, open **Overview > Complete setup**, if available.
+- **Thread not open?** Under **Favorites**, select **Team onboarding**. If absent, use **Search Threads**, search `get to know`, and open the greeting for your lab user.
+- **Import still running?** Continue independent exercises and return to connect the repository before debugging.
+- **Repository already connected?** Keep it and do not add a duplicate.
+- **Sign-in or connection failed?** Notify the facilitator; do not use a personal account.
 
 ## Continue the SRE exercise
 
-Continue with the approved SRE exercise for your session: discovery, reviewing and approving a reversible Web App configuration change, debugging, and the scheduled-task/live-report activities appropriate to its time budget.
+Continue with the approved SRE exercise for your session: reviewing and approving a reversible Web App configuration change, debugging, and the scheduled-task/live-report activities appropriate to its time budget. Use the findings already provided in the Getting started thread; do not repeat discovery in a new chat.
 
 Before source-code debugging, confirm both the **import** and **repository connection** are ready. Before a live report, confirm its required telemetry connector is connected and the Web App emits telemetry.
 

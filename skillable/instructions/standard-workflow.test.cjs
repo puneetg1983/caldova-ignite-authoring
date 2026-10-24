@@ -70,17 +70,23 @@ test("keeps pending team content explicit and enforces SRE setup dependencies", 
     assert.ok(pages[3].indexOf("Review Azure resources and telemetry") <
         pages[3].indexOf("## Connect the imported repository"));
     assert.ok(pages[3].indexOf("## Connect the imported repository") <
-        pages[3].indexOf("## Interact with onboarding"));
+        pages[3].indexOf("## Review the Getting started thread"));
     const setup = pages[3].split("## Review Azure resources and telemetry before connecting GitHub")[1]
-        .split("## Interact with onboarding")[0];
+        .split("## Review the Getting started thread")[0];
     assert.match(setup, /Review only in the \*\*context wizard\*\*/);
     assert.match(setup, /same context wizard/);
     assert.doesNotMatch(setup, /Azure Portal|Builder|Contributor|RBAC|Complete setup/i);
     assert.equal((setup.match(/^\d\. /gm) || []).length, 7);
-    const onboarding = pages[3].split("## Interact with onboarding")[1]
+    const gettingStarted = pages[3].split("## Review the Getting started thread")[1]
         .split("## Continue the SRE exercise")[0];
-    assert.match(onboarding, /continue with the SRE exercise below/);
-    assert.doesNotMatch(onboarding, /continue to the configuration review/);
+    const [main, guidance] = gettingStarted.split("### Need guidance?");
+    assert.match(main, /select \*\*Done and go to agent\*\*\. The \*\*Getting started\*\* thread opens/);
+    assert.match(main, /continue with the SRE exercise below/);
+    assert.equal((main.match(/^\d\. /gm) || []).length, 4);
+    assert.doesNotMatch(main, /Favorites|Search Threads|Operations Hub|continue to the configuration review/);
+    assert.match(guidance, /Operations Hub/);
+    assert.match(guidance, /Search Threads/);
+    assert.doesNotMatch(source, /## First chat thread|Discover all Azure resources|continue read-only discovery/);
     assert.match(pages[3], /confirm both the \*\*import\*\* and \*\*repository connection\*\*/);
     assert.match(source, /caldova-sreagent-<suffix>/);
 });
