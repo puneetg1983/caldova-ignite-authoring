@@ -116,11 +116,12 @@ for (const lab of labs) {
         const connection = pages[3].split("## Connect the imported repository")[1]
             .split("## Review the Getting started thread")[0];
         assert.match(review, /Review only in the \*\*context wizard\*\*/);
+        assert.match(review, /After sign-in, you should see the \*\*context wizard\*\*\. If not, follow \*\*Additional guidance > Review Azure resources and telemetry\*\* at the end to open it\./);
         assert.equal((review.match(/^\d\. /gm) || []).length, 3);
         assert.match(review, /\*\*subscription\*\* and \*\*resource group\*\*/);
         assert.match(review, /\*\*Log Analytics\*\* and \*\*Application Insights\*\*/);
         assert.match(review, /Do not change these settings/);
-        assert.ok(review.trim().split(/\s+/).length <= 100);
+        assert.ok(review.trim().split(/\s+/).length <= 130);
         assert.match(connection, /same context wizard/);
         assert.equal((connection.match(/^\d\. /gm) || []).length, 4);
         assert.match(connection, /Confirm the repository connection is ready/);
