@@ -47,7 +47,7 @@ test("PREL38: starts with an in-VM SRE URL and delegates VM/Azure prerequisites 
 });
 
 test("PREL38: all chat prompts use native Copy and Type Text, not static fences", () => {
-    assert.equal(prompts.length, 10);
+    assert.equal(prompts.length, 9);
     assert.doesNotMatch(source, /^```text$/m);
     assert.equal((source.match(/^\+{4}/gm) || []).length, prompts.length);
     for (const line of source.split("\n").filter(line => line.startsWith("+++"))) {
@@ -66,7 +66,6 @@ test("PREL38: all chat prompts use native Copy and Type Text, not static fences"
     }
     assert.doesNotMatch(source, /use \*\*Copy & Type Text\*\*/i);
     assert.ok(prompts.includes("List the configuration of the Caldova App Service."));
-    assert.ok(prompts.includes("What is the Caldova web app URL?"));
 });
 
 test("PREL38: Quickstart review and background import precede repository connection", () => {
@@ -153,20 +152,27 @@ test("PREL38: debugging uses one natural prompt and verifies the original sympto
     assert.doesNotMatch(debug, /repository|indexing|retrieve source files/i);
     assert.match(debug, /^1\. Open a new tab in the \*\*VM browser\*\*/m);
     assert.match(debug, /Open a new tab in the \*\*VM browser\*\*/);
-    assert.ok(debug.includes("+++@lab.Variable(CaldovaWebAppUrl)+++"));
-    assert.match(debug, /Copy\/paste or type your app URL below, or click it to type automatically/);
+    assert.ok(debug.includes("+++https://portal.azure.com+++"));
+    assert.match(debug, /Copy\/paste or type the Azure Portal URL below, or click it to type automatically/);
+    assert.match(debug, /\*\*Resource groups\*\*.*resource group assigned to this lab/);
+    assert.match(debug, /\*\*caldova-webapp-\.\.\.\*\* with type \*\*App Service\*\*, not the App Service plan/);
+    assert.match(debug, /\*\*Overview\*\*.*\*\*Default domain\*\*.*\*\*Browse\*\*/);
+    assert.match(debug, /copy the domain and paste or type `https:\/\/`/);
+    assert.match(debug, /Example only: `https:\/\/caldova-webapp-<unique-suffix>\.azurewebsites\.net`/);
+    assert.match(debug, /Use the complete \*\*Default domain\*\* shown for your app, not this example/);
     assert.match(debug, /press \*\*Enter inside the VM\*\*/i);
     assert.doesNotMatch(debug, /configuration thread|Default Hostname|followed by that hostname/);
-    assert.equal((debug.match(/^\d\. /gm) || []).length, 5);
+    assert.equal((debug.match(/^\d\. /gm) || []).length, 7);
     assert.match(debug, /Confirm matching products appear and catalog browsing still works/);
     assert.match(debug, /`jacket`.*\*\*Search\*\*.*\*\*500 - Search failed\*\*/);
     assert.ok(prompts.includes("Product search fails with HTTP 500, but browsing works. Find out why, fix the running app, and check that searching for jacket returns products."));
     assert.equal((debug.match(/^\+{4}/gm) || []).length, 1);
     assert.match(debug, /repeat the same `jacket` search/);
     assert.match(debug, /catalog browsing still works/);
-    assert.doesNotMatch(debug, /Review mode|Catalog__AsOfDate|Default domain/);
-    assert.match(guidance, /automated URL setup needs correction/);
-    assert.match(guidance, /This workaround does not replace the lab's automatic URL setup/);
+    assert.doesNotMatch(debug, /Review mode|Catalog__AsOfDate/);
+    assert.match(guidance, /assigned subscription from \*\*Resources\*\*/);
+    assert.match(guidance, /do not create resources or change permissions/);
+    assert.doesNotMatch(source, /@lab\.Variable\(CaldovaWebAppUrl\)|automated URL setup|automatic URL setup|What is the Caldova web app URL\?/);
     assert.match(guidance, /A source-code pull request is not a deployment/);
     assert.match(guidance, /Returning an empty result set is not recovery/);
     assert.doesNotMatch(source, /@lab\.CloudResourceTemplate.*Outputs|@lab\.Variable\(CaldovaAppUrl\)/);

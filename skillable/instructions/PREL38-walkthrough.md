@@ -255,6 +255,15 @@ unpublished. Do not rerun unrelated provisioning actions or replace the
 learner's lab. No new build or screenshot of successful URL delivery is claimed.
 
 These are configuration-verification timestamps, not learner-action timings.
+The user subsequently approved manual URL discovery through the web resource.
+The PREL38 review draft now directs learners to **Azure Portal > Resource groups >
+assigned resource group > caldova-webapp-... (App Service) > Overview**, then
+**Default domain / Browse**. It includes a clearly marked example, preserves
+regional hostname components, and removes the unresolved automatic-variable
+control and contradictory troubleshooting text. The publisher remains disabled.
+This revised manual path has not been rerun, retimed, or published to the live
+guide; it does not change the historical measurements below.
+
 The historical CSV, screenshot manifest, operator durations, and human estimates
 remain unchanged.
 

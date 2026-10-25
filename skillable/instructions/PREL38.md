@@ -196,20 +196,25 @@ The Health check configuration exercise is optional; see **Additional guidance**
 
 **Goal:** Investigate the search problem, fix it, and confirm customer-visible recovery.
 
-1. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type your app URL below, or click it to type automatically. Then press **Enter inside the VM**:
+1. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type the Azure Portal URL below, or click it to type automatically. Then press **Enter inside the VM**:
 
-+++@lab.Variable(CaldovaWebAppUrl)+++
++++https://portal.azure.com+++
 
-2. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
+2. In Azure Portal, select **Resource groups** and open the resource group assigned to this lab, shown in **Resources**. In its resource list, open **caldova-webapp-...** with type **App Service**, not the App Service plan.
+3. On the web app's **Overview** page, find **Default domain**. Select **Browse** to open the app, or copy the domain and paste or type `https://` followed by that domain into a new VM browser tab, then press **Enter inside the VM**. Keep the SRE Agent tab open.
+
+Example only: `https://caldova-webapp-<unique-suffix>.azurewebsites.net`. Your suffix will differ, and Azure may include extra regional hostname components. Use the complete **Default domain** shown for your app, not this example.
+
+4. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
 
 ![Product-name search fails with HTTP 500](images/prel38-walkthrough/search-failure.png)
 
-3. Return to the SRE Agent tab and select **New chat**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+5. Return to the SRE Agent tab and select **New chat**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Product search fails with HTTP 500, but browsing works. Find out why, fix the running app, and check that searching for jacket returns products.++++
 
-4. Send the message, follow the investigation, and answer the agent's questions.
-5. Return to the app tab and repeat the same `jacket` search. Confirm matching products appear and catalog browsing still works.
+6. Send the message, follow the investigation, and answer the agent's questions.
+7. Return to the app tab and repeat the same `jacket` search. Confirm matching products appear and catalog browsing still works.
 
 ## Schedule a weekly cost review
 
@@ -288,15 +293,11 @@ Under **Favorites**, select **Team onboarding**. If absent, select **Search Thre
 
 ### Inquire and configure Web App
 
-Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the optional Health check change. Your app URL is provided directly in **Debug the product-search failure**.
+Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the optional Health check change. Find your app URL in Azure Portal using the steps in **Debug the product-search failure**.
 
 ### Debug the product-search failure
 
-**App URL blank or showing an unresolved variable?** Tell the facilitator that the automated URL setup needs correction. As a temporary workaround while it is fixed, return to the configuration thread and select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
-
-++++What is the Caldova web app URL?++++
-
-Open the returned app URL in the VM browser. If needed, open the assigned Web App in Azure Portal and select **Browse**. This workaround does not replace the lab's automatic URL setup.
+**Cannot find the web app?** Confirm Azure Portal is using the lab's Azure account and assigned subscription from **Resources**, then reopen the assigned resource group and clear resource-list filters. Look for **caldova-webapp-...** with type **App Service**. If it is absent or access is denied, ask the facilitator; do not create resources or change permissions. If the app does not open, copy its complete **Default domain** from **Overview** and try the HTTPS address in the VM browser. Do not use the example URL or another learner's hostname.
 
 If search already works, tell the facilitator; do not break the app yourself. Verify recovery by repeating the search in the app.
 

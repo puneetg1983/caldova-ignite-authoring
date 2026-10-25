@@ -238,11 +238,13 @@ corrected script saved in that disabled action, with all other profile fields
 unchanged. A proposed new verification activity was cancelled without saving;
 no new activity or instruction controls were published.
 
-Do not enable the publisher or publish the URL-only correction until a supported
-live check establishes the actual resolved HTTPS URL and native typing opens
-that app inside the VM. No replacement lab was launched. The broader review
-draft remains unpublished, and the troubleshooting lookup is not a substitute
-for automatic URL delivery.
+The current PREL38 review draft uses the subsequently user-approved manual
+route instead: **Azure Portal > Resource groups > assigned resource group >
+caldova-webapp-... (App Service) > Overview > Default domain / Browse**. Its URL
+example is illustrative only; learners use their app's complete default domain.
+This path does not depend on the disabled publisher. Do not enable that action
+without a successful supported runtime check. No replacement lab was launched,
+and the broader review draft remains unpublished.
 
 ### Facilitator preparation: PowerPoint and Azure MCP in the VM
 
