@@ -9,38 +9,26 @@ Do not enable GitHub sync or change Resources, themes, infrastructure or permiss
 
 # Start
 
-Sign in to the lab VM and prepare the shared tools used in this lab.
+Open your assigned SRE Agent. VM access and Azure sign-in details are already provided in **Resources**.
 
 > [!Note] Need help? See **Additional guidance** at the end, grouped by section, or ask the facilitator.
 
-## 1. Sign in to the lab VM
+## 1. Open Azure SRE Agent
 
-1. Select the lab VM: @lab.VirtualMachine(Win11-Pro-Base).SelectLink.
-2. If Windows shows a lock screen, select @lab.CtrlAltDelete.
-3. Click the username field **inside the VM**, then click the VM username below.
-4. Click the password field **inside the VM**, then click the VM password below.
-5. Complete Windows sign-in and open a browser **inside the VM**.
+**Goal:** Open the SRE portal and select the agent assigned to your lab.
 
-| Field | Click to type into the focused VM field |
-| --- | --- |
-| VM username | +++@lab.VirtualMachine(Win11-Pro-Base).Username+++ |
-| VM password | +++@lab.VirtualMachine(Win11-Pro-Base).Password+++ |
+1. Open **Microsoft Edge inside the lab VM** and click its address bar. Use **Type Text**:
 
-<!-- START-01: Windows sign-in and field focus; never capture passwords or TAP values. -->
++++https://sre.azure.com+++
 
-## 2. Azure Portal
+2. Press **Enter inside the VM**, then select **Sign in**. If already signed in with the lab Azure account, continue to agent selection.
+3. Use the **Azure account** in **Resources > Azure Portal**, not the VM account. At **Temporary Access Pass**, use the **TAP** control in Resources.
+4. Select your assigned `caldova-sreagent-<suffix>` using its full actual name. Reuse this agent throughout the lab; do not create another.
+5. You should see **More context. Better investigations.** with **Quickstart** selected. Keep this **context wizard** open. Review configuration and connect the imported repository in the SRE Agent module before selecting **Done and go to agent**.
 
-**Goal:** Sign in to Azure with your lab account.
+![Context wizard landing view with Quickstart selected, Code, and Logs](images/context-wizard/overview.png)
 
-To open the portal inside the VM, use:
-
-@[Open Azure Portal in the VM](`Start-Process msedge.exe -ArgumentList 'https://portal.azure.com/#home'`){PowerShell visible}
-
-1. In **Resources > Azure Portal**, use the lab Azure username, not the VM username. Focus the username field inside the VM before clicking the value.
-2. At **Temporary Access Pass**, focus the field inside the VM and use the **TAP** control in Resources.
-3. Confirm you are using the lab account and subscription, not a personal account.
-
-<!-- START-03: Azure Portal in the VM; exclude credentials and account details. -->
+<!-- SRE-00: SRE sign-in and agent selection; exclude account details and credentials. -->
 
 ## GitHub and Copilot
 
@@ -110,22 +98,7 @@ Use the assigned `caldova-sreagent-<suffix>`. The Web App, resource group, and t
 8. Create a live report with a dependency-health graph, traffic charts, versions, and sharing.
 9. Review the agent's thread-level consumption and learn how to control its active-flow AAU budget.
 
-## Sign in to Azure SRE Agent
-
-**Goal:** Open your assigned agent using the lab Azure account.
-
-With Windows signed in and the lab VM selected, use:
-
-@[Open Azure SRE Agent in the VM](`Start-Process msedge.exe -ArgumentList 'https://sre.azure.com'`){PowerShell visible}
-
-1. Select **Sign in**. If already signed in with the lab Azure account, continue to agent selection.
-2. Open **Resources > Azure Portal**. Focus the username field inside the VM, then click the lab Azure username.
-3. At **Temporary Access Pass**, focus the field inside the VM and use the **TAP** control in Resources. Return to **Instructions** afterward.
-4. Select your assigned `caldova-sreagent-<suffix>` using its full actual name. Reuse this agent throughout the lab; do not create another.
-
-After sign-in, keep the **context wizard** open. Review configuration and connect the imported repository before selecting **Done and go to agent**.
-
-<!-- SRE-00: SRE sign-in and agent selection; exclude account details and credentials. -->
+Return to the SRE Agent tab opened on Start. Keep the **context wizard** open for the review and repository connection below.
 
 ## Start the GitHub import in the background
 
@@ -140,7 +113,9 @@ After sign-in, keep the **context wizard** open. Review configuration and connec
 4. Under **Owner**, select the lab GitHub account. Set **Repository Name** to `caldova-ignite-authoring` and visibility to **Private**.
 5. Select **Begin import**, leave the status tab open, and return to the SRE Agent's context wizard for the configuration review **without waiting**.
 
-<!-- SRE-01: Importer fields and Private visibility; redact account details. -->
+![GitHub import destination fields with the lab account masked and Private selected](images/github-import/destination.png)
+
+![GitHub preparing the new repository while the import runs in the background](images/github-import/progress.png)
 
 ## Review Azure resources and telemetry before connecting GitHub
 
@@ -277,11 +252,11 @@ Confirm search works, review the cost findings and PowerPoint, inspect the live 
 
 Use the guidance for your current section, or ask the facilitator.
 
-### Sign-in and VM browser
+### Open Azure SRE Agent
 
 Focus the destination field **inside the VM** before using **Copy & Type Text**, and keep it focused until typing finishes. Then select **Send** or press **Enter** as instructed. Use **Resources > Azure Portal** for Azure sign-in details, not the VM account.
 
-**Browser did not open?** Focus the VM browser's address bar, use +++https://portal.azure.com/#home+++ or +++https://sre.azure.com+++, and press **Enter inside the VM**. If Type Text also fails, type the URL manually. Do not change VM settings or permissions.
+**Type Text did not work?** Type `https://sre.azure.com` manually in the VM browser's address bar, then press **Enter inside the VM**. Do not change VM settings or permissions.
 
 **Password requested instead of TAP?** Use the Azure password in **Resources > Azure Portal**, not the VM password.
 

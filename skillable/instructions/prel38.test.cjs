@@ -20,24 +20,29 @@ test("PREL38: identity and four native pages remain; authoring labels are hidden
         ["Start", "Modernization", "ARM/Azure Copilot", "SRE Agent"]);
     assert.doesNotMatch(visible, /Screenshot placeholder|Authoring placeholder|STEVEN TODO|UNPUBLISHED|SRE lab duration:|No new per-exercise|maximum 5 minutes/);
     assert.match(pages[0], /Need help\? See \*\*Additional guidance\*\* at the end/);
-    assert.doesNotMatch(pages[0], /Open Azure SRE Agent/);
-    assert.match(sre, /## Sign in to Azure SRE Agent/);
+    assert.equal(pages[0].match(/^## (.+)$/m)?.[1], "1. Open Azure SRE Agent");
+    assert.doesNotMatch(source, /## (?:\d\. )?Sign in to the lab VM|## (?:\d\. )?Azure Portal/);
+    assert.doesNotMatch(sre, /## Sign in to Azure SRE Agent/);
+    assert.match(sre, /Return to the SRE Agent tab opened on Start/);
 });
 
-test("PREL38: sign-in retains runtime VM credentials and TAP-first Azure flow", () => {
-    for (const field of ["Username", "Password"]) {
-        assert.ok(source.includes(`+++@lab.VirtualMachine(Win11-Pro-Base).${field}+++`));
-    }
-    assert.match(source, /@lab.CtrlAltDelete/);
-    assert.match(source, /At \*\*Temporary Access Pass\*\*.*\*\*TAP\*\*/);
+test("PREL38: starts with an in-VM SRE URL and delegates VM/Azure prerequisites to Resources", () => {
+    assert.match(pages[0], /VM access and Azure sign-in details are already provided in \*\*Resources\*\*/);
+    assert.match(pages[0], /\*\*Microsoft Edge inside the lab VM\*\*.*address bar/);
+    assert.ok(pages[0].includes("+++https://sre.azure.com+++"));
+    assert.match(pages[0], /Press \*\*Enter inside the VM\*\*/);
+    assert.match(pages[0], /\*\*Azure account\*\* in \*\*Resources > Azure Portal\*\*, not the VM account/);
+    assert.match(pages[0], /At \*\*Temporary Access Pass\*\*, use the \*\*TAP\*\* control in Resources/);
+    assert.match(pages[0], /\*\*More context\. Better investigations\.\*\* with \*\*Quickstart\*\* selected/);
+    assert.match(pages[0], /Keep this \*\*context wizard\*\* open/);
+    assert.ok(pages[0].includes("images/context-wizard/overview.png"));
+    assert.doesNotMatch(source, /@lab\.VirtualMachine|@lab\.CtrlAltDelete|VM username \||VM password \|/);
     assert.doesNotMatch(source, /Azure password \||@lab\.CloudPortalCredential|@lab\.[^\s+]*TAP/i);
     assert.match(guidance, /Password requested instead of TAP/);
     assert.match(guidance, /Focus the destination field \*\*inside the VM\*\*/);
     assert.match(guidance, /keep it focused until typing finishes/);
-    for (const url of ["https://sre.azure.com", "https://portal.azure.com/#home"]) {
-        assert.ok(source.includes(`+++${url}+++`));
-    }
-    assert.match(guidance, /type the URL manually/);
+    assert.doesNotMatch(source, /https:\/\/portal\.azure\.com\/#home|Start-Process msedge/);
+    assert.match(guidance, /Type `https:\/\/sre\.azure\.com` manually/);
 });
 
 test("PREL38: all chat prompts use native Copy and Type Text, not static fences", () => {
@@ -83,6 +88,21 @@ test("PREL38: OAuth uses the imported lab repository and retains source-readines
     assert.match(connection, /Replace the example username/);
     assert.match(connection, /Confirm the repository connection is ready/);
     assert.doesNotMatch(connection, /Builder|Azure Portal/);
+});
+
+test("PREL38: background import has destination and progress screenshots", () => {
+    const importing = section("Start the GitHub import in the background");
+    assert.match(importing, /Under \*\*Owner\*\*, select the lab GitHub account/);
+    assert.match(importing, /visibility to \*\*Private\*\*/);
+    assert.match(importing, /\*\*Begin import\*\*.*without waiting/);
+    for (const file of ["destination.png", "progress.png"]) {
+        const path = `images/github-import/${file}`;
+        assert.ok(importing.includes(path), path);
+        const png = readFileSync(join(__dirname, ...path.split("/")));
+        assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+        assert.ok(png.readUInt32BE(16) >= 600 && png.readUInt32BE(16) < 1779, path);
+        assert.ok(png.readUInt32BE(20) >= 250, path);
+    }
 });
 
 test("PREL38: Getting started has its time guidance in a note, not the heading", () => {

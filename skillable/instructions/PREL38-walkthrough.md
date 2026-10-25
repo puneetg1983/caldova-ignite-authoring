@@ -168,6 +168,12 @@ Public screenshots are crops of actual captures, not mockups. Their manifest rec
 
 The subsequent learner-guide revision explicitly starts configuration in **New chat**, separate from Getting started. This matches where the configuration inquiry actually ran during the original trial; it does not require another discovery exercise.
 
+The section-by-section review subsequently removed duplicated Windows and Azure Portal sign-in instructions, which are already available in Resources. Start now begins with opening `https://sre.azure.com` inside the VM and selecting the assigned agent. This revised entry path has not been rerun or timed; there is no sanitized initial sign-in capture in the evidence set.
+
+The user supplied a context-wizard landing screenshot during that review. A header-free crop is now used in the opening section to identify **More context. Better investigations.** and **Quickstart**. This is user-provided overview evidence, separate from the original 19 timed-walkthrough screenshots and four detail captures; it does not show the sign-in sequence.
+
+The background-import section now includes two cropped screenshots from the earlier 2026-10-24 setup: destination fields with Private selected, and the import-progress screen. The destination account name is masked. These are not new captures or timed-trial records; the original screenshot manifest and action timings remain unchanged.
+
 The guide now also includes a required thread-level AAU consumption/budget review and optional skill, custom-agent, incident-source, and response-plan setup. These additions are based on the product documentation, **not a new live walkthrough**. Their UI flows, screenshots, active time, and end-to-end wait time have not been measured in this trial. The original 199-action timing baseline, 226-record CSV, 19 evidence screenshots, and human estimates above have not been rewritten to include them. The expanded guide contains nine chat prompts; the earlier seven-prompt publication evidence refers to the measured revision, not this expansion.
 
 AAU allocation changes, incident-source connections, custom skills/agents, and response plans were not applied to the running agent during this revision. No PowerPoint/Azure MCP installation, VM image change, lifecycle action, or new lab launch was performed. Facilitator preparation choices are documented in the repository README. The earlier live Skillable publication remains the last runtime-verified revision; the expanded source needs a separate supported publication and runtime check.

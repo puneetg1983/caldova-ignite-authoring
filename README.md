@@ -46,10 +46,12 @@ workflow. Saving or merging a file here does not change a live lab.
 
 The working guides use native Skillable Markdown with this page order:
 **Start -> Modernization -> ARM/Azure Copilot -> SRE Agent**. No custom theme or
-JavaScript is required. PREL38 keeps VM, Azure Portal, and shared GitHub/Copilot
-setup on Start; Azure SRE Agent sign-in belongs on the SRE Agent page. Its Azure
-sign-in steps use Temporary Access Pass (TAP) from Resources by default, with
-password guidance at the end and no inline Azure credential table.
+JavaScript is required. PREL38 now begins with opening `https://sre.azure.com`
+inside the VM and selecting the assigned agent. VM and Azure Portal sign-in
+instructions are delegated to Resources instead of repeated in the guide.
+Shared GitHub/Copilot setup remains on Start. SRE sign-in uses Temporary Access
+Pass (TAP) from Resources by default, with password guidance at the end and no
+inline credential table or duplicate sign-in section on the final SRE page.
 LAB720 and the shared reference retain their previous setup until reviewed.
 The guides contain the SRE activities with the requested setup corrections and
 explicit import/connection prerequisites. PREL38 has been revised and exercised
@@ -76,7 +78,7 @@ Repository setup uses **Code -> + -> GitHub**,
 the imported repository URL, **OAuth -> Sign in to GitHub**, consent,
 **Next -> Save**, and **Code -> Show details** to verify the saved entry.
 
-The four images in `skillable/instructions/images/context-wizard/` are cropped
+The four detail images in `skillable/instructions/images/context-wizard/` are cropped
 from the existing authorized PREL38 learner VM on 2026-10-24. Browser chrome,
 account headers, and credentials are excluded; the subscription value and
 saved repository URL are masked in black. The import completed with source files
@@ -85,6 +87,17 @@ and the saved repository survived a reload. Its Status cell showed a dash;
 this does not establish completed indexing or source-code retrieval.
 LAB720 reuses explicitly labelled PREL38 examples and still needs its own
 runtime check before publication.
+
+The separate `overview.png` is cropped from the user's context-wizard screenshot
+provided on 2026-10-25. It shows **More context. Better investigations.**,
+**Quickstart**, the unconnected Code card, and part of Logs. Its account/agent
+header is excluded. It illustrates the opening section, not a new agent-side
+capture or evidence that fresh sign-in was rerun.
+
+The two images in `skillable/instructions/images/github-import/` show the
+destination fields and import progress from the earlier 2026-10-24 setup.
+Browser chrome and account headers are excluded, and the destination account
+name is masked. They are not new captures or part of the timed trial.
 
 The [PREL38 walkthrough](skillable/instructions/PREL38-walkthrough.md) records
 the actual actions, UTC timings, cropped screenshots, gaps, and separately
