@@ -41,9 +41,14 @@ test("PREL38: sign-in retains runtime VM credentials and TAP-first Azure flow", 
 });
 
 test("PREL38: all chat prompts use native Copy and Type Text, not static fences", () => {
-    assert.equal(prompts.length, 7);
+    assert.equal(prompts.length, 9);
     assert.doesNotMatch(source, /^```text$/m);
     assert.equal((source.match(/^\+{4}/gm) || []).length, prompts.length);
+    for (const line of source.split("\n").filter(line => line.startsWith("+++"))) {
+        const wrapped = line.match(/^(\+{3,4})(?!\+)(.*?)(\+{3,4})$/);
+        assert.ok(wrapped, `Invalid native typing control: ${line}`);
+        assert.equal(wrapped[1], wrapped[3], `Mismatched native typing delimiters: ${line}`);
+    }
     for (const prompt of prompts) {
         assert.ok(prompt.length < 650, `Overlong prompt: ${prompt}`);
         assert.doesNotMatch(prompt, /@lab\.|<suffix>/);
@@ -91,7 +96,11 @@ test("PREL38: Getting started has its time guidance in a note, not the heading",
 });
 
 test("PREL38: configuration inquiry is required; health-check change is optional and separate", () => {
-    assert.match(section("Inquire and configure Web App"), /Health check configuration exercise is optional/);
+    const configuration = section("Inquire and configure Web App");
+    assert.match(configuration, /\*\*New chat\*\*.*separate configuration thread, not the Getting started thread/);
+    assert.doesNotMatch(configuration, /In the same Getting started thread/);
+    assert.match(configuration, /Keep this configuration thread for the app URL and optional Health check/);
+    assert.match(configuration, /Health check configuration exercise is optional/);
     assert.doesNotMatch(main, /configure.*Health check path to \/api\/health/i);
     assert.match(guidance, /### Optional: App Service Health check/);
     assert.match(guidance, /successful endpoint response, restart impact, and rollback/);
@@ -162,6 +171,68 @@ test("PREL38: extra help is compiled once at the end and does not claim missing 
     assert.match(main, /Record anything still running or blocked/);
 });
 
+test("PREL38: consumption review drills into execution threads and separates AAU limits from Azure costs", () => {
+    const consumption = section("Review agent consumption and the AAU budget");
+    assert.ok(main.indexOf("## Review agent consumption") > main.indexOf("## Create a live traffic"));
+    assert.ok(main.indexOf("## Complete") > main.indexOf("## Review agent consumption"));
+    for (const control of ["Settings > Agent consumption", "Consumption by thread",
+        "Chats", "Scheduled tasks", "Refresh", "Download", "Change AAU allocation"]) {
+        assert.ok(consumption.includes(`**${control}**`), control);
+    }
+    assert.match(consumption, /Click a thread title/);
+    assert.match(consumption, /execution thread, not just the chat that created the schedule/);
+    assert.match(consumption, /close without saving/);
+    assert.match(consumption, /always-on.*separate/s);
+    assert.match(guidance, /500 to 1,000,000/);
+    assert.match(guidance, /Increases take effect immediately; decreases apply next month/);
+    assert.match(guidance, /Do not lower the allowance while lab work is still running/);
+    assert.match(guidance, /does not cap the separate always-on charge or other Azure resource charges/);
+    assert.match(guidance, /Do not stop or delete the assigned agent/);
+});
+
+test("PREL38: optional skills and custom agents have explicit creation and verification steps", () => {
+    assert.match(guidance, /### Optional: Create a search-check skill/);
+    assert.match(guidance, /\*\*Builder > Agent Canvas > Create > Skill\*\*/);
+    assert.match(guidance, /`SKILL\.md`.*frontmatter/);
+    assert.match(guidance, /confirm `caldova-search-check` appears/);
+    assert.match(guidance, /Verify the agent loads the skill/);
+    assert.match(guidance, /\*\*Builder > Agent Canvas > Create > Custom Agent\*\*/);
+    assert.match(guidance, /\*\*Choose skills\*\*.*only `caldova-search-check`/);
+    assert.match(guidance, /empty selection inherits global tools/);
+    assert.match(guidance, /read-only tools are unavailable, cancel/);
+    assert.match(guidance, /\*\*Test playground\*\*/);
+    assert.match(guidance, /type `\/agent` and select `caldova-search-reviewer`/);
+    assert.doesNotMatch(main, /## Optional:|SKILL\.md|Create > Custom Agent/);
+});
+
+test("PREL38: optional incident setup restricts alerts, explicitly selects Review, and disables its own test plan", () => {
+    assert.match(guidance, /### Optional: Configure incident management/);
+    assert.match(guidance, /\*\*Connect an incident platform > Choose platform > Azure Monitor\*\*/);
+    assert.match(guidance, /Save\*\* only after the facilitator confirms isolated lab alerts/);
+    assert.match(guidance, /Do not change pre-existing\/shared plans/);
+    assert.match(guidance, /### Optional: Configure an incident response plan/);
+    assert.match(guidance, /\*\*Title contains\*\* to `caldova-lab-search`/);
+    assert.match(guidance, /\*\*Agent autonomy level > Review\*\*; new plans default to Autonomous/);
+    assert.match(guidance, /cooldown\*\* enabled/);
+    assert.match(guidance, /filters do not overlap another enabled plan/);
+    assert.match(guidance, /empty preview is not proof of successful routing/);
+    assert.match(guidance, /trigger the approved test alert without breaking the app/);
+    assert.match(guidance, /select only `caldova-search-review`.*\*\*Turn off > Yes\*\*/);
+    assert.match(guidance, /Do not disable other plans/);
+});
+
+test("PREL38: facilitator preparation distinguishes licensed VM software from the app ARM deployment", () => {
+    const readme = readFileSync(join(__dirname, "..", "..", "README.md"), "utf8");
+    assert.match(readme, /Facilitator preparation: PowerPoint and Azure MCP in the VM/);
+    assert.match(readme, /Installation does not grant a license/);
+    assert.match(readme, /Integration Services \*\*and a logged-in/);
+    assert.match(readme, /actual learner's Windows profile/);
+    assert.match(readme, /code --install-extension ms-azuretools\.vscode-azure-mcp-server/);
+    assert.match(readme, /do not bake Azure\/GitHub credentials/i);
+    assert.match(readme, /not a `Microsoft\.Compute\/virtualMachines` desktop/);
+    assert.doesNotMatch(JSON.stringify(template), /Microsoft\.Compute\/virtualMachines/i);
+});
+
 test("PREL38: image links resolve and the original 40-image snapshot remains byte-identical", () => {
     for (const match of source.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)) {
         assert.ok(existsSync(join(__dirname, ...match[1].split("/"))), match[1]);
@@ -227,6 +298,9 @@ test("PREL38: measured operator time is distinguished from estimated human time 
     assert.match(walkthrough, /not yet establish a 45-minute end-to-end fit/);
     assert.match(walkthrough, /\/api\/products.*HTML fallback/);
     assert.match(walkthrough, /LAB720.*not been performed/);
+    assert.match(walkthrough, /## Revisions after the measured walkthrough/);
+    assert.match(walkthrough, /not a new live walkthrough/);
+    assert.match(walkthrough, /earlier seven-prompt publication evidence refers to the measured revision/);
     const csv = readFileSync(join(__dirname, "PREL38-walkthrough-actions.csv"), "utf8");
     assert.match(csv, /"started_utc","finished_utc","operation_seconds","observation_status"/);
     assert.match(csv, /"timed-trial"/);

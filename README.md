@@ -94,12 +94,24 @@ approvals; it is not a measured 45-minute human completion. Fresh setup, slide
 review without a compatible viewer, and the other teams' pages remain outside
 that timing claim. LAB720's 25-minute optimization is deferred for discussion.
 
-PREL38 now separates configuration inquiry from the optional `/api/health`
-exercise. Debugging must repair the running app and return real `jacket`
+PREL38 starts configuration inquiry in **New chat**, separate from Getting
+started, and keeps the optional `/api/health` change in that configuration
+thread. Debugging must repair the running app and return real `jacket`
 products; an undeployed code PR or empty result is not recovery. Cost automation
 and live-report generation overlap other activities, with explicit checks for
 pending questions/approvals and completed artifacts. Report versions and sharing
 are required; conversational refinement remains optional at the end.
+
+The expanded source adds **Settings -> Agent consumption** with per-thread AAU
+review, execution-thread inspection, filtered CSV export, and active-flow
+allocation controls. Budget changes are deferred until the other exercises
+finish and require a facilitator-approved value. Always-on charges and other
+Azure resource costs are not covered by the active-flow limit. Additional
+guidance contains optional skill, custom-agent, incident-source, and narrowly
+filtered Review-mode response-plan exercises, including turning off the new
+test plan. These additions have not been runtime-tested or retimed, and have
+not replaced the earlier live Skillable revision. The walkthrough retains its
+original measurement baseline and explicitly distinguishes this expansion.
 
 The PREL38 deployment source seeds the package's actual search failure using
 `Catalog__AsOfDate=2026-12-15` and probes
@@ -144,6 +156,77 @@ change where an existing External Link resource opens.
 PREL38 was manually published as a live preview on 2026-10-24; the team-owned
 placeholders remain. LAB720 has not been published by this workflow. Revisions
 are reviewed section by section before updating the live PREL38 preview.
+
+### Facilitator preparation: PowerPoint and Azure MCP in the VM
+
+**Prefer a prepared VM image over installation during learner time.** Neither
+software installation nor a lifecycle/image change is included in this
+instruction revision.
+
+For **PowerPoint**, ask the VM/image owner for an approved Office-enabled lab
+image, or install Microsoft 365 Apps with PowerPoint in the image using the
+[Office Deployment Tool](https://learn.microsoft.com/en-us/microsoft-365-apps/deploy/overview-office-deployment-tool).
+Use the Office Customization Tool to generate the installation configuration
+for the organization's licensed product, then run the ODT's
+`.\setup.exe /download configuration.xml` and
+`.\setup.exe /configure configuration.xml` during image preparation. Validate
+that a generated `.pptx` opens without a license or first-run blocker before
+capturing the image using the VM platform's supported image process. Do not
+capture signed-in Office sessions, activation tokens, or credentials.
+
+Installation does not grant a license. Confirm the lab users' Office
+entitlements with Skillable/the licensing owner; Azure sign-in and a Temporary
+Access Pass do not establish a Microsoft 365 Apps license. For shared-computer
+deployments, use an eligible license and
+[shared computer activation](https://learn.microsoft.com/en-us/microsoft-365-apps/licensing-activation/overview-shared-computer-activation)
+when applicable; every user still needs the required entitlement. If desktop
+Office licensing is unavailable, choose and test an approved viewing alternative
+before requiring slide review. Do not send learners to a personal account or an
+unapproved upload service.
+
+A [Skillable lifecycle action](https://docs.skillable.com/docs/life-cycle-actions-5)
+can install guest software: **Lab Profile -> Advanced -> Life Cycle Actions ->
+Add Life Cycle Action -> Execute Script in Virtual Machine**, targeting
+`Win11-Pro-Base`. This requires Skillable Integration Services **and a logged-in
+guest session**; Post-Build alone does not guarantee either. Coordinate a ready
+session/build sequence with the VM owner, use Blocking and an appropriate
+timeout/error action, and make the script idempotent with explicit installer
+exit-code checks. A cloud-platform script runs in the cloud context, not the
+desktop VM. Large Office downloads and activation make an installation LCA less
+predictable than an image; do not make learners wait for it during the exercise.
+
+For **Azure MCP Server in VS Code**, the
+[official extension](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/get-started/tools/visual-studio-code)
+is the simplest option. Preinstall it in the image, or use a guest lifecycle
+script running in the **actual learner's Windows profile**:
+
+```powershell
+code --install-extension ms-azuretools.vscode-azure-mcp-server
+code --list-extensions
+```
+
+Validate the extension appears in the learner's VS Code, select Copilot
+**Agent** mode, enable the Azure MCP tools, and perform a read-only lab resource
+query after the learner signs in with the lab Azure account. Check the actual
+account/subscription before using tools. Do not bake Azure/GitHub credentials
+into the image or assume installation performs authentication. Test and pin
+the extension/package version for event reproducibility; do not rely on an
+untested latest-version download during every lab startup. If using the
+documented npm configuration instead, provision its Node.js/runtime
+prerequisites as well.
+
+This is **Azure MCP Server**, not an automatic replacement for the ARM MCP
+server in the other team's module. A VM-local MCP server also does not
+automatically become a connector for the hosted SRE Agent; that requires a
+separately supported connection. Preserve the existing ARM module until its
+owner approves a change.
+
+The current Caldova ARM template provisions the app/observability/SRE resources,
+**not a `Microsoft.Compute/virtualMachines` desktop**. It therefore cannot
+install PowerPoint or VS Code extensions in the separate Skillable VM. An
+Azure-hosted VM deployed by a different template can use a supported guest
+extension/bootstrap, but that is a separate infrastructure change, not an
+addition to this app template.
 
 ### Backups and rollback
 

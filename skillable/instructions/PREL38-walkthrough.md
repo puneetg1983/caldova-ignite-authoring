@@ -10,6 +10,8 @@ The measured trial took **72 minutes 35 seconds of operator wall time**, includi
 
 **A human's required SRE work is estimated at 19-32 minutes of active interaction, including a provisional setup allowance, plus service waits that cannot all be predicted or eliminated. This does not yet establish a 45-minute end-to-end fit.** Fresh setup and the other teams' Modernization/ARM activities were not timed. PowerPoint slide review remains unmeasured because the VM lacks a compatible viewer.
 
+That estimate covers the measured guide only. It excludes the later consumption review and optional configuration exercises described under **Revisions after the measured walkthrough**.
+
 ## Measurement method and boundaries
 
 - The timed trial is **T01-T199**, from **00:30:32.838 to 01:43:07.940 UTC**. The CSV separately records guarded follow-up VM actions **T200-T226**, including native typing checks. Host-side publishing and administrative work are outside the action timer; their separate export/verification milestones are recorded below.
@@ -161,6 +163,16 @@ The configuration prompt's actual native button was exercised with the VM chat i
 Final independent HTTP checks at **02:14:57 UTC** still returned health 200, search 200 with 53 total jacket matches and 20 matching product names, and catalog 200 with 2,000 total products and 20 returned rows.
 
 Public screenshots are crops of actual captures, not mockups. Their manifest records capture UTC, source basename/hash, crop coordinates, and final hash. Full per-action screenshots and exports remain private because they can contain account details, credentials, or browser state. The immutable original instruction/media snapshots were not altered.
+
+## Revisions after the measured walkthrough
+
+The subsequent learner-guide revision explicitly starts configuration in **New chat**, separate from Getting started. This matches where the configuration inquiry actually ran during the original trial; it does not require another discovery exercise.
+
+The guide now also includes a required thread-level AAU consumption/budget review and optional skill, custom-agent, incident-source, and response-plan setup. These additions are based on the product documentation, **not a new live walkthrough**. Their UI flows, screenshots, active time, and end-to-end wait time have not been measured in this trial. The original 199-action timing baseline, 226-record CSV, 19 evidence screenshots, and human estimates above have not been rewritten to include them. The expanded guide contains nine chat prompts; the earlier seven-prompt publication evidence refers to the measured revision, not this expansion.
+
+AAU allocation changes, incident-source connections, custom skills/agents, and response plans were not applied to the running agent during this revision. No PowerPoint/Azure MCP installation, VM image change, lifecycle action, or new lab launch was performed. Facilitator preparation choices are documented in the repository README. The earlier live Skillable publication remains the last runtime-verified revision; the expanded source needs a separate supported publication and runtime check.
+
+The previously authorized learner URL now redirects to PREL38's profile instead of opening the VM. The supported instruction editor still opens, but guarded foreground checks refused keyboard input while another browser window owned focus; no instruction save was attempted. No replacement lab was launched.
 
 ## Options to discuss before changing scope
 
