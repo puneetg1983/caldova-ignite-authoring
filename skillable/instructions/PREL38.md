@@ -186,10 +186,9 @@ Your repository URL should look like `https://github.com/User1-12345678_events/c
 
 ++++List the configuration of the Caldova App Service.++++
 
-2. Send the message, review the configuration, and ask questions about any unfamiliar settings. Keep this configuration thread for the app URL and optional Health check exercise.
-3. Find **Default Hostname** in the response. Your app URL is `https://` followed by that hostname. Use your lab's actual value, not the screenshot's example.
+2. Send the message, review the configuration, and ask questions about any unfamiliar settings. Keep this configuration thread for the optional Health check exercise.
 
-![App Service configuration response showing Default Hostname](images/app-configuration/default-hostname.png)
+![Example App Service configuration response](images/app-configuration/default-hostname.png)
 
 The Health check configuration exercise is optional; see **Additional guidance**.
 
@@ -197,7 +196,10 @@ The Health check configuration exercise is optional; see **Additional guidance**
 
 **Goal:** Investigate the search problem, fix it, and confirm customer-visible recovery.
 
-1. Return to the configuration thread and copy **Default Hostname**. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type `https://` followed by that hostname, then press **Enter inside the VM**. If the response already includes the full app URL, use it instead. See **Additional guidance** if neither is shown.
+1. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type your app URL below, or click it to type automatically. Then press **Enter inside the VM**:
+
++++@lab.Variable(CaldovaWebAppUrl)+++
+
 2. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
 
 ![Product-name search fails with HTTP 500](images/prel38-walkthrough/search-failure.png)
@@ -286,15 +288,15 @@ Under **Favorites**, select **Team onboarding**. If absent, select **Search Thre
 
 ### Inquire and configure Web App
 
-Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for **Default Hostname**, the app URL, or the optional Health check change.
+Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the optional Health check change. Your app URL is provided directly in **Debug the product-search failure**.
 
 ### Debug the product-search failure
 
-**App URL missing?** Return to the configuration thread and select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+**App URL blank or showing an unresolved variable?** Tell the facilitator that the automated URL setup needs correction. As a temporary workaround while it is fixed, return to the configuration thread and select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++What is the Caldova web app URL?++++
 
-Open the returned app URL in the VM browser. If needed, open the assigned Web App in Azure Portal and select **Browse**. Automatic URL population is not required to continue.
+Open the returned app URL in the VM browser. If needed, open the assigned Web App in Azure Portal and select **Browse**. This workaround does not replace the lab's automatic URL setup.
 
 If search already works, tell the facilitator; do not break the app yourself. Verify recovery by repeating the search in the app.
 

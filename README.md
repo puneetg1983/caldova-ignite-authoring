@@ -122,9 +122,11 @@ that timing claim. LAB720's 25-minute optimization is deferred for discussion.
 
 PREL38 starts configuration inquiry in **New chat**, separate from Getting
 started, and keeps the optional `/api/health` change in that configuration
-thread. Learners find **Default Hostname** in that response and prefix it with
-`https://` to open their actual app in the VM browser; an existing T56 capture
-illustrates that field in `images/app-configuration/default-hostname.png`.
+thread. Debugging provides the full learner-specific app URL through
+`@lab.Variable(CaldovaWebAppUrl)`, with native text entry into the VM browser.
+Learners do not need to find a hostname or ask the agent for their URL.
+An existing T56 capture illustrates the configuration response in
+`images/app-configuration/default-hostname.png`, not a required URL lookup.
 There is no separate repository-readiness exercise before debugging.
 Debugging must repair the running app and return real `jacket`
 products; an undeployed code PR or empty result is not recovery. Cost automation
@@ -186,6 +188,35 @@ change where an existing External Link resource opens.
 PREL38 was manually published as a live preview on 2026-10-24; the team-owned
 placeholders remain. LAB720 has not been published by this workflow. Revisions
 are reviewed section by section before updating the live PREL38 preview.
+
+### Automatic learner-specific app URL
+
+Skillable documents [setting lab variables from lifecycle actions](https://docs.skillable.com/docs/variables-1)
+with `Set-LabVariable` and displaying them using `@lab.Variable(name)`.
+The ARM template's `webAppUrl` output alone does not populate an instruction token.
+
+Before publishing this PREL38 revision, configure a separate **Execute Script
+in Cloud Platform** lifecycle action on profile **224911**, targeting the lab's
+assigned Azure subscription. Use **Post-Build**, **Blocking**, and the Azure
+PowerShell runtime, after the resource template has finished. Paste
+[`skillable/Set-CaldovaWebAppUrl.ps1`](skillable/Set-CaldovaWebAppUrl.ps1)
+as the command. Preserve all existing lifecycle actions and their settings.
+Configure an error notification explaining that the application URL could not
+be prepared; do not hide a failed action behind a fixed or guessed URL.
+
+The script checks the assigned subscription and resource group, requires exactly
+one Caldova App Service, and sets `CaldovaWebAppUrl` from its actual
+`DefaultHostName`, the same Azure-returned value used by the ARM output.
+It performs no Azure resource or RBAC writes and supports regional hostnames.
+It must run in Skillable's cloud action environment, which supplies both the
+Azure context and `Set-LabVariable`, not in a learner terminal or on the host.
+Do not prefill the variable with an example URL.
+
+The lifecycle configuration and resolved learner rendering are not yet verified
+live. Source changes alone do not enable the action. Before publication, check
+that the learner sees their actual HTTPS URL, not a blank value or unresolved
+token, and that native typing opens that app inside the VM. The troubleshooting
+lookup is a temporary escape hatch, not a substitute for this publication check.
 
 ### Facilitator preparation: PowerPoint and Azure MCP in the VM
 

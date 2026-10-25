@@ -1,5 +1,6 @@
 const assert = require("node:assert/strict");
 const { createHash } = require("node:crypto");
+const { execFileSync } = require("node:child_process");
 const { readFileSync, existsSync } = require("node:fs");
 const { join } = require("node:path");
 const test = require("node:test");
@@ -137,9 +138,8 @@ test("PREL38: configuration inquiry is required; health-check change is optional
     const configuration = section("Inquire and configure Web App");
     assert.match(configuration, /\*\*New chat\*\*.*separate configuration thread, not the Getting started thread/);
     assert.doesNotMatch(configuration, /In the same Getting started thread/);
-    assert.match(configuration, /Keep this configuration thread for the app URL and optional Health check/);
-    assert.match(configuration, /Find \*\*Default Hostname\*\* in the response/);
-    assert.ok(configuration.includes("Your app URL is `https://` followed by that hostname."));
+    assert.match(configuration, /Keep this configuration thread for the optional Health check/);
+    assert.doesNotMatch(configuration, /Find \*\*Default Hostname\*\*|followed by that hostname/);
     assert.ok(configuration.includes("images/app-configuration/default-hostname.png"));
     assert.match(configuration, /Health check configuration exercise is optional/);
     assert.doesNotMatch(main, /configure.*Health check path to \/api\/health/i);
@@ -151,10 +151,12 @@ test("PREL38: configuration inquiry is required; health-check change is optional
 test("PREL38: debugging uses one natural prompt and verifies the original symptom", () => {
     const debug = section("Debug the product-search failure");
     assert.doesNotMatch(debug, /repository|indexing|retrieve source files/i);
-    assert.match(debug, /^1\. Return to the configuration thread and copy \*\*Default Hostname\*\*/m);
+    assert.match(debug, /^1\. Open a new tab in the \*\*VM browser\*\*/m);
     assert.match(debug, /Open a new tab in the \*\*VM browser\*\*/);
-    assert.ok(debug.includes("`https://` followed by that hostname"));
-    assert.match(debug, /press \*\*Enter inside the VM\*\*/);
+    assert.ok(debug.includes("+++@lab.Variable(CaldovaWebAppUrl)+++"));
+    assert.match(debug, /Copy\/paste or type your app URL below, or click it to type automatically/);
+    assert.match(debug, /press \*\*Enter inside the VM\*\*/i);
+    assert.doesNotMatch(debug, /configuration thread|Default Hostname|followed by that hostname/);
     assert.equal((debug.match(/^\d\. /gm) || []).length, 5);
     assert.match(debug, /Confirm matching products appear and catalog browsing still works/);
     assert.match(debug, /`jacket`.*\*\*Search\*\*.*\*\*500 - Search failed\*\*/);
@@ -163,10 +165,85 @@ test("PREL38: debugging uses one natural prompt and verifies the original sympto
     assert.match(debug, /repeat the same `jacket` search/);
     assert.match(debug, /catalog browsing still works/);
     assert.doesNotMatch(debug, /Review mode|Catalog__AsOfDate|Default domain/);
-    assert.match(guidance, /Automatic URL population is not required to continue/);
+    assert.match(guidance, /automated URL setup needs correction/);
+    assert.match(guidance, /This workaround does not replace the lab's automatic URL setup/);
     assert.match(guidance, /A source-code pull request is not a deployment/);
     assert.match(guidance, /Returning an empty result set is not recovery/);
     assert.doesNotMatch(source, /@lab\.CloudResourceTemplate.*Outputs|@lab\.Variable\(CaldovaAppUrl\)/);
+});
+
+test("PREL38: URL lifecycle action publishes only the assigned app's actual HTTPS hostname",
+    { skip: process.platform !== "win32" }, () => {
+    const cases = [
+        { name: "standard", count: 1, hostname: "caldova-webapp-test.azurewebsites.net" },
+        { name: "regional", count: 1, hostname: "caldova-webapp-test-abc.westus-01.azurewebsites.net" },
+        { name: "missing", count: 0, error: "exactly one" },
+        { name: "ambiguous", count: 2, error: "exactly one" },
+        { name: "unrelated", count: 1, appName: "another-webapp", error: "exactly one" },
+        { name: "empty hostname", count: 1, hostname: "", error: "valid App Service hostname" },
+        { name: "invalid hostname", count: 1, hostname: "app.azurewebsites.net/extra", error: "valid App Service hostname" },
+        { name: "missing context", count: 1, noContext: true, error: "assigned Azure subscription" },
+        { name: "wrong subscription", count: 1, wrongSubscription: true, error: "assigned Azure subscription" },
+        { name: "Azure failure", count: 1, readFailure: true, error: "Azure read failed" },
+        { name: "publication failure", count: 1, hostname: "caldova-webapp-test.azurewebsites.net",
+            publishFailure: true, error: "Variable publication failed" },
+    ];
+    const harness = `
+$ErrorActionPreference = "Stop"
+$ProgressPreference = "SilentlyContinue"
+$source = Get-Content -LiteralPath $env:CALDOVA_URL_SCRIPT -Raw
+$source = $source.Replace('@lab.CloudSubscription.Id', '11111111-1111-1111-1111-111111111111')
+$source = $source.Replace('@lab.CloudResourceGroup(1).Name', 'ResourceGroup1')
+$cases = '${JSON.stringify(cases)}' | ConvertFrom-Json
+function Get-AzContext {
+    if ($script:current.noContext) { return }
+    $id = if ($script:current.wrongSubscription) { '22222222-2222-2222-2222-222222222222' }
+        else { '11111111-1111-1111-1111-111111111111' }
+    [pscustomobject]@{ Subscription = [pscustomobject]@{ Id = $id } }
+}
+function Get-AzWebApp {
+    param($ResourceGroupName)
+    $script:queried = $true
+    if ($ResourceGroupName -cne 'ResourceGroup1') { throw 'Wrong resource group' }
+    if ($script:current.readFailure) { throw 'Azure read failed' }
+    for ($i = 0; $i -lt $script:current.count; $i++) {
+        $name = if ($script:current.appName) { $script:current.appName } else { "caldova-webapp-$i" }
+        [pscustomobject]@{ Name = $name; DefaultHostName = $script:current.hostname }
+    }
+}
+function Set-LabVariable {
+    param($Name, $Value)
+    if ($script:current.publishFailure) { throw 'Variable publication failed' }
+    $script:published = @{ Name = $Name; Value = $Value }
+}
+$results = foreach ($case in $cases) {
+    $script:current = $case
+    $script:published = $null
+    $script:queried = $false
+    $failure = $null
+    try { & ([scriptblock]::Create($source)) } catch { $failure = $_.Exception.Message }
+    [pscustomobject]@{ Name = $case.name; Published = $script:published; Queried = $script:queried; Error = $failure }
+}
+ConvertTo-Json -InputObject @($results) -Depth 4 -Compress
+`;
+    const results = JSON.parse(execFileSync("powershell.exe",
+        ["-NoProfile", "-NonInteractive", "-EncodedCommand", Buffer.from(harness, "utf16le").toString("base64")],
+        { encoding: "utf8", env: { ...process.env,
+            CALDOVA_URL_SCRIPT: join(__dirname, "..", "Set-CaldovaWebAppUrl.ps1") } }));
+    assert.equal(results.length, cases.length);
+    for (const [index, result] of results.entries()) {
+        const expected = cases[index];
+        assert.equal(result.Name, expected.name);
+        if (expected.error) {
+            assert.equal(result.Published, null, expected.name);
+            assert.ok(result.Error?.includes(expected.error), `${expected.name}: ${result.Error}`);
+        } else {
+            assert.equal(result.Error, null, expected.name);
+            assert.deepEqual(result.Published,
+                { Name: "CaldovaWebAppUrl", Value: `https://${expected.hostname}` });
+        }
+        assert.equal(result.Queried, !(expected.wrongSubscription || expected.noContext), expected.name);
+    }
 });
 
 test("PREL38: recurring cost review is created in chat, includes forecasts, and overlaps report work", () => {
