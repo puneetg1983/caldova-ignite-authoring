@@ -108,6 +108,7 @@ Use the assigned `caldova-sreagent-<suffix>`. The Web App, resource group, and t
 6. Investigate the product-search failure and verify recovery.
 7. Schedule a weekly cost review with forecasting, savings recommendations, and a PowerPoint.
 8. Create a live report with a dependency-health graph, traffic charts, versions, and sharing.
+9. Review the agent's thread-level consumption and learn how to control its active-flow AAU budget.
 
 ## Sign in to Azure SRE Agent
 
@@ -196,11 +197,11 @@ Your repository URL should look like `https://github.com/User1-12345678_events/c
 
 **Goal:** Inspect and understand the assigned App Service configuration.
 
-1. In the same Getting started thread, click the message box and use **Copy & Type Text**:
+1. Select **New chat** to start a separate configuration thread, not the Getting started thread. Click the message box and use **Copy & Type Text**:
 
 ++++List the configuration of the Caldova App Service.++++
 
-2. Send the message, review the configuration, and ask questions about any unfamiliar settings.
+2. Send the message, review the configuration, and ask questions about any unfamiliar settings. Keep this configuration thread for the app URL and optional Health check exercise.
 
 The Health check configuration exercise is optional; see **Additional guidance**.
 
@@ -256,9 +257,21 @@ The Health check configuration exercise is optional; see **Additional guidance**
 
 ![Saved versions, dependency health first, and the report-sharing control](images/prel38-walkthrough/live-report-versions.png)
 
+## Review agent consumption and the AAU budget
+
+**Goal:** Understand which work consumed Azure Agent Units (AAUs), inspect the threads behind that work, and find the active-flow budget control.
+
+1. In the left navigation, select **Settings > Agent consumption**. Select the current month and review **Total active flow consumption** and **Daily active flow consumption**.
+2. In **Consumption by thread**, find your configuration, search investigation, cost-review execution, and report-authoring threads where listed. Compare their AAUs and status; active threads can still consume more.
+3. Click a thread title to open its conversation. Review the agent's steps, tool calls, approvals, and result. Repeat for the weekly cost task's execution thread, not just the chat that created the schedule.
+4. Return to **Agent consumption**. Use the **Chats** and **Scheduled tasks** cards to compare those types, then clear the filter. Select **Refresh** to update usage; select **Download** if you want a CSV of the currently filtered threads.
+5. Under **Monthly AAU limit**, select **Change AAU allocation** and inspect the active-flow allowance. Record a proposed limit, then close without saving so the remaining exercises can continue. See **Additional guidance > Agent consumption and budget changes** for applying a facilitator-approved limit after the lab activities.
+
+The **active-flow** limit controls the agent's processing allowance, not the cost of the Caldova Azure resources. The fixed **always-on** charge is separate and continues even when active flow is stopped or its limit is reached.
+
 ## Complete
 
-Confirm search works, review the cost findings and PowerPoint, and inspect the live report. Record anything still running or blocked. Follow the facilitator's cleanup instructions; do not reset the lab or delete shared resources.
+Confirm search works, review the cost findings and PowerPoint, inspect the live report, and record which threads consumed AAUs. If time allows, try the optional skills, custom-agent, incident-management, and response-plan exercises below. Record anything still running or blocked. Follow the facilitator's cleanup instructions; do not reset the lab or delete shared resources.
 
 ## Additional guidance
 
@@ -284,6 +297,10 @@ If import or indexing is still running, continue independent activities and retu
 
 Under **Favorites**, select **Team onboarding**. If absent, select **Search Threads**, search `get to know`, and open your lab user's greeting.
 
+### Inquire and configure Web App
+
+Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the app URL or optional Health check change.
+
 ### Debug the product-search failure
 
 **App URL missing?** In the configuration thread, ask "What is the Caldova web app URL?" If needed, open the assigned Web App in Azure Portal and select **Browse**. Automatic URL population is not required to continue.
@@ -308,6 +325,18 @@ While working on another activity, check the report's authoring thread for pendi
 
 The 24-hour report can still include earlier failures after a fix. Verify recovery with fresh app requests rather than expecting historical failure charts to turn green immediately.
 
+### Agent consumption and budget changes
+
+Usage can lag behind the conversation. Select the correct month, clear type/day/status filters, and select **Refresh** before concluding that a thread is missing or has used no AAUs. Use thread titles and execution details to identify work; do not assume a report or scheduled task is represented only by its creation chat.
+
+After completing the other activities, including any optional exercises you plan to try, apply a budget change **only with the facilitator's approved value**:
+
+1. Open **Settings > Agent consumption > Change AAU allocation**. Record the existing allocation.
+2. Enter the agreed monthly **active-flow** AAU limit within the supported range of **500 to 1,000,000**. Review the effective date and billing impact in the confirmation before applying it. This is not a currency-denominated Azure Cost Management budget.
+3. Confirm the allocation shown after the change. Reaching the limit makes the agent unavailable for chat and actions. Increases take effect immediately; decreases apply next month and can leave the agent in always-on-only flow until then. Do not lower the allowance while lab work is still running.
+
+The active-flow limit does not cap the separate always-on charge or other Azure resource charges. Do not stop or delete the assigned agent to experiment with billing.
+
 ### Optional: App Service Health check
 
 **Goal:** Explore endpoint monitoring separately from product-search recovery.
@@ -325,3 +354,79 @@ Select **Live reports > Caldova Traffic and Health > Open authoring thread**. Cl
 ++++Group the dependency graph by service and make unhealthy components stand out.++++
 
 Answer any questions. Return through **Live reports > Caldova Traffic and Health** to inspect the update and compare versions.
+
+### Optional: Create a search-check skill
+
+**Goal:** Teach the agent a reusable Caldova procedure. Skills are loaded automatically when relevant; they are not a separate specialist you must invoke.
+
+1. Select **Builder > Agent Canvas > Create > Skill**.
+2. Set **Name** to `caldova-search-check`. For **Description**, use:
+
++++Procedure for reviewing Caldova product-search failures and verifying that jacket search returns real products.+++
+
+3. In the `SKILL.md` editor, keep the generated name/description frontmatter. Add this procedure below it:
+
+```markdown
+## Procedure
+1. Identify the assigned Caldova App Service from the connected lab context.
+2. Review recent request/error telemetry for browsing and product-name search.
+3. Ask the user to repeat the jacket search and confirm real matching products.
+4. Do not treat a healthy /api/health, an empty result, or an undeployed PR as recovery.
+5. Summarize the evidence, remaining uncertainty, and recommended next step.
+6. Keep this check read-only. Do not change settings, deploy code, or seed a fault.
+```
+
+4. Select **Choose tools** and attach only the existing read-only telemetry query tools needed for this procedure. Select **Create** and confirm `caldova-search-check` appears in the **Skills** tab.
+5. Select **New chat**, click the message box, and use **Copy & Type Text**:
+
+++++Use our Caldova search-check procedure to review the latest search results. Don't change anything.++++
+
+6. Verify the agent loads the skill and follows the procedure. If it does not, review the skill's description and instructions before trying again; do not assume saving a skill proves it was used.
+
+### Optional: Create a Caldova custom agent
+
+**Goal:** Build a focused specialist with explicit skill and tool access, then invoke it deliberately.
+
+1. Complete **Optional: Create a search-check skill**, then select **Builder > Agent Canvas > Create > Custom Agent**.
+2. In **Form**, set **Custom agent name** to `caldova-search-reviewer`. In **Instructions**, use:
+
++++You review Caldova product-search health. Use the caldova-search-check skill and connected telemetry. Explain evidence and uncertainty. Stay read-only: do not change resources, deploy code, or create faults.+++
+
+3. Select **Choose skills** and select only `caldova-search-check`. Select **Choose tools** and choose the existing read-only telemetry tools needed for the check. Do not leave the tools selection empty: an empty selection inherits global tools, rather than granting no tools. If suitable read-only tools are unavailable, cancel and ask the facilitator.
+4. Select **Create**. Confirm the custom agent appears on **Agent Canvas**, then open **Test playground** and select `caldova-search-reviewer`.
+5. Click the playground message box and use **Copy & Type Text**:
+
+++++Review Caldova's latest product-search health using our search-check procedure. Don't change anything.++++
+
+6. Confirm the expected skill and read-only tools were used. To invoke the specialist from a regular **New chat**, type `/agent` and select `caldova-search-reviewer`. Unlike skills, custom agents are explicitly selected.
+
+### Optional: Configure incident management
+
+**Goal:** Connect an incident source so alerts can become investigation threads. This connection is separate from the resource/log connections reviewed in Quickstart.
+
+1. Select **Incidents > Triggers + response plans**. Review the connected platform and existing plans first. Keep an existing connection; do not replace it or add production credentials.
+2. If no platform is connected, use **Connect an incident platform > Choose platform > Azure Monitor**. Review the **Connect to platform** fields with the facilitator and use only the assigned lab scope.
+3. Connecting can create an enabled quickstart response plan. Select **Save** only after the facilitator confirms isolated lab alerts and approves the connection. Confirm the page shows **Azure Monitor connected**.
+4. Inspect the plans immediately. If this connection just created a quickstart plan, select that new plan's checkbox, then **Turn off > Yes** before configuring your narrow test plan. Do not change pre-existing/shared plans; ask the facilitator to resolve any overlap.
+
+If your lab has no approved incident source or test-alert setup, review the connection dialog without saving and continue. Do not create an outage or grant broader permissions to complete an optional exercise.
+
+### Optional: Configure an incident response plan
+
+**Goal:** Route only designated lab alerts to the custom agent, with changes requiring human review.
+
+1. Complete the optional custom-agent and incident-management exercises. For this example, use **Azure Monitor** and a facilitator-provided, non-production test alert whose title contains `caldova-lab-search`.
+2. Select **Incidents > Triggers + response plans > Create a response plan**. If no plans exist, select **Add an incident response plan** instead.
+3. Enter **Incident response plan name** `caldova-search-review`. Select the test alert's **Severity** and set **Title contains** to `caldova-lab-search`. Select **Response subagent** `caldova-search-reviewer` and explicitly choose **Agent autonomy level > Review**; new plans default to Autonomous.
+4. Keep **Alert reinvestigation cooldown** enabled to avoid repeated investigations of the same noisy alert. Select **Next**, review **Incidents preview**, and confirm the filters do not overlap another enabled plan. An empty preview is not proof of successful routing.
+5. With the facilitator's approval, select **Create** (the final button can be labelled **Create incident response plan**). Confirm the saved plan is **On** and in **Review** mode.
+6. Have the facilitator trigger the approved test alert without breaking the app. Open the resulting incident investigation, verify its custom agent and read-only evidence, then inspect that thread under **Settings > Agent consumption**.
+7. When the test finishes, select only `caldova-search-review`, then **Turn off > Yes**. Confirm **Off** so it does not keep starting work after the exercise. Do not disable other plans.
+
+### Reference guides
+
+The new consumption and optional setup steps follow the product guides below. If a control is unavailable in your lab version, ask the facilitator rather than changing permissions.
+
+- [Agent consumption](https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage) and [AAU limits and billing](https://learn.microsoft.com/en-us/azure/sre-agent/pricing-billing#set-an-active-flow-spending-limit).
+- [Create a skill](https://sre.azure.com/docs/tutorials/automation/create-skill) and [Create a custom agent](https://sre.azure.com/docs/tutorials/automation/create-subagent).
+- [Connect Azure Monitor and automate incidents](https://sre.azure.com/docs/get-started/automate-incidents) and [Configure a response plan](https://sre.azure.com/docs/tutorials/agent-config/setup-response-plan).
