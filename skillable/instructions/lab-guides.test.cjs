@@ -40,7 +40,8 @@ const requiredSreHeadings = [
     "Additional guidance"
 ];
 
-for (const lab of labs) {
+// PREL38's approved conversational flow is covered by prel38.test.cjs.
+for (const lab of labs.filter(lab => lab.name !== "PREL38")) {
     const revisedStart = lab.name === "PREL38";
     const source = readFileSync(join(__dirname, `${lab.name}.md`), "utf8");
     const pages = source.split(/\r?\n===\r?\n/);

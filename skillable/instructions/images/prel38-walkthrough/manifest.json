@@ -1,0 +1,268 @@
+[
+  {
+    "file": "repository-source-retrieved.png",
+    "source_capture": "T121-connected-repository-retrieval-private.png",
+    "source_sha256": "2c3cf7fa58589874d51ce9864946612727a5484cc59a4f257a0d7d4a4febf167",
+    "captured_at": "2026-10-25T01:09:24.3457310+00:00",
+    "crop_xywh": [
+      233,
+      554,
+      1360,
+      335
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "6fee19f10cebfabac866dd52c2d76a0c08fd65a8c3304b11cb5cf72cbe4cbce8"
+  },
+  {
+    "file": "cost-task-run.png",
+    "source_capture": "T38-cost-run-triggered-private.png",
+    "source_sha256": "95c38068f7f34144507f6306c74df94384d1f44459d4a8781fc4ac57bc8a5b8b",
+    "captured_at": "2026-10-25T00:45:08.7046025+00:00",
+    "crop_xywh": [
+      501,
+      545,
+      1229,
+      320
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "25fc0bd07bcc1b256475a79ba8fe0af3af08de27870d1ab6c697e74d4c3d7090"
+  },
+  {
+    "file": "cost-findings.png",
+    "source_capture": "T70-cost-execution-findings-private.png",
+    "source_sha256": "dfb746a655cf363884fa750e66e0a397b4f2bd02296c7897d791a8313a283d68",
+    "captured_at": "2026-10-25T00:54:33.1261706+00:00",
+    "crop_xywh": [
+      234,
+      500,
+      1340,
+      320
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "0df046dad95b13d630be29c721107380909b4cbe5a24767f0ce647730807baec"
+  },
+  {
+    "file": "cost-powerpoint-download.png",
+    "source_capture": "T75-cost-powerpoint-opened-private.png",
+    "source_sha256": "58870831ceae8d9d7dd74e72f263409d9bea723c659efbe86d0e12d149ec2ccf",
+    "captured_at": "2026-10-25T00:55:52.7541551+00:00",
+    "crop_xywh": [
+      957,
+      151,
+      620,
+      252
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "4690b193b47ff8c02b7ec347667cd29890f1612dd2ab48081dba723edcd7f632"
+  },
+  {
+    "file": "powerpoint-viewer-gap.png",
+    "source_capture": "T76-cost-powerpoint-viewer-check-private.png",
+    "source_sha256": "ac466a98279daaed2ad38ab79764b38e4e24ac180a55eec6ddef8aa8d6c131ae",
+    "captured_at": "2026-10-25T00:56:23.5877355+00:00",
+    "crop_xywh": [
+      498,
+      317,
+      784,
+      698
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "a4504ac03f43fe431384ab5a3a0cbe51f5e806454ff5020728cfbf9e9827b1ec"
+  },
+  {
+    "file": "live-report-gallery.png",
+    "source_capture": "T195-report-gallery-expanded-navigation-private.png",
+    "source_sha256": "b2a7cf4f311afb1bdd2d506cc47d7e1e41b375527df2aa8e61179ccbbcd9fa5f",
+    "captured_at": "2026-10-25T01:40:55.3049361+00:00",
+    "crop_xywh": [
+      500,
+      375,
+      1240,
+      730
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "7390377f54373aaea14be0b735f391991d79cffc7e34958549baa05818aefa9e"
+  },
+  {
+    "file": "live-report-versions.png",
+    "source_capture": "T98-live-report-version-picker-private.png",
+    "source_sha256": "9fef75cb75fe34e199e77a4925f53f3a80d98939129d5419ff8fc88a0ade9df7",
+    "captured_at": "2026-10-25T01:03:12.4320422+00:00",
+    "crop_xywh": [
+      96,
+      375,
+      1640,
+      730
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "00cb2a38a1c28bc7d7e41638d75b5e870de4760b92ce19b408d6bc66f249ce8b"
+  },
+  {
+    "file": "live-report-dependencies-first.png",
+    "source_capture": "T101-live-report-current-restored-private.png",
+    "source_sha256": "565f0ba01ec6ea5e9cf1370cc23c93fe86a8d47b9c043fb74278367673aa6ff5",
+    "captured_at": "2026-10-25T01:03:44.1074092+00:00",
+    "crop_xywh": [
+      96,
+      375,
+      1640,
+      730
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "f42a484df4b8fe9d3e049ec9c76144cc8a46053d49975d6e540cb63cb7f03b30"
+  },
+  {
+    "file": "live-report-response-times.png",
+    "source_capture": "T107-live-report-requested-failing-urls-private.png",
+    "source_sha256": "99bdc36c2bd4e3ea1e36705024d0d8a0677812a227bcee705c69c284566d6062",
+    "captured_at": "2026-10-25T01:05:32.8790025+00:00",
+    "crop_xywh": [
+      155,
+      500,
+      1500,
+      470
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "31758784591bf0579c43ac9dd28fd7043036a4d8cd2d39eaa5b9300bf0880201"
+  },
+  {
+    "file": "live-report-url-tables.png",
+    "source_capture": "T108-live-report-url-tables-private.png",
+    "source_sha256": "b9f9b64fb2c9f321d7252c4ad84022ad0bea8c1c147eba5d42edaba52eba032e",
+    "captured_at": "2026-10-25T01:05:51.7868494+00:00",
+    "crop_xywh": [
+      155,
+      500,
+      1500,
+      470
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "b4694867f357b9e0f04078585c0a46266294ef0469fd8453c7ffc4ed0e118771"
+  },
+  {
+    "file": "live-report-geography.png",
+    "source_capture": "T109-live-report-geography-caveats-private.png",
+    "source_sha256": "e583384e8948a9dc98d7b6c871b5c59f122a7ecbfd1ba0c3f3bcb732f4dd05d7",
+    "captured_at": "2026-10-25T01:05:55.6539567+00:00",
+    "crop_xywh": [
+      155,
+      730,
+      1500,
+      370
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "031730aedd980779d1ad1b1a5536d274289233977c2a5ee143e16ec7b42debc4"
+  },
+  {
+    "file": "catalog-browsing.png",
+    "source_capture": "T134-caldova-catalog-browsing-private.png",
+    "source_sha256": "f04f32f6a8bca533c5f8b2fffd6a3ad9ec038d3994a805b4e57d69a42cb5e166",
+    "captured_at": "2026-10-25T01:11:44.8069295+00:00",
+    "crop_xywh": [
+      49,
+      780,
+      1655,
+      324
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "cc691fa876bf06ab6843fd874e8876cf234ff3e8d6d3a010bdd509bbe61987b2"
+  },
+  {
+    "file": "search-failure.png",
+    "source_capture": "T136-caldova-search-http500-private.png",
+    "source_sha256": "f1dc8210870a7779151bb785a58eedba0bb3092a5dfb634881d22f9f6247123a",
+    "captured_at": "2026-10-25T01:12:12.3871092+00:00",
+    "crop_xywh": [
+      50,
+      486,
+      1655,
+      555
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "6627c3573aff3ff2da3822c2b63e6344bb70d4353e316ed82ef64b02e77c358d"
+  },
+  {
+    "file": "search-recovered.png",
+    "source_capture": "T168-customer-jacket-search-recovered-private.png",
+    "source_sha256": "7c5bce10033062ae68071996d6aab87e7a31c5506f405746167910e4c2367888",
+    "captured_at": "2026-10-25T01:29:16.2697566+00:00",
+    "crop_xywh": [
+      50,
+      486,
+      1655,
+      555
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "9b13b1c4c3060aac0e27f4ea9af2a4716000442a069ae37a2fbd6461374cfddd"
+  },
+  {
+    "file": "health-check-saved.png",
+    "source_capture": "T182-optional-health-saved-result-private.png",
+    "source_sha256": "f67dd2cfe04a8e6bfc6e4d171e5f11afe0aabfdf143621ca4ea2e1096d56f3a5",
+    "captured_at": "2026-10-25T01:37:25.5523857+00:00",
+    "crop_xywh": [
+      234,
+      640,
+      1340,
+      72
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "5b9f6fa72e8b32131d751e60255b2836cdfdb51b67cb46071162835851715934"
+  },
+  {
+    "file": "live-report-v3-versions.png",
+    "source_capture": "T198-report-v3-versions-private.png",
+    "source_sha256": "a38fb0d40b568b4e8d586e92df310d2764981e549755d21da97303b8671d9e74",
+    "captured_at": "2026-10-25T01:42:00.8270125+00:00",
+    "crop_xywh": [
+      96,
+      375,
+      1640,
+      730
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "68cbc4c7721457c4f78acec902d915424c9af478a294e9a6a1863c7ef86fcb5b"
+  },
+  {
+    "file": "live-report-v3-grouped.png",
+    "source_capture": "T199-report-v3-rendered-health-private.png",
+    "source_sha256": "a1ea596cc38d27f39de2a83bf7b65a69196115a5d72e9efd5421c71f94ac5e93",
+    "captured_at": "2026-10-25T01:43:07.9402984+00:00",
+    "crop_xywh": [
+      96,
+      375,
+      1640,
+      730
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "6ccdc09d9107127de51b4916e91521798eca8792623a149c9840cb73692db666"
+  },
+  {
+    "file": "onboarding-telemetry-detail.png",
+    "source_capture": "T188-onboarding-diagram-result-private.png",
+    "source_sha256": "8ab8d49298d23cdf589979fd95e702f05a64dece02569520aef4d3d0cdf28845",
+    "captured_at": "2026-10-25T01:38:22.8006181+00:00",
+    "crop_xywh": [
+      235,
+      555,
+      1340,
+      273
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "dcc2f42a81700fb71c8ac0a060a691eae4c5b962d5f2e69a368474194c2960fe"
+  },
+  {
+    "file": "native-copy-type.png",
+    "source_capture": "T226-evidence-native-config-typing-settled-private.png",
+    "source_sha256": "96851ffeebcdb89a152fc97384bd4d063c4aefce2866546e5c27f36d39be6103",
+    "captured_at": "2026-10-25T02:04:45.5982167+00:00",
+    "crop_xywh": [
+      222,
+      782,
+      1370,
+      184
+    ],
+    "redaction": "Crop only; excludes browser/account headers, credentials, product banners, and OS watermark.",
+    "sha256": "f9cdf2417ea02e7c00c4b3cc7b38eded237a105294d3f5b76e0e835bdad9d48a"
+  }
+]
