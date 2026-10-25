@@ -51,10 +51,10 @@ setup on Start; Azure SRE Agent sign-in belongs on the SRE Agent page. Its Azure
 sign-in steps use Temporary Access Pass (TAP) from Resources by default, with
 password guidance at the end and no inline Azure credential table.
 LAB720 and the shared reference retain their previous setup until reviewed.
-The guides contain the full SRE activities from the respective Word manuals,
-with the requested setup corrections, explicit import/connection prerequisites,
-and verified setup screenshots alongside the remaining named screenshot
-placeholders. They do not update the Word files.
+The guides contain the SRE activities with the requested setup corrections and
+explicit import/connection prerequisites. PREL38 has been revised and exercised
+against the running lab; LAB720 retains its earlier draft and named screenshot
+placeholders. These Markdown changes do not update the Word files.
 The SRE sequence is background repository import, configuration review in the
 context wizard shown at sign-in, connection of the completed imported repository,
 then **Done and go to agent**, the Getting started thread (at most five minutes),
@@ -84,7 +84,34 @@ visible, OAuth showed **Connected to GitHub** after user-approved consent,
 and the saved repository survived a reload. Its Status cell showed a dash;
 this does not establish completed indexing or source-code retrieval.
 LAB720 reuses explicitly labelled PREL38 examples and still needs its own
-runtime check before publication. Other screenshot placeholders remain.
+runtime check before publication.
+
+The [PREL38 walkthrough](skillable/instructions/PREL38-walkthrough.md) records
+the actual actions, UTC timings, cropped screenshots, gaps, and separately
+labelled human-time estimates. Its 72-minute operator trial includes
+facilitator repairs, tooling/evidence overhead, overlapping work, and delayed
+approvals; it is not a measured 45-minute human completion. Fresh setup, slide
+review without a compatible viewer, and the other teams' pages remain outside
+that timing claim. LAB720's 25-minute optimization is deferred for discussion.
+
+PREL38 now separates configuration inquiry from the optional `/api/health`
+exercise. Debugging must repair the running app and return real `jacket`
+products; an undeployed code PR or empty result is not recovery. Cost automation
+and live-report generation overlap other activities, with explicit checks for
+pending questions/approvals and completed artifacts. Report versions and sharing
+are required; conversational refinement remains optional at the end.
+
+The PREL38 deployment source seeds the package's actual search failure using
+`Catalog__AsOfDate=2026-12-15` and probes
+`/api/search/by-name?name=jacket`, replacing the unused fault flag and old
+`/YSOD.aspx` probe. These are the only three template-variable changes.
+Source/package validation, repair of an existing instance, and publication of
+hosted cloud template 6969 are separate operations; do not treat one as proof
+of the others. Template 6969 was subsequently published and independently
+downloaded to verify exactly those three changes, after confirming PREL38
+profile 224911 is its sole consumer. A new lab deployment remains untested.
+The refreshed PREL38 learner page shows seven images without authoring warnings;
+its actual native configuration-prompt typing control was exercised in the VM.
 
 PREL38 already has the GHE group assignment and GH-Sync action used by LAB720;
 enterprise SSO worked for the running PREL38 lab account. No provisioning
@@ -176,7 +203,7 @@ infrastructure or profile configuration.
    lifecycle actions. Do not use VM **Commit Changes** for instruction updates.
 
 Source checks:
-`node --test skillable\instructions\standard-workflow.test.cjs skillable\instructions\lab-guides.test.cjs`.
+`node --test skillable\instructions\standard-workflow.test.cjs skillable\instructions\lab-guides.test.cjs skillable\instructions\prel38.test.cjs`.
 These check source structure, activity coverage, backup hashes, and safety
 constraints, not Skillable rendering or successful VM input. The earlier
 custom-theme experiment is separate and is not required here.

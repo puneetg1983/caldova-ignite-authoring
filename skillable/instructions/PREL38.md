@@ -9,8 +9,6 @@ Do not enable GitHub sync or change Resources, themes, infrastructure or permiss
 
 # Start
 
-**PREL38 - Pre-Ignite-Day Lab: Operating Caldova Retail Ops with Azure SRE Agent**
-
 Sign in to the lab VM and prepare the shared tools used in this lab.
 
 > [!Note] Need help? See **Additional guidance** at the end, grouped by section, or ask the facilitator.
@@ -28,11 +26,13 @@ Sign in to the lab VM and prepare the shared tools used in this lab.
 | VM username | +++@lab.VirtualMachine(Win11-Pro-Base).Username+++ |
 | VM password | +++@lab.VirtualMachine(Win11-Pro-Base).Password+++ |
 
-**Screenshot placeholder START-01: Windows sign-in and the focused destination field. Do not show passwords or TAP values.**
+<!-- START-01: Windows sign-in and field focus; never capture passwords or TAP values. -->
 
 ## 2. Azure Portal
 
-Keep the existing **Resources > Azure Portal** card and its username, password, and TAP controls unchanged. To open the portal inside the VM, use:
+**Goal:** Sign in to Azure with your lab account.
+
+To open the portal inside the VM, use:
 
 @[Open Azure Portal in the VM](`Start-Process msedge.exe -ArgumentList 'https://portal.azure.com/#home'`){PowerShell visible}
 
@@ -40,18 +40,18 @@ Keep the existing **Resources > Azure Portal** card and its username, password, 
 2. At **Temporary Access Pass**, focus the field inside the VM and use the **TAP** control in Resources.
 3. Confirm you are using the lab account and subscription, not a personal account.
 
-**Screenshot placeholder START-03: Azure Portal inside the VM and selection of the assigned lab subscription; hide credentials.**
+<!-- START-03: Azure Portal in the VM; exclude credentials and account details. -->
 
-## Existing shared setup: GitHub and Copilot
+## GitHub and Copilot
 
-The following shared sign-in steps are retained from PREL38. Open all pages inside the VM and complete them before the modules that use GitHub Copilot.
+**Goal:** Sign in to the lab GitHub account and enable Copilot in VS Code. Open all pages inside the VM.
 
 1. Navigate at +++https://github.com/enterprises/skillable-events/sso+++ and login with the same Azure credentials
 2. Keep login page from SSO portal above open in browser, open VS Code
 3. Click "Signin" in VSCode GitHub Copilot and select "Continue with Github login"
 4. authenticate profile through SSO portal and GHE is now active in their VS Code instance
 
-**Screenshot placeholder START-04: Lab GitHub enterprise SSO and VS Code's Continue with GitHub option, without credentials.**
+<!-- START-04: Enterprise SSO and VS Code GitHub sign-in; exclude credentials. -->
 
 Select **Next** to continue to Modernization.
 
@@ -59,9 +59,11 @@ Select **Next** to continue to Modernization.
 
 # Modernization
 
-> [!Alert] Authoring placeholder: no approved Modernization exercise is present in the exported PREL38 instructions. The Modernization owner must supply or confirm this page before publication. Do not overwrite another team's newer live content with this placeholder.
+<!-- The Modernization owner must supply this exercise. Preserve any newer live content. -->
 
 Use the same VM and lab credentials from Start.
+
+Follow the facilitator's instructions for this module.
 
 Select **Next** to continue to ARM/Azure Copilot.
 
@@ -69,9 +71,9 @@ Select **Next** to continue to ARM/Azure Copilot.
 
 # ARM/Azure Copilot
 
-## Existing shared setup: Install the ARM MCP server
+## Install the ARM MCP server
 
-These existing PREL38 instructions are retained for their owning team to review:
+**Goal:** Connect GitHub Copilot to the lab's Azure environment.
 
 1. In edge, navigate to +++https://aka.ms/JoinARMMCP+++, this will open up VSCode
 2. Click "Install"
@@ -79,11 +81,10 @@ These existing PREL38 instructions are retained for their owning team to review:
 
 Now you can use the VSCode GitHub Copilot chat to ask any questions about your Azure environment!
 
-**Screenshot placeholder ARM-01: ARM MCP installation and authentication in the VM, without credentials.**
+<!-- ARM-01: ARM MCP installation and authentication; exclude credentials. -->
 
-ARM MCP section STEVEN TODO
-
-> [!Alert] Authoring placeholder: the existing ARM MCP placeholder above has no exercise body. The ARM/Azure Copilot owner must provide the approved exercises and screenshot callouts before publication. No deployment or permission changes are introduced by this draft.
+<!-- ARM MCP section STEVEN TODO
+The ARM/Azure Copilot owner must supply the remaining exercises. -->
 
 Select **Next** to continue to SRE Agent, the final module.
 
@@ -93,7 +94,7 @@ Select **Next** to continue to SRE Agent, the final module.
 
 ## Welcome to Caldova operations
 
-Act as the on-call engineer for Caldova Retail Co., a storefront and operations app running on Azure App Service. Review the environment, approve a reversible configuration change, investigate a customer-visible search failure, and verify the fix without a code deployment.
+Act as the on-call engineer for Caldova Retail Co., a storefront and operations app running on Azure App Service. Understand the app, investigate a customer-visible search failure, verify recovery, and create reusable cost and health views.
 
 Use the assigned `caldova-sreagent-<suffix>`. The Web App, resource group, and telemetry resources may also have generated suffixes. Whenever this guide says **Caldova Web App**, use the full actual name in your lab; do not type `<suffix>` or assume a fixed example name.
 
@@ -102,15 +103,15 @@ Use the assigned `caldova-sreagent-<suffix>`. The Web App, resource group, and t
 1. Start a GitHub import in the background.
 2. Review the configured resource group and connected log sources in Quickstart, without changing them.
 3. Connect the completed imported repository to the agent.
-4. Review the environment and health findings in the Getting started thread for at most **5 minutes**.
-5. Review and approve a reversible App Service health-check configuration change.
-6. Reproduce the product-search failure, investigate its configuration cause, approve a precise fix, and verify search recovery.
-7. Create and run a recurring, read-only cost audit.
-8. Build and check a reusable live traffic-and-health report.
+4. Review the app summary, architecture diagram, and health findings in Getting started.
+5. Inspect the App Service configuration.
+6. Investigate the product-search failure and verify recovery.
+7. Schedule a weekly cost review with forecasting, savings recommendations, and a PowerPoint.
+8. Create a live report with a dependency-health graph, traffic charts, versions, and sharing.
 
 ## Sign in to Azure SRE Agent
 
-Open your assigned agent using the lab Azure account.
+**Goal:** Open your assigned agent using the lab Azure account.
 
 With Windows signed in and the lab VM selected, use:
 
@@ -123,9 +124,11 @@ With Windows signed in and the lab VM selected, use:
 
 After sign-in, keep the **context wizard** open. Review configuration and connect the imported repository before selecting **Done and go to agent**.
 
-**Screenshot placeholder SRE-00: SRE Agent Sign in, Temporary Access Pass sign-in, and assigned agent selection. Hide account-specific information and all credentials.**
+<!-- SRE-00: SRE sign-in and agent selection; exclude account details and credentials. -->
 
 ## Start the GitHub import in the background
+
+**Goal:** Create your own repository copy while you review the agent's context.
 
 1. In the VM browser, complete the **GitHub and Copilot** sign-in steps on Start using the lab account.
 2. Focus the browser address bar inside the VM, click +++https://github.com/new/import+++, then press **Enter inside the VM**.
@@ -136,7 +139,7 @@ After sign-in, keep the **context wizard** open. Review configuration and connec
 4. Under **Owner**, select the lab GitHub account. Set **Repository Name** to `caldova-ignite-authoring` and visibility to **Private**.
 5. Select **Begin import**, leave the status tab open, and return to the SRE Agent's context wizard for the configuration review **without waiting**.
 
-**Screenshot placeholder SRE-01: GitHub Importer with the exact source-repository label, lab owner, repository name, and Private visibility.**
+<!-- SRE-01: Importer fields and Private visibility; redact account details. -->
 
 ## Review Azure resources and telemetry before connecting GitHub
 
@@ -149,11 +152,7 @@ Stay on **Quickstart** in the **context wizard**. GitHub is **not connected yet*
 1. Under **Azure resources**, click **Show details**. Review the configured **Resource group**. Leave it unchanged.
 2. Under **Logs**, click **Show details**. Confirm **Application Insights** and **Log Analytics** both show **Connected**.
 
-**Screenshot SRE-02: Azure resource details; subscription value redacted.**
-
 ![Azure resources expanded to show Resource group scope](images/context-wizard/azure-resource-scope.png)
-
-**Screenshot SRE-03: Both log providers connected.**
 
 ![Logs details with Application Insights and Log Analytics Connected](images/context-wizard/logs-connected.png)
 
@@ -167,181 +166,162 @@ Continue to **Connect the imported repository**.
 
 ## Connect the imported repository
 
+**Goal:** Connect your imported copy so the agent can investigate the application source.
+
 1. Confirm the GitHub import is complete and its source files are visible. Copy the imported repository's URL, not the original source URL.
 2. In the **same context wizard**, under **Code**, click **+**. Select **GitHub** and paste your URL into **Repository URL**.
 3. Scroll to **Connection method**. Keep **OAuth**, then click **Sign in to GitHub**. Confirm the **lab GitHub account**, review access, and click **Authorize Azure-SRE-Agent**. When **Connected to GitHub** appears, click **Next**.
 4. Under **Add repositories**, confirm your imported repository's URL, then click **Save**.
 5. Under **Code**, click **Show details** and confirm the imported repository appears. Confirm the repository connection is ready before source-code debugging.
 
-**Screenshot SRE-04: OAuth controls and saved repository; URL redacted.**
+Your repository URL should look like `https://github.com/User1-12345678_events/caldova-ignite-authoring`. Replace the example username with your actual lab GitHub username; do not use the original `puneetg1983` repository URL.
 
 ![OAuth connection method and Sign in to GitHub](images/context-wizard/github-oauth.png)
 
 ![Code details with one saved repository](images/context-wizard/repository-saved.png)
 
-## Review the Getting started thread - maximum 5 minutes
+## Review the Getting started thread
 
-1. In the context wizard, select **Done and go to agent**. The **Getting started** thread opens.
-2. Read its environment summary and the Web App's health and configuration findings.
-3. Reply as Caldova's on-call engineer and ask a follow-up if useful. Keep it read-only; do not enter personal or confidential information.
-4. At **5 minutes**, or while the agent is processing, continue to **Update Web App configuration**. Return later to read its response.
+> [!Note] Spend up to 5 minutes here, then continue to **Inquire and configure Web App**. If the agent is still processing, continue and return later.
 
-**Screenshot placeholder SRE-05: Done and go to agent and the Getting started thread's environment and health findings.**
+**Goal:** Understand what Caldova does and how its Azure resources fit together.
 
-## Update Web App configuration
+1. In the context wizard, click **Done and go to agent**, then review your **Getting started** thread.
+2. Answer any open questions from the agent, then review the application summary, architecture diagram, and health findings.
+3. Chat with it to understand the app better. To use the example below, click the chat box **inside the VM**, then click **Copy & Type Text**:
 
-1. In the same Getting started thread, if its findings identified a missing health-check path, send:
+++++What is this app about, and what can customers do with it?++++
 
-```text
-For the Caldova Web App identified in this conversation, configure the App Service Health check path to /api/health. First show the current state, proposed change, exact command, and rollback. Keep Review mode and wait for my approval before applying the change.
-```
+## Inquire and configure Web App
 
-2. Review the exact target, command, impact, and rollback. The Health check path is an App Service configuration property, not a new application setting.
-3. Select **Approve action** only for the intended lab Web App change.
-4. Confirm completion and ask the agent to read back the configured path.
+**Goal:** Inspect and understand the assigned App Service configuration.
 
-**Screenshot placeholder SRE-06: Health-check proposal, exact command, rollback, approval, and verified resulting path.**
+1. In the same Getting started thread, click the message box and use **Copy & Type Text**:
 
-## Debug a scenario
+++++List the configuration of the Caldova App Service.++++
 
-### See the problem
+2. Send the message, review the configuration, and ask questions about any unfamiliar settings.
 
-1. In Azure Portal inside the VM, open the assigned Web App's **Overview** and its **Default domain** in the VM browser.
-2. Select **Catalog**. Confirm the paginated product catalog loads.
-3. In **Search by product name**, enter `jacket` and select **Search**.
-4. Confirm the customer symptom: **500 - Search failed**, while catalog browsing still works.
+The Health check configuration exercise is optional; see **Additional guidance**.
 
-**Screenshot placeholder SRE-07: Product-search HTTP 500 alongside the working catalog table.**
+## Debug the product-search failure
 
-### Debug it with the agent
+**Goal:** Investigate the search problem, fix it, and confirm customer-visible recovery.
 
-1. Confirm both the **import** and **repository connection** are ready, with source files visible in the imported repository.
-2. Start a new chat and describe only the symptom:
+1. Confirm the repository import and connection are ready and the agent can retrieve source files.
+2. Open the Caldova web app URL from the configuration response in the **VM browser**. See **Additional guidance** if the URL is missing.
+3. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
 
-```text
-Users report that searching the product catalog on the Caldova Web App assigned to this lab fails with HTTP 500, while browsing the catalog works. Investigate the root cause using request evidence, current configuration, and the connected repository. Cite the affected source code. Do not change anything yet.
-```
+![Product-name search fails with HTTP 500](images/prel38-walkthrough/search-failure.png)
 
-3. Review how the agent separates the symptom from the cause, cites `Catalog__AsOfDate` and the relevant source, and ranks mitigation options.
-4. If evidence confirms a future date is responsible, request a precise correction rather than deleting the setting:
+4. Return to the SRE Agent tab, select **New chat**, click the message box, and use **Copy & Type Text**:
 
-```text
-Instead of deleting Catalog__AsOfDate, propose updating its value to today's correct date in the format and time basis expected by the application. Show the current value, exact change, and rollback. Keep Review mode and wait for approval.
-```
+++++Product search fails with HTTP 500, but browsing works. Find out why, fix the running app, and check that searching for jacket returns products.++++
 
-5. Review the proposed command. It must update `Catalog__AsOfDate` on the assigned Web App, not delete it or change unrelated settings.
-6. Select **Approve action**, confirm completion, then repeat the same `jacket` search in the VM browser.
-7. Confirm results appear instead of the error and catalog browsing still works. Do not claim recovery from the agent's summary alone.
+5. Send the message, follow the investigation, and answer the agent's questions.
+6. Return to the app tab and repeat the same `jacket` search. Confirm results appear and catalog browsing still works.
 
-**Screenshot placeholder SRE-08: Evidence-backed root cause, precise date-setting update and rollback, approval, and successful repeat search.**
+## Schedule a weekly cost review
 
-## Scheduled tasks: read-only weekly cost audit
+**Goal:** Use chat to automate cost analysis, forecasting, and savings recommendations.
 
-1. In SRE Agent, select **Scheduled tasks** in the sidebar, then **Create task**.
-2. Name it **Weekly Cloud Cost Audit (Caldova deck)**.
-3. In the task details, enter:
+> [!Note] This lab was just deployed, so little cost history may be available. That reflects the age of the lab, not a limitation of the agent. Forecasts should state their assumptions.
 
-```text
-Run a weekly, read-only Cloud Cost Audit for the Azure resources this agent manages. Discover the actual lab subscription and resource group; do not assume names. Use billed cost data where available. Otherwise estimate from inventory and clearly label estimates. Compare this week with last week, identify top cost drivers and idle, oversized, or orphaned resources, and rate findings SEV1-SEV3 by cost impact with recommendations and rough monthly savings. Post a short summary and a downloadable PowerPoint deck. Change no Azure resources or permissions, do not use agent memory, and state data sources and limitations. Use 16:9 slides with a navy #1F3A5F header, CALDOVA wordmark, teal #00A39A accents, red/amber/slate severity colors, one idea per slide, and consistent headers and footers. Prefer charts over tables over text.
-```
+1. In SRE Agent, select **New chat**. Click the message box, then use **Copy & Type Text**:
 
-4. Set **Frequency** to **Weekly**, choose a day/time, and review the displayed time zone. Keep the task in **Review** mode.
-5. Select **Create task** and confirm it appears with the intended schedule.
-6. Select the task and **Run now**, then open the execution thread.
-7. While it runs, review other independent work. Return to inspect data sources, cost-impact findings, recommendations, and the generated deck.
+++++Create a weekly task called "Weekly Caldova cost review" and run it once now. Review current Azure costs, forecast next month, and recommend ways to save money. Create a beautiful, visually rich PowerPoint with charts, tables, and clear visuals showing cost drivers, forecasts, and potential savings. Use available data, clearly label estimates and assumptions, and don't change any resources.++++
 
-**Screenshot placeholder SRE-09: Task creation, Weekly schedule, Review mode, and Run now.**
+2. Send the message and answer **any questions from the agent**.
+3. In the left navigation, select **Automation**. Once **Weekly Caldova cost review** appears, open it and check its schedule and latest run status. If no run has started, select **Run task now**.
 
-**Screenshot placeholder SRE-10: Completed cost-audit thread and downloadable Caldova-branded deck, with data-source limitations.**
+![Run task now and the linked execution thread](images/prel38-walkthrough/cost-task-run.png)
 
-## Live reports: traffic and health
+4. **Don't wait for completion.** Scroll to **Create a live traffic and health report** below and continue.
+5. After that activity, return to **Automation > Weekly Caldova cost review**. Open its latest execution thread, review the findings, and open the PowerPoint attachment.
 
-1. Return to **Builder > Connectors** and confirm a healthy Application Insights or Log Analytics connector for the Web App.
-2. Confirm the Web App itself emits telemetry.
-3. Select **Live Reports > + New report**.
-4. Enter:
+## Create a live traffic and health report
 
-```text
-Build a read-only live report called "Caldova Web App Traffic & Health" using the connected telemetry source for the actual Web App assigned to this lab. Use the last 24 hours. Include request count, failure rate, average response time, a traffic trend chart, the top 10 requested URLs, top failing URLs with status codes, and country/region breakdown if the source contains that data. Retrieve current data when opened or reloaded. Identify the resource and source, label missing data, and add no write actions or permissions.
-```
+**Goal:** Visualize dependencies and health, inspect traffic, and explore report versions and sharing.
 
-5. Review the exact connector, resource, tools, and requested permissions. Approve only the expected read-only calls; use **Allow once** if that is the offered action. Do not broaden permissions.
-6. Confirm the report saves to the gallery, then open it and inspect the health tiles, charts, URL tables, and available location data.
-7. Select **Reload** to retrieve fresh data.
+1. In the left navigation, select **Live reports > + New report**.
+2. When the agent asks what report you want, click **Enter a custom response** and use **Copy & Type Text**:
 
-**Screenshot placeholder SRE-11: Live Reports creation, connector/tool review, and saved report tile.**
+++++Create a visually rich live report called "Caldova Traffic and Health" using the last 24 hours of connected telemetry. Put a dependency graph at the top, showing each component and its health. Below it, show traffic trends, request counts, failure rate, response times, top requested and failing URLs, and country/region where available. Use clear charts, tables, and health indicators. Label missing data and unknown health, and keep it read-only.++++
 
-**Screenshot placeholder SRE-12: Health summary and traffic chart.**
+3. Click the arrow beside your response and answer any further questions. Review the report-saving approval and allow only the expected read-only telemetry tools.
+4. **Don't wait for completion.** Select **Automation > Weekly Caldova cost review** and check its latest run. Finish other pending activities; if none remain, scroll to **Additional guidance** and try an optional activity.
+5. Return later through **Live reports > Caldova Traffic and Health** once the report is saved. Review the dependency graph first, then the charts and tables.
+6. Open the **version picker** to inspect saved versions. If an earlier version exists, compare it, then return to the current version. Versions preserve layout and configuration, not historical telemetry.
+7. Select the share icon at the upper right (**Copy link to report**). Recipients must already have access to the agent; sharing the link does not grant access.
 
-**Screenshot placeholder SRE-13: Requested/failing URL tables and country/region results or an explicit missing-data message.**
+![Saved versions, dependency health first, and the report-sharing control](images/prel38-walkthrough/live-report-versions.png)
 
 ## Complete
 
-Review the pattern you practiced: connected operational context, evidence-based investigation, a reversible change with human approval, and customer-visible verification. Confirm which objectives you completed, and record any blocked import, connection, task, or report instead of claiming it succeeded.
-
-Keep the lab's existing cleanup policy. Do not delete shared resources, change role assignments, commit VM changes, or reset the lab as part of editing these instructions.
+Confirm search works, review the cost findings and PowerPoint, and inspect the live report. Record anything still running or blocked. Follow the facilitator's cleanup instructions; do not reset the lab or delete shared resources.
 
 ## Additional guidance
 
-### Start: VM sign-in
+Use the guidance for your current section, or ask the facilitator.
 
-Click-to-type sends text to the current cursor position in the selected VM. Open the destination screen and focus its field first, then click the matching value in Instructions or Resources. VM credentials and Azure credentials are different.
+### Sign-in and VM browser
 
-### Start: Azure Portal
+Focus the destination field **inside the VM** before using **Copy & Type Text**, and keep it focused until typing finishes. Then select **Send** or press **Enter** as instructed. Use **Resources > Azure Portal** for Azure sign-in details, not the VM account.
 
-- **Browser did not open?** Focus the address bar **inside the VM**, click +++https://portal.azure.com/#home+++, then press **Enter inside the VM**.
-- The open-in-VM commands require working VM Integration Services. If a command fails, use the Type Text fallback. If Type Text also fails, type the URL manually inside the VM and notify the facilitator. Do not change VM settings or permissions to work around a failure.
-- **Password requested instead of TAP?** Use the Azure password in **Resources > Azure Portal**, not the VM password. Focus the password field inside the VM first.
+**Browser did not open?** Focus the VM browser's address bar, use +++https://portal.azure.com/#home+++ or +++https://sre.azure.com+++, and press **Enter inside the VM**. If Type Text also fails, type the URL manually. Do not change VM settings or permissions.
 
-### Start: GitHub and Copilot
-
-If enterprise sign-in or account provisioning is blocked, notify the facilitator. Do not substitute a personal GitHub account or change access policies.
-
-### Sign in to Azure SRE Agent
-
-- **Browser did not open?** Focus the address bar **inside the VM**, click +++https://sre.azure.com+++, then press **Enter inside the VM**. Do not use an external Resources link that opens on your own computer.
-- **Password requested instead of TAP?** Use the Azure password in **Resources > Azure Portal**, not the VM password. Focus the password field inside the VM first.
-
-### Background activities
-
-Agent responses, repository imports, and other background activities can take time. Continue independent exercises while processing runs. Return before a later step that requires the result. Do not start a second copy of the same operation.
+**Password requested instead of TAP?** Use the Azure password in **Resources > Azure Portal**, not the VM password.
 
 ### Review Azure resources and telemetry
 
-**Wizard not open?** In the agent's Operations Hub, open **Overview > Complete setup**, if available.
-
-**Empty broader scopes?** Leave management-group and subscription scopes unchanged. Review the existing **Resource group scope** only; do not add broader access.
+If the wizard is closed, go to **Operations hub > Overview > Complete setup**. Ask the facilitator if the option is absent. Review only the existing resource group; do not add broader access.
 
 ### Connect the imported repository
 
-- **Import still running?** Continue independent exercises and return to connect the repository before debugging.
-- **Repository already connected?** Keep it and do not add a duplicate.
-- **Organization access requested?** Leave the organization **Request** buttons untouched; this exercise uses the private repository under your lab account.
-- **Status shows a dash?** A saved repository is not proof that indexing or source-code retrieval has finished. Confirm the agent can retrieve source files before debugging; ask the facilitator if it cannot.
-- **Sign-in or connection failed?** Notify the facilitator; do not use a personal account.
+If import or indexing is still running, continue independent activities and return before debugging. Do not add a duplicate connection or use a personal account. If the agent cannot retrieve the imported source, ask the facilitator.
 
 ### Review the Getting started thread
 
-**Thread not open?** Under **Favorites**, select **Team onboarding**. If absent, use **Search Threads**, search `get to know`, and open the greeting for your lab user.
+Under **Favorites**, select **Team onboarding**. If absent, select **Search Threads**, search `get to know`, and open your lab user's greeting.
 
-### Update Web App configuration
+### Debug the product-search failure
 
-If the health-check path is already configured, verify it rather than repeating the change. If the agent reports failure, inspect the error rather than treating it as success.
+**App URL missing?** In the configuration thread, ask "What is the Caldova web app URL?" If needed, open the assigned Web App in Azure Portal and select **Browse**. Automatic URL population is not required to continue.
 
-### Debug a scenario
+If search already works, tell the facilitator; do not break the app yourself. Verify recovery by repeating the search in the app.
 
-If search already succeeds, record that state and ask the facilitator; do not deliberately break a shared environment.
+A source-code pull request is not a deployment. If the running app still fails after a proposed fix, tell the agent the result and ask it to restore live search. Returning an empty result set is not recovery for the `jacket` search.
 
-### Scheduled tasks: read-only weekly cost audit
+### Schedule a weekly cost review
 
-- **Different labels?** Some lab versions use **Automation > New task**; use the equivalent task list, not incident triggers.
-- **Autonomous default?** Keep **Review** mode rather than accepting that default to complete the form.
-- **Run now absent?** Ask the facilitator for the supported immediate-run path; do not create duplicate tasks.
-- **Data or deck unavailable?** Record the limitation. Estimates are not actual billing, and a missing artifact is not a completed deck.
+If the task is not listed yet, return to its creation chat and answer any pending questions or approvals. Continue another activity and check again; do not create a duplicate task.
 
-### Live reports: traffic and health
+Select **Automation > Weekly Caldova cost review** to check its latest run. Do not start a duplicate run. Open the execution thread to verify the findings and PowerPoint, rather than relying on the run status alone. If a run fails or the PowerPoint is missing, record the issue and ask the facilitator.
 
-- **Connector missing?** Ask the facilitator for the approved setup; do not invent a connector wizard or grant roles.
-- A connected agent connector does not prove application instrumentation is configured.
-- **Data delayed or empty?** Generate normal browsing/search traffic, return after other activities, and inspect the source/time range before concluding the Web App is healthy.
-- Treat unavailable geographic data or failed queries as limitations, not zero failures. Record any connector or query error for the facilitator.
+If the downloaded PowerPoint cannot open because the VM has no compatible viewer, keep the file and ask the facilitator for a viewing option. Do not install software or grant additional access.
+
+### Create a live traffic and health report
+
+If telemetry is empty, browse the app and try search, then return after another activity. Missing data or unknown dependency health does not mean the app is healthy. Ask the facilitator about connector or query errors; do not add permissions.
+
+While working on another activity, check the report's authoring thread for pending questions or approvals. **Allow once** may be needed to save the report with its expected read-only telemetry tools; saving the report does not change Azure resources. An empty gallery does not necessarily mean generation is still running.
+
+The 24-hour report can still include earlier failures after a fix. Verify recovery with fresh app requests rather than expecting historical failure charts to turn green immediately.
+
+### Optional: App Service Health check
+
+**Goal:** Explore endpoint monitoring separately from product-search recovery.
+
+Return to the configuration conversation and click its message box. Use **Copy & Type Text**:
+
+++++Configure the Caldova App Service Health check path to /api/health. Explain the impact before making the change.++++
+
+Before approving, confirm the target app, successful endpoint response, restart impact, and rollback. Verify the saved setting afterward. This endpoint does not detect the search fault.
+
+### Optional: Keep improving your live report
+
+Select **Live reports > Caldova Traffic and Health > Open authoring thread**. Click the message box and use **Copy & Type Text**:
+
+++++Group the dependency graph by service and make unhealthy components stand out.++++
+
+Answer any questions. Return through **Live reports > Caldova Traffic and Health** to inspect the update and compare versions.

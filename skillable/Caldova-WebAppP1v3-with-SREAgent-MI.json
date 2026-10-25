@@ -7,9 +7,9 @@
   "variables": {
     "location": "swedencentral",
     "packageUrl": "https://ignite2026-sreagent-demo-cfgsgac8h8abh2d9.westus3-01.azurewebsites.net/webapp.zip",
-    "faultSettingName": "BreakMyWebApp",
-    "faultSettingValue": "1",
-    "availabilityPath": "/YSOD.aspx",
+    "faultSettingName": "Catalog__AsOfDate",
+    "faultSettingValue": "2026-12-15",
+    "availabilityPath": "/api/search/by-name?name=jacket",
     "availabilityEnabled": true,
     "agentLocation": "eastus2",
     "labSuffix": "[uniqueString(resourceGroup().id)]",
