@@ -241,6 +241,13 @@ automation attempt. Cleanup was persisted through the supported authoring UI:
 | Independent full export at **22:19:23 UTC** | Only publisher `Enabled` changed to `false`; all four original actions and other profile fields preserved |
 | Existing media/export entries | All 47 byte-identical |
 
+A later continuation saved the corrected repository script in action
+**187064**, still disabled. An independent full export at **22:28:47 UTC**
+verified that only its script changed from the disabled profile. A proposed
+new verification activity remained an unsaved draft and was cancelled at
+**22:42:11 UTC**. No new activity or instruction controls were published,
+and no further cloud execution or resolved URL was established.
+
 Keep the publisher disabled until a supported live check proves the exact
 learner-specific URL, resolved instruction rendering, native VM entry, and the
 deployed application. The URL-only correction and broader review draft remain

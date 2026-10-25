@@ -223,17 +223,20 @@ Do not prefill the variable with an example URL.
 Current-instance checks reached the cloud runner but exposed Azure module
 information being reported as an error, followed by an invalid resource-group
 binding. The repository script now suppresses only Azure informational output
-and uses the correct profile alias; the corrected version is **not live-verified
-or deployed**. Post-Build execution on a new lab has not been tested.
+and uses the correct profile alias. The corrected script is saved in the
+**disabled** live action but is **not runtime-verified**. Post-Build execution
+on a new lab has not been tested.
 
 URL debugging is deferred. The temporary verification heading, URL control,
 and activity were removed, and the original native guide was restored.
 An independent full-profile export at **2026-10-25 22:19:23 UTC** verified
 zero activities, all four original lifecycle actions unchanged, all other
 profile fields unchanged, and all 47 media/export entries byte-identical.
-The only remaining lifecycle change from the installed configuration is
-**187064.Enabled = false**, preventing the unverified action from delaying
-new lab launches.
+Publisher **187064.Enabled = false** prevents the unverified action from
+delaying new lab launches. A later export at **22:28:47 UTC** verified the
+corrected script saved in that disabled action, with all other profile fields
+unchanged. A proposed new verification activity was cancelled without saving;
+no new activity or instruction controls were published.
 
 Do not enable the publisher or publish the URL-only correction until a supported
 live check establishes the actual resolved HTTPS URL and native typing opens
