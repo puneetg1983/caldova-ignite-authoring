@@ -17,7 +17,8 @@ const setupImages = [
     "github-oauth.png",
     "repository-saved.png"
 ].map(name => `images/context-wizard/${name}`);
-const overviewImage = "images/context-wizard/overview.png";
+const reviewImages = ["overview.png", "repository-connection.png"]
+    .map(name => `images/context-wizard/${name}`);
 const allowedTokens = new Set([
     "@lab.VirtualMachine(Win11-Pro-Base).SelectLink",
     "@lab.VirtualMachine(Win11-Pro-Base).Username",
@@ -296,7 +297,7 @@ for (const lab of labs.filter(lab => lab.name !== "PREL38")) {
 }
 
 test("setup assets are real cropped PNGs and all guides retain the same repository connection steps", () => {
-    for (const image of [...setupImages, overviewImage]) {
+    for (const image of [...setupImages, ...reviewImages]) {
         const png = readFileSync(join(__dirname, ...image.split("/")));
         assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
         assert.ok(png.readUInt32BE(16) >= 600, image);
@@ -304,7 +305,7 @@ test("setup assets are real cropped PNGs and all guides retain the same reposito
         assert.ok(png.readUInt32BE(16) < 1779, `Uncropped capture: ${image}`);
     }
     assert.deepEqual(readdirSync(join(__dirname, "images", "context-wizard")).sort(),
-        [...setupImages, overviewImage].map(path => path.split("/").at(-1)).sort());
+        [...setupImages, ...reviewImages].map(path => path.split("/").at(-1)).sort());
     const guides = ["standard-workflow", "PREL38", "LAB720"].map(name =>
         readFileSync(join(__dirname, `${name}.md`), "utf8"));
     const steps = source => source.split("## Connect the imported repository")[1]

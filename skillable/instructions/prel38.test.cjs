@@ -87,6 +87,9 @@ test("PREL38: OAuth uses the imported lab repository and retains source-readines
     assert.match(connection, /https:\/\/github\.com\/User1-12345678_events\/caldova-ignite-authoring/);
     assert.match(connection, /Replace the example username/);
     assert.match(connection, /Confirm the repository connection is ready/);
+    assert.deepEqual([...connection.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(match => match[1]),
+        ["repository-connection.png", "github-oauth.png", "repository-saved.png"]
+            .map(name => `images/context-wizard/${name}`));
     assert.doesNotMatch(connection, /Builder|Azure Portal/);
 });
 

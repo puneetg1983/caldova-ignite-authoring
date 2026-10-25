@@ -94,6 +94,11 @@ provided on 2026-10-25. It shows **More context. Better investigations.**,
 header is excluded. It illustrates the opening section, not a new agent-side
 capture or evidence that fresh sign-in was rerun.
 
+The user also supplied `repository-connection.png` on 2026-10-25. This already
+cropped **Add repositories** dialog contains no account details and is preserved
+unchanged before the OAuth and saved-repository images in PREL38. It illustrates
+provider selection and the Repository URL field, not OAuth or indexing success.
+
 The two images in `skillable/instructions/images/github-import/` show the
 destination fields and import progress from the earlier 2026-10-24 setup.
 Browser chrome and account headers are excluded, and the destination account

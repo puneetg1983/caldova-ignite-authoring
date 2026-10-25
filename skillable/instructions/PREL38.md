@@ -152,6 +152,8 @@ Continue to **Connect the imported repository**.
 
 Your repository URL should look like `https://github.com/User1-12345678_events/caldova-ignite-authoring`. Replace the example username with your actual lab GitHub username; do not use the original `puneetg1983` repository URL.
 
+![Add repositories dialog with GitHub selected and the Repository URL field](images/context-wizard/repository-connection.png)
+
 ![OAuth connection method and Sign in to GitHub](images/context-wizard/github-oauth.png)
 
 ![Code details with one saved repository](images/context-wizard/repository-saved.png)
