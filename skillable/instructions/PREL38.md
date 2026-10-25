@@ -170,6 +170,10 @@ Your repository URL should look like `https://github.com/User1-12345678_events/c
 
 ++++What is this app about, and what can customers do with it?++++
 
+![Example onboarding thread showing saved context and follow-up questions](images/getting-started/thread-overview.png)
+
+*Example from an earlier lab session; your thread title and generated answers may differ.*
+
 ## Inquire and configure Web App
 
 **Goal:** Inspect and understand the assigned App Service configuration.

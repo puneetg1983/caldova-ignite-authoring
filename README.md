@@ -99,6 +99,14 @@ cropped **Add repositories** dialog contains no account details and is preserved
 unchanged before the OAuth and saved-repository images in PREL38. It illustrates
 provider selection and the Repository URL field, not OAuth or indexing success.
 
+The user selected `images/getting-started/thread-overview.png` from an earlier
+onboarding-thread capture for the Getting started section. Its account/agent
+header is cropped out and the account name in the greeting is masked.
+This example predates the revised repository-first flow, so its suggestions
+to connect more sources are not a statement of the current lab's configuration.
+It is separate from the timed trial and does not supply the missing full
+architecture-diagram capture.
+
 The two images in `skillable/instructions/images/github-import/` show the
 destination fields and import progress from the earlier 2026-10-24 setup.
 Browser chrome and account headers are excluded, and the destination account

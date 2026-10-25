@@ -116,6 +116,12 @@ test("PREL38: Getting started has its time guidance in a note, not the heading",
     assert.match(gettingStarted, /application summary, architecture diagram, and health findings/);
     assert.match(gettingStarted, /Answer any open questions/);
     assert.ok(prompts.includes("What is this app about, and what can customers do with it?"));
+    assert.ok(gettingStarted.includes("images/getting-started/thread-overview.png"));
+    assert.match(gettingStarted, /Example from an earlier lab session/);
+    const png = readFileSync(join(__dirname, "images", "getting-started", "thread-overview.png"));
+    assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+    assert.ok(png.readUInt32BE(16) >= 1200);
+    assert.ok(png.readUInt32BE(20) >= 500);
     assert.doesNotMatch(gettingStarted, /Search Threads|Favorites|Operations hub|discovery/i);
 });
 
