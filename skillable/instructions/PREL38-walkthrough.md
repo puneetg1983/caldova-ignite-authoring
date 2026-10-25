@@ -178,15 +178,53 @@ The user selected an earlier, wider onboarding-thread screenshot for Getting sta
 
 The background-import section now includes two cropped screenshots from the earlier 2026-10-24 setup: destination fields with Private selected, and the import-progress screen. The destination account name is masked. These are not new captures or timed-trial records; the original screenshot manifest and action timings remain unchanged.
 
-The review removed the extra repository-readiness gate before debugging. An initial manual-hostname lookup was rejected: debugging must provide the full learner-specific URL directly. The source now uses `@lab.Variable(CaldovaWebAppUrl)` in a native typing control. The separate `Set-CaldovaWebAppUrl.ps1` cloud lifecycle script reads the deployed App Service's actual hostname and publishes that variable after checking the assigned subscription and resource group. It does not change Azure resources or permissions. This still requires live lifecycle configuration and rendered-token verification; it is not evidence that automatic URL population already works. The existing T56 crop remains an example configuration response, not a required URL-discovery exercise or new timed evidence. Native text-entry instructions consistently offer copy/paste, manual typing, or clicking the text after selecting the VM field. The missing-URL question remains only a temporary troubleshooting control. These revisions have not been rerun or retimed.
+The review removed the extra repository-readiness gate before debugging. An initial manual-hostname lookup was rejected: debugging must provide the full learner-specific URL directly. The source now uses `@lab.Variable(CaldovaWebAppUrl)` in a native typing control. The separate `Set-CaldovaWebAppUrl.ps1` cloud lifecycle script reads the deployed App Service's actual hostname and publishes that variable after checking the assigned subscription and resource group. It does not change Azure resources or permissions. At that source-only stage, live lifecycle configuration and rendered-token verification were still pending; the later configuration evidence is recorded below. The existing T56 crop remains an example configuration response, not a required URL-discovery exercise or new timed evidence. Native text-entry instructions consistently offer copy/paste, manual typing, or clicking the text after selecting the VM field. The missing-URL question remains only a temporary troubleshooting control. These revisions have not been rerun or retimed.
 
 The guide now also includes a required thread-level AAU consumption/budget review and optional skill, custom-agent, incident-source, and response-plan setup. These additions are based on the product documentation, **not a new live walkthrough**. Their UI flows, screenshots, active time, and end-to-end wait time have not been measured in this trial. The original 199-action timing baseline, 226-record CSV, 19 evidence screenshots, and human estimates above have not been rewritten to include them. The expanded guide contains ten chat prompts; the earlier seven-prompt publication evidence refers to the measured revision, not this expansion.
 
-AAU allocation changes, incident-source connections, custom skills/agents, and response plans were not applied to the running agent during this revision. No PowerPoint/Azure MCP installation, VM image change, lifecycle action, or new lab launch was performed. Facilitator preparation choices are documented in the repository README. The earlier live Skillable publication remains the last runtime-verified revision; the expanded source needs a separate supported publication and runtime check.
+AAU allocation changes, incident-source connections, custom skills/agents, and response plans were not applied to the running agent during this revision. No PowerPoint/Azure MCP installation, VM image change, lifecycle action, or new lab launch was performed during the source-only review. Facilitator preparation choices are documented in the repository README. The earlier live Skillable instruction publication remains the last runtime-verified revision; the expanded source needs a separate supported publication and runtime check.
 
 An earlier publication attempt was blocked when the previous learner URL redirected to PREL38's profile and guarded foreground checks refused editor input while another window owned focus; no instruction save was attempted.
 
-The user subsequently supplied a new running PREL38 lab. Its client opened in corporate Edge with the guest Windows sign-in screen displayed, and the profile's lifecycle settings were accessible through the supported authoring UI. An unsaved cloud-action dialog and the profile edit form were cancelled without saving. No lifecycle action was installed or executed, no instructions were published, and no replacement lab was launched by the agent. This access check is not a new walkthrough, timing measurement, or proof of resolved app-URL rendering.
+The user subsequently supplied a new running PREL38 lab. Its client opened in corporate Edge with the guest Windows sign-in screen displayed, and the profile's lifecycle settings were accessible through the supported authoring UI. At the initial access check, an unsaved cloud-action dialog and the profile edit form were cancelled without saving. No lifecycle action was installed or executed at that check, no instructions were published, and no replacement lab was launched by the agent. This access check is not a new walkthrough, timing measurement, or proof of resolved app-URL rendering.
+
+### Automatic URL binding: saved configuration, runtime check still pending
+
+On **2026-10-25**, the separate **Publish Caldova app URL** cloud action
+(**187064**) was subsequently saved on PREL38 profile **224911**. Its event is
+**Post-Build**, with **Blocking** and **Enabled** selected, using PowerShell
+**PS 7.1.3 | Az 6.0.0**. Failure handling is **Notify User**, with an explicit
+message to contact the facilitator rather than a guessed URL.
+
+An official full-profile rollback export was retained privately before the change.
+An independent post-save export verified the following at **19:03:13 UTC**:
+
+| Check | Result |
+| --- | --- |
+| New action script | Matches `Set-CaldovaWebAppUrl.ps1`, allowing line endings and the trailing newline only |
+| Lifecycle actions | Five total; all four original actions preserved unchanged |
+| Other profile fields | Unchanged |
+| Live instructions and existing media | Unchanged; the URL-only correction and broader review draft are not published |
+| Cloud execution and learner URL | Not yet verified |
+
+The supplied running instance **66592651** predates this action. Installing a
+Post-Build action does not execute it retroactively. Its exact instance-management
+page was reached through the supported profile search, but no script was run.
+At **19:12:01 UTC**, the host Windows foreground process was confirmed as
+`LockApp`; guarded browser interaction stopped. This is a host-desktop lock,
+separate from the guest Windows sign-in screen observed earlier.
+
+After desktop access is restored, verify a supported way to execute only the
+URL publisher for the current instance, then publish the surgical URL control
+without the rest of the review draft. Confirm the actual resolved HTTPS URL,
+its native VM entry, and the deployed application; capture sanitized evidence.
+Do not rerun unrelated provisioning actions or replace the learner's lab.
+No new build, resolved variable, learner rendering, app opening, or screenshot
+of that outcome is established by the saved configuration.
+
+These are configuration-verification timestamps, not learner-action timings.
+The historical CSV, screenshot manifest, operator durations, and human estimates
+remain unchanged.
 
 ## Options to discuss before changing scope
 

@@ -159,7 +159,7 @@ its actual native configuration-prompt typing control was exercised in the VM.
 
 PREL38 already has the GHE group assignment and GH-Sync action used by LAB720;
 enterprise SSO worked for the running PREL38 lab account. No provisioning
-groups or lifecycle scripts were changed. LAB720's additional `_Skillable-E7`
+groups or existing GHE lifecycle scripts were changed. LAB720's additional `_Skillable-E7`
 group has not been established as necessary for this flow and was not copied.
 
 The existing shared GitHub/Copilot setup is retained for each lab. PREL38 also
@@ -195,8 +195,13 @@ Skillable documents [setting lab variables from lifecycle actions](https://docs.
 with `Set-LabVariable` and displaying them using `@lab.Variable(name)`.
 The ARM template's `webAppUrl` output alone does not populate an instruction token.
 
-Before publishing this PREL38 revision, configure a separate **Execute Script
-in Cloud Platform** lifecycle action on profile **224911**, targeting the lab's
+PREL38 profile **224911** now has the separate **Publish Caldova app URL**
+action (**187064**), saved through the supported authoring UI. An independent
+full-profile export at **2026-10-25 19:03:13 UTC** verified the script against
+the repository, all four original lifecycle actions unchanged, and all other
+profile settings and live instructions unchanged.
+
+For this binding, use an **Execute Script in Cloud Platform** action targeting the lab's
 assigned Azure subscription. Use **Post-Build**, **Blocking**, and the Azure
 PowerShell runtime, after the resource template has finished. Paste
 [`skillable/Set-CaldovaWebAppUrl.ps1`](skillable/Set-CaldovaWebAppUrl.ps1)
@@ -212,8 +217,13 @@ It must run in Skillable's cloud action environment, which supplies both the
 Azure context and `Set-LabVariable`, not in a learner terminal or on the host.
 Do not prefill the variable with an example URL.
 
-The lifecycle configuration and resolved learner rendering are not yet verified
-live. Source changes alone do not enable the action. Before publication, check
+The saved lifecycle configuration is verified, but execution and resolved learner
+rendering are not. The supplied running instance was built before this action
+was installed; saving a Post-Build action does not run it retroactively.
+The current-instance management page was reached, but the host Windows desktop
+locked before execution could be inspected. No replacement lab was launched.
+The URL-only native instruction correction has not been published, and the
+remaining review draft must not be published with it. Before publication, check
 that the learner sees their actual HTTPS URL, not a blank value or unresolved
 token, and that native typing opens that app inside the VM. The troubleshooting
 lookup is a temporary escape hatch, not a substitute for this publication check.
@@ -221,7 +231,7 @@ lookup is a temporary escape hatch, not a substitute for this publication check.
 ### Facilitator preparation: PowerPoint and Azure MCP in the VM
 
 **Prefer a prepared VM image over installation during learner time.** Neither
-software installation nor a lifecycle/image change is included in this
+software installation nor related VM lifecycle/image changes are included in this
 instruction revision.
 
 For **PowerPoint**, ask the VM/image owner for an approved Office-enabled lab
