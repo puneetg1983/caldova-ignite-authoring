@@ -46,7 +46,7 @@ test("PREL38: starts with an in-VM SRE URL and delegates VM/Azure prerequisites 
 });
 
 test("PREL38: all chat prompts use native Copy and Type Text, not static fences", () => {
-    assert.equal(prompts.length, 9);
+    assert.equal(prompts.length, 10);
     assert.doesNotMatch(source, /^```text$/m);
     assert.equal((source.match(/^\+{4}/gm) || []).length, prompts.length);
     for (const line of source.split("\n").filter(line => line.startsWith("+++"))) {
@@ -58,7 +58,14 @@ test("PREL38: all chat prompts use native Copy and Type Text, not static fences"
         assert.ok(prompt.length < 650, `Overlong prompt: ${prompt}`);
         assert.doesNotMatch(prompt, /@lab\.|<suffix>/);
     }
+    for (const match of source.matchAll(/^\+{4}([^\r\n]+)\+{4}$/gm)) {
+        const instruction = source.slice(0, match.index).trimEnd().split("\n").at(-1);
+        assert.match(instruction, /\*\*inside the VM\*\*/);
+        assert.match(instruction, /Copy\/paste or type the prompt below, or click it to type automatically:/);
+    }
+    assert.doesNotMatch(source, /use \*\*Copy & Type Text\*\*/i);
     assert.ok(prompts.includes("List the configuration of the Caldova App Service."));
+    assert.ok(prompts.includes("What is the Caldova web app URL?"));
 });
 
 test("PREL38: Quickstart review and background import precede repository connection", () => {
@@ -77,7 +84,7 @@ test("PREL38: Quickstart review and background import precede repository connect
     assert.ok(main.indexOf("## Connect the imported repository") < main.indexOf("## Review the Getting started thread"));
 });
 
-test("PREL38: OAuth uses the imported lab repository and retains source-readiness gate", () => {
+test("PREL38: OAuth uses the imported lab repository and confirms its saved entry without another readiness gate", () => {
     const connection = section("Connect the imported repository");
     assert.equal((connection.match(/^\d\. /gm) || []).length, 5);
     for (const control of ["Code", "GitHub", "Repository URL", "OAuth", "Sign in to GitHub",
@@ -86,7 +93,8 @@ test("PREL38: OAuth uses the imported lab repository and retains source-readines
     }
     assert.match(connection, /https:\/\/github\.com\/User1-12345678_events\/caldova-ignite-authoring/);
     assert.match(connection, /Replace the example username/);
-    assert.match(connection, /Confirm the repository connection is ready/);
+    assert.match(connection, /Under \*\*Code\*\*, click \*\*Show details\*\* and confirm the imported repository appears/);
+    assert.doesNotMatch(connection, /Confirm the repository connection is ready/);
     assert.deepEqual([...connection.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(match => match[1]),
         ["repository-connection.png", "github-oauth.png", "repository-saved.png"]
             .map(name => `images/context-wizard/${name}`));
@@ -130,6 +138,9 @@ test("PREL38: configuration inquiry is required; health-check change is optional
     assert.match(configuration, /\*\*New chat\*\*.*separate configuration thread, not the Getting started thread/);
     assert.doesNotMatch(configuration, /In the same Getting started thread/);
     assert.match(configuration, /Keep this configuration thread for the app URL and optional Health check/);
+    assert.match(configuration, /Find \*\*Default Hostname\*\* in the response/);
+    assert.ok(configuration.includes("Your app URL is `https://` followed by that hostname."));
+    assert.ok(configuration.includes("images/app-configuration/default-hostname.png"));
     assert.match(configuration, /Health check configuration exercise is optional/);
     assert.doesNotMatch(main, /configure.*Health check path to \/api\/health/i);
     assert.match(guidance, /### Optional: App Service Health check/);
@@ -139,8 +150,13 @@ test("PREL38: configuration inquiry is required; health-check change is optional
 
 test("PREL38: debugging uses one natural prompt and verifies the original symptom", () => {
     const debug = section("Debug the product-search failure");
-    assert.match(debug, /agent can retrieve source files/);
-    assert.match(debug, /configuration response in the \*\*VM browser\*\*/);
+    assert.doesNotMatch(debug, /repository|indexing|retrieve source files/i);
+    assert.match(debug, /^1\. Return to the configuration thread and copy \*\*Default Hostname\*\*/m);
+    assert.match(debug, /Open a new tab in the \*\*VM browser\*\*/);
+    assert.ok(debug.includes("`https://` followed by that hostname"));
+    assert.match(debug, /press \*\*Enter inside the VM\*\*/);
+    assert.equal((debug.match(/^\d\. /gm) || []).length, 5);
+    assert.match(debug, /Confirm matching products appear and catalog browsing still works/);
     assert.match(debug, /`jacket`.*\*\*Search\*\*.*\*\*500 - Search failed\*\*/);
     assert.ok(prompts.includes("Product search fails with HTTP 500, but browsing works. Find out why, fix the running app, and check that searching for jacket returns products."));
     assert.equal((debug.match(/^\+{4}/gm) || []).length, 1);

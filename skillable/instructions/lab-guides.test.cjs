@@ -296,7 +296,7 @@ for (const lab of labs.filter(lab => lab.name !== "PREL38")) {
     });
 }
 
-test("setup assets are real cropped PNGs and all guides retain the same repository connection steps", () => {
+test("setup assets are real cropped PNGs and all guides retain the shared repository connection controls", () => {
     for (const image of [...setupImages, ...reviewImages]) {
         const png = readFileSync(join(__dirname, ...image.split("/")));
         assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
@@ -309,7 +309,8 @@ test("setup assets are real cropped PNGs and all guides retain the same reposito
     const guides = ["standard-workflow", "PREL38", "LAB720"].map(name =>
         readFileSync(join(__dirname, `${name}.md`), "utf8"));
     const steps = source => source.split("## Connect the imported repository")[1]
-        .split("## Review the Getting started thread")[0].match(/^\d\. .+$/gm);
+        .split("## Review the Getting started thread")[0].match(/^\d\. .+$/gm)
+        .map(step => step.replace(" Confirm the repository connection is ready before source-code debugging.", ""));
     for (const guide of guides.slice(1)) assert.deepEqual(steps(guide), steps(guides[0]));
     const reviewSteps = source => source.split("## Review Azure resources and telemetry before connecting GitHub")[1]
         .split("## Connect the imported repository")[0].match(/^\d\. .+$/gm);

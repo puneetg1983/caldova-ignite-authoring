@@ -17,7 +17,7 @@ Open your assigned SRE Agent. VM access and Azure sign-in details are already pr
 
 **Goal:** Open the SRE portal and select the agent assigned to your lab.
 
-1. Open **Microsoft Edge inside the lab VM** and click its address bar. Use **Type Text**:
+1. Open **Microsoft Edge inside the lab VM** and click its address bar. Copy/paste or type the URL below, or click it to type automatically:
 
 +++https://sre.azure.com+++
 
@@ -33,6 +33,8 @@ Open your assigned SRE Agent. VM access and Azure sign-in details are already pr
 ## GitHub and Copilot
 
 **Goal:** Sign in to the lab GitHub account and enable Copilot in VS Code. Open all pages inside the VM.
+
+For the URL below, copy/paste or type it in the VM browser, or select the address bar **inside the VM** and click the URL to type automatically.
 
 1. Navigate at +++https://github.com/enterprises/skillable-events/sso+++ and login with the same Azure credentials
 2. Keep login page from SSO portal above open in browser, open VS Code
@@ -62,6 +64,8 @@ Select **Next** to continue to ARM/Azure Copilot.
 ## Install the ARM MCP server
 
 **Goal:** Connect GitHub Copilot to the lab's Azure environment.
+
+For the URL below, copy/paste or type it in the VM browser, or select the address bar **inside the VM** and click the URL to type automatically.
 
 1. In edge, navigate to +++https://aka.ms/JoinARMMCP+++, this will open up VSCode
 2. Click "Install"
@@ -105,8 +109,8 @@ Return to the SRE Agent tab opened on Start. Keep the **context wizard** open fo
 **Goal:** Create your own repository copy while you review the agent's context.
 
 1. Use the **GitHub Enterprise (GHE) lab account** configured in **Start > GitHub and Copilot**, not a personal GitHub account. If needed, complete those sign-in steps in the VM browser first.
-2. Focus the browser address bar inside the VM, click +++https://github.com/new/import+++, then press **Enter inside the VM**.
-3. In **The URL for your source repository\***, enter:
+2. Select the browser address bar **inside the VM**. Copy/paste or type +++https://github.com/new/import+++, or click it to type automatically. Press **Enter inside the VM**.
+3. Select **The URL for your source repository\*** field **inside the VM**. Copy/paste or type the URL below, or click it to type automatically:
 
 +++https://github.com/puneetg1983/caldova-ignite-authoring.git+++
 
@@ -148,7 +152,7 @@ Continue to **Connect the imported repository**.
 2. In the **same context wizard**, under **Code**, click **+**. Select **GitHub** and paste your URL into **Repository URL**.
 3. Scroll to **Connection method**. Keep **OAuth**, then click **Sign in to GitHub**. Confirm the **lab GitHub account**, review access, and click **Authorize Azure-SRE-Agent**. When **Connected to GitHub** appears, click **Next**.
 4. Under **Add repositories**, confirm your imported repository's URL, then click **Save**.
-5. Under **Code**, click **Show details** and confirm the imported repository appears. Confirm the repository connection is ready before source-code debugging.
+5. Under **Code**, click **Show details** and confirm the imported repository appears.
 
 Your repository URL should look like `https://github.com/User1-12345678_events/caldova-ignite-authoring`. Replace the example username with your actual lab GitHub username; do not use the original `puneetg1983` repository URL.
 
@@ -166,7 +170,7 @@ Your repository URL should look like `https://github.com/User1-12345678_events/c
 
 1. In the context wizard, click **Done and go to agent**, then review your **Getting started** thread.
 2. Answer any open questions from the agent, then review the application summary, architecture diagram, and health findings.
-3. Chat with it to understand the app better. To use the example below, click the chat box **inside the VM**, then click **Copy & Type Text**:
+3. Chat with it to understand the app better. Select the chat box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++What is this app about, and what can customers do with it?++++
 
@@ -178,11 +182,14 @@ Your repository URL should look like `https://github.com/User1-12345678_events/c
 
 **Goal:** Inspect and understand the assigned App Service configuration.
 
-1. Select **New chat** to start a separate configuration thread, not the Getting started thread. Click the message box and use **Copy & Type Text**:
+1. Select **New chat** to start a separate configuration thread, not the Getting started thread. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++List the configuration of the Caldova App Service.++++
 
 2. Send the message, review the configuration, and ask questions about any unfamiliar settings. Keep this configuration thread for the app URL and optional Health check exercise.
+3. Find **Default Hostname** in the response. Your app URL is `https://` followed by that hostname. Use your lab's actual value, not the screenshot's example.
+
+![App Service configuration response showing Default Hostname](images/app-configuration/default-hostname.png)
 
 The Health check configuration exercise is optional; see **Additional guidance**.
 
@@ -190,18 +197,17 @@ The Health check configuration exercise is optional; see **Additional guidance**
 
 **Goal:** Investigate the search problem, fix it, and confirm customer-visible recovery.
 
-1. Confirm the repository import and connection are ready and the agent can retrieve source files.
-2. Open the Caldova web app URL from the configuration response in the **VM browser**. See **Additional guidance** if the URL is missing.
-3. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
+1. Return to the configuration thread and copy **Default Hostname**. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type `https://` followed by that hostname, then press **Enter inside the VM**. If the response already includes the full app URL, use it instead. See **Additional guidance** if neither is shown.
+2. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
 
 ![Product-name search fails with HTTP 500](images/prel38-walkthrough/search-failure.png)
 
-4. Return to the SRE Agent tab, select **New chat**, click the message box, and use **Copy & Type Text**:
+3. Return to the SRE Agent tab and select **New chat**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Product search fails with HTTP 500, but browsing works. Find out why, fix the running app, and check that searching for jacket returns products.++++
 
-5. Send the message, follow the investigation, and answer the agent's questions.
-6. Return to the app tab and repeat the same `jacket` search. Confirm results appear and catalog browsing still works.
+4. Send the message, follow the investigation, and answer the agent's questions.
+5. Return to the app tab and repeat the same `jacket` search. Confirm matching products appear and catalog browsing still works.
 
 ## Schedule a weekly cost review
 
@@ -209,7 +215,7 @@ The Health check configuration exercise is optional; see **Additional guidance**
 
 > [!Note] This lab was just deployed, so little cost history may be available. That reflects the age of the lab, not a limitation of the agent. Forecasts should state their assumptions.
 
-1. In SRE Agent, select **New chat**. Click the message box, then use **Copy & Type Text**:
+1. In SRE Agent, select **New chat**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Create a weekly task called "Weekly Caldova cost review" and run it once now. Review current Azure costs, forecast next month, and recommend ways to save money. Create a beautiful, visually rich PowerPoint with charts, tables, and clear visuals showing cost drivers, forecasts, and potential savings. Use available data, clearly label estimates and assumptions, and don't change any resources.++++
 
@@ -226,7 +232,7 @@ The Health check configuration exercise is optional; see **Additional guidance**
 **Goal:** Visualize dependencies and health, inspect traffic, and explore report versions and sharing.
 
 1. In the left navigation, select **Live reports > + New report**.
-2. When the agent asks what report you want, click **Enter a custom response** and use **Copy & Type Text**:
+2. When the agent asks what report you want, select **Enter a custom response** **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Create a visually rich live report called "Caldova Traffic and Health" using the last 24 hours of connected telemetry. Put a dependency graph at the top, showing each component and its health. Below it, show traffic trends, request counts, failure rate, response times, top requested and failing URLs, and country/region where available. Use clear charts, tables, and health indicators. Label missing data and unknown health, and keep it read-only.++++
 
@@ -260,7 +266,7 @@ Use the guidance for your current section, or ask the facilitator.
 
 ### Open Azure SRE Agent
 
-Focus the destination field **inside the VM** before using **Copy & Type Text**, and keep it focused until typing finishes. Then select **Send** or press **Enter** as instructed. Use **Resources > Azure Portal** for Azure sign-in details, not the VM account.
+Focus the destination field **inside the VM**. Copy/paste or type the prompt or URL, or click its text in these instructions to type automatically. For automatic typing, keep it focused until typing finishes. Then select **Send** or press **Enter** as instructed. Use **Resources > Azure Portal** for Azure sign-in details, not the VM account.
 
 **Type Text did not work?** Type `https://sre.azure.com` manually in the VM browser's address bar, then press **Enter inside the VM**. Do not change VM settings or permissions.
 
@@ -272,7 +278,7 @@ If the wizard is closed, go to **Operations hub > Overview > Complete setup**. A
 
 ### Connect the imported repository
 
-If import or indexing is still running, continue independent activities and return before debugging. Do not add a duplicate connection or use a personal account. If the agent cannot retrieve the imported source, ask the facilitator.
+Do not add a duplicate connection or use a personal account. If the agent reports that indexing is still running, continue another activity and return later. If it cannot retrieve the imported source, ask the facilitator.
 
 ### Review the Getting started thread
 
@@ -280,11 +286,15 @@ Under **Favorites**, select **Team onboarding**. If absent, select **Search Thre
 
 ### Inquire and configure Web App
 
-Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the app URL or optional Health check change.
+Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for **Default Hostname**, the app URL, or the optional Health check change.
 
 ### Debug the product-search failure
 
-**App URL missing?** In the configuration thread, ask "What is the Caldova web app URL?" If needed, open the assigned Web App in Azure Portal and select **Browse**. Automatic URL population is not required to continue.
+**App URL missing?** Return to the configuration thread and select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+
+++++What is the Caldova web app URL?++++
+
+Open the returned app URL in the VM browser. If needed, open the assigned Web App in Azure Portal and select **Browse**. Automatic URL population is not required to continue.
 
 If search already works, tell the facilitator; do not break the app yourself. Verify recovery by repeating the search in the app.
 
@@ -322,7 +332,7 @@ The active-flow limit does not cap the separate always-on charge or other Azure 
 
 **Goal:** Explore endpoint monitoring separately from product-search recovery.
 
-Return to the configuration conversation and click its message box. Use **Copy & Type Text**:
+Return to the configuration conversation and select its message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Configure the Caldova App Service Health check path to /api/health. Explain the impact before making the change.++++
 
@@ -330,7 +340,7 @@ Before approving, confirm the target app, successful endpoint response, restart 
 
 ### Optional: Keep improving your live report
 
-Select **Live reports > Caldova Traffic and Health > Open authoring thread**. Click the message box and use **Copy & Type Text**:
+Select **Live reports > Caldova Traffic and Health > Open authoring thread**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Group the dependency graph by service and make unhealthy components stand out.++++
 
@@ -341,11 +351,11 @@ Answer any questions. Return through **Live reports > Caldova Traffic and Health
 **Goal:** Teach the agent a reusable Caldova procedure. Skills are loaded automatically when relevant; they are not a separate specialist you must invoke.
 
 1. Select **Builder > Agent Canvas > Create > Skill**.
-2. Set **Name** to `caldova-search-check`. For **Description**, use:
+2. Set **Name** to `caldova-search-check`. Select **Description** **inside the VM**. Copy/paste or type the text below, or click it to type automatically:
 
 +++Procedure for reviewing Caldova product-search failures and verifying that jacket search returns real products.+++
 
-3. In the `SKILL.md` editor, keep the generated name/description frontmatter. Add this procedure below it:
+3. In the `SKILL.md` editor, keep the generated name/description frontmatter. Copy/paste or type this procedure below it:
 
 ```markdown
 ## Procedure
@@ -358,7 +368,7 @@ Answer any questions. Return through **Live reports > Caldova Traffic and Health
 ```
 
 4. Select **Choose tools** and attach only the existing read-only telemetry query tools needed for this procedure. Select **Create** and confirm `caldova-search-check` appears in the **Skills** tab.
-5. Select **New chat**, click the message box, and use **Copy & Type Text**:
+5. Select **New chat** and select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Use our Caldova search-check procedure to review the latest search results. Don't change anything.++++
 
@@ -369,13 +379,13 @@ Answer any questions. Return through **Live reports > Caldova Traffic and Health
 **Goal:** Build a focused specialist with explicit skill and tool access, then invoke it deliberately.
 
 1. Complete **Optional: Create a search-check skill**, then select **Builder > Agent Canvas > Create > Custom Agent**.
-2. In **Form**, set **Custom agent name** to `caldova-search-reviewer`. In **Instructions**, use:
+2. In **Form**, set **Custom agent name** to `caldova-search-reviewer`. Select **Instructions** **inside the VM**. Copy/paste or type the text below, or click it to type automatically:
 
 +++You review Caldova product-search health. Use the caldova-search-check skill and connected telemetry. Explain evidence and uncertainty. Stay read-only: do not change resources, deploy code, or create faults.+++
 
 3. Select **Choose skills** and select only `caldova-search-check`. Select **Choose tools** and choose the existing read-only telemetry tools needed for the check. Do not leave the tools selection empty: an empty selection inherits global tools, rather than granting no tools. If suitable read-only tools are unavailable, cancel and ask the facilitator.
 4. Select **Create**. Confirm the custom agent appears on **Agent Canvas**, then open **Test playground** and select `caldova-search-reviewer`.
-5. Click the playground message box and use **Copy & Type Text**:
+5. Select the playground message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Review Caldova's latest product-search health using our search-check procedure. Don't change anything.++++
 

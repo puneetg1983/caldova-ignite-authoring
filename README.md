@@ -122,7 +122,11 @@ that timing claim. LAB720's 25-minute optimization is deferred for discussion.
 
 PREL38 starts configuration inquiry in **New chat**, separate from Getting
 started, and keeps the optional `/api/health` change in that configuration
-thread. Debugging must repair the running app and return real `jacket`
+thread. Learners find **Default Hostname** in that response and prefix it with
+`https://` to open their actual app in the VM browser; an existing T56 capture
+illustrates that field in `images/app-configuration/default-hostname.png`.
+There is no separate repository-readiness exercise before debugging.
+Debugging must repair the running app and return real `jacket`
 products; an undeployed code PR or empty result is not recovery. Cost automation
 and live-report generation overlap other activities, with explicit checks for
 pending questions/approvals and completed artifacts. Report versions and sharing
@@ -169,11 +173,11 @@ reference, not the complete working guide or a publication target.
 
 Credentials use runtime tokens and native Type Text controls. TAP continues
 to use the existing Resources control; no unverified TAP token is introduced.
-Browser-opening commands run in the selected VM using Integration Services,
-with address-bar Type Text/manual-entry fallbacks rather than host-browser links.
-PREL38 now explicitly requests Edge in a visible PowerShell session. The revised
-links rendered, but a successful one-click VM launch has not been confirmed;
-do not treat publication or source checks as proof that command execution works.
+PREL38 consistently offers copy/paste, manual typing, or clicking native text
+after selecting the destination VM field. Its address-bar flow does not rely
+on a browser-launch command. LAB720 and the shared reference retain their
+guest-browser commands until reviewed. Earlier rendering/native-input checks
+do not establish a fresh end-to-end run of the revised instructions.
 
 The existing native Resources cards, including the external SRE link, are
 unchanged. The new instructions provide in-VM opening controls; they do not
