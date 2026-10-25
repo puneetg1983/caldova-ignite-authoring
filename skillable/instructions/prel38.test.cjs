@@ -92,7 +92,8 @@ test("PREL38: OAuth uses the imported lab repository and retains source-readines
 
 test("PREL38: background import has destination and progress screenshots", () => {
     const importing = section("Start the GitHub import in the background");
-    assert.match(importing, /Under \*\*Owner\*\*, select the lab GitHub account/);
+    assert.match(importing, /\*\*GitHub Enterprise \(GHE\) lab account\*\* configured in \*\*Start > GitHub and Copilot\*\*, not a personal GitHub account/);
+    assert.match(importing, /Under \*\*Owner\*\*, select the \*\*same GHE lab account\*\*/);
     assert.match(importing, /visibility to \*\*Private\*\*/);
     assert.match(importing, /\*\*Begin import\*\*.*without waiting/);
     for (const file of ["destination.png", "progress.png"]) {

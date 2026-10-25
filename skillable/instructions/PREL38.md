@@ -104,13 +104,13 @@ Return to the SRE Agent tab opened on Start. Keep the **context wizard** open fo
 
 **Goal:** Create your own repository copy while you review the agent's context.
 
-1. In the VM browser, complete the **GitHub and Copilot** sign-in steps on Start using the lab account.
+1. Use the **GitHub Enterprise (GHE) lab account** configured in **Start > GitHub and Copilot**, not a personal GitHub account. If needed, complete those sign-in steps in the VM browser first.
 2. Focus the browser address bar inside the VM, click +++https://github.com/new/import+++, then press **Enter inside the VM**.
 3. In **The URL for your source repository\***, enter:
 
 +++https://github.com/puneetg1983/caldova-ignite-authoring.git+++
 
-4. Under **Owner**, select the lab GitHub account. Set **Repository Name** to `caldova-ignite-authoring` and visibility to **Private**.
+4. Under **Owner**, select the **same GHE lab account**. Set **Repository Name** to `caldova-ignite-authoring` and visibility to **Private**.
 5. Select **Begin import**, leave the status tab open, and return to the SRE Agent's context wizard for the configuration review **without waiting**.
 
 ![GitHub import destination fields with the lab account masked and Private selected](images/github-import/destination.png)
