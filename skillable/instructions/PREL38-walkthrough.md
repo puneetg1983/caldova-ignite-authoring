@@ -188,7 +188,7 @@ An earlier publication attempt was blocked when the previous learner URL redirec
 
 The user subsequently supplied a new running PREL38 lab. Its client opened in corporate Edge with the guest Windows sign-in screen displayed, and the profile's lifecycle settings were accessible through the supported authoring UI. At the initial access check, an unsaved cloud-action dialog and the profile edit form were cancelled without saving. No lifecycle action was installed or executed at that check, no instructions were published, and no replacement lab was launched by the agent. This access check is not a new walkthrough, timing measurement, or proof of resolved app-URL rendering.
 
-### Automatic URL binding: saved configuration, runtime check still pending
+### Automatic URL binding: deferred; preview restored
 
 On **2026-10-25**, the separate **Publish Caldova app URL** cloud action
 (**187064**) was subsequently saved on PREL38 profile **224911**. Its event is
@@ -214,13 +214,38 @@ At **19:12:01 UTC**, the host Windows foreground process was confirmed as
 `LockApp`; guarded browser interaction stopped. This is a host-desktop lock,
 separate from the guest Windows sign-in screen observed earlier.
 
-After desktop access is restored, verify a supported way to execute only the
-URL publisher for the current instance, then publish the surgical URL control
-without the rest of the review draft. Confirm the actual resolved HTTPS URL,
-its native VM entry, and the deployed application; capture sanitized evidence.
-Do not rerun unrelated provisioning actions or replace the learner's lab.
-No new build, resolved variable, learner rendering, app opening, or screenshot
-of that outcome is established by the saved configuration.
+After the user unlocked the host, a temporary, unscored cloud activity
+(**490606**) was added to execute the publisher on the existing instance.
+Only an owned verification prefix was added above the original native guide;
+the broader review draft was not published.
+
+The first check, requested at **19:40:49 UTC**, returned Azure module-load
+information as a red CLIXML error. After suppressing only the Azure information
+stream and preserving actual failures and native variable metadata, the next
+observed result was a resource-group-name validation error. The profile's
+resource-group replacement alias is `ResourceGroup1`, not `1`. The repository
+script and mocked behavior coverage were corrected, but the revised production
+script was not saved to the live action or verified end to end. Host locking and
+foreground-window problems also interrupted authoring. No actual app URL or
+successful native VM entry was established.
+
+URL debugging was then deferred rather than continuing an open-ended UI
+automation attempt. Cleanup was persisted through the supported authoring UI:
+
+| Cleanup check | Verified outcome |
+| --- | --- |
+| Native instructions | Original guide restored; temporary heading and URL control removed |
+| Temporary activity 490606 | Deleted; profile activities restored to empty |
+| Pending publisher draft | Discarded without deploying the revised script |
+| Publisher 187064 | Disabled at **22:18:22 UTC** so the unverified blocking action cannot delay new launches |
+| Independent full export at **22:19:23 UTC** | Only publisher `Enabled` changed to `false`; all four original actions and other profile fields preserved |
+| Existing media/export entries | All 47 byte-identical |
+
+Keep the publisher disabled until a supported live check proves the exact
+learner-specific URL, resolved instruction rendering, native VM entry, and the
+deployed application. The URL-only correction and broader review draft remain
+unpublished. Do not rerun unrelated provisioning actions or replace the
+learner's lab. No new build or screenshot of successful URL delivery is claimed.
 
 These are configuration-verification timestamps, not learner-action timings.
 The historical CSV, screenshot manifest, operator durations, and human estimates

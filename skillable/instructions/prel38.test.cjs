@@ -177,6 +177,8 @@ test("PREL38: URL lifecycle action publishes only the assigned app's actual HTTP
     const cases = [
         { name: "standard", count: 1, hostname: "caldova-webapp-test.azurewebsites.net" },
         { name: "regional", count: 1, hostname: "caldova-webapp-test-abc.westus-01.azurewebsites.net" },
+        { name: "module information", count: 1, hostname: "caldova-webapp-test.azurewebsites.net",
+            moduleInformation: true },
         { name: "missing", count: 0, error: "exactly one" },
         { name: "ambiguous", count: 2, error: "exactly one" },
         { name: "unrelated", count: 1, appName: "another-webapp", error: "exactly one" },
@@ -184,7 +186,10 @@ test("PREL38: URL lifecycle action publishes only the assigned app's actual HTTP
         { name: "invalid hostname", count: 1, hostname: "app.azurewebsites.net/extra", error: "valid App Service hostname" },
         { name: "missing context", count: 1, noContext: true, error: "assigned Azure subscription" },
         { name: "wrong subscription", count: 1, wrongSubscription: true, error: "assigned Azure subscription" },
+        { name: "Azure module failure", count: 1, importFailure: true, error: "Azure module load failed" },
         { name: "Azure failure", count: 1, readFailure: true, error: "Azure read failed" },
+        { name: "noisy Azure failure", count: 1, moduleInformation: true,
+            readFailure: true, error: "Azure read failed" },
         { name: "publication failure", count: 1, hostname: "caldova-webapp-test.azurewebsites.net",
             publishFailure: true, error: "Variable publication failed" },
     ];
@@ -193,9 +198,20 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 $source = Get-Content -LiteralPath $env:CALDOVA_URL_SCRIPT -Raw
 $source = $source.Replace('@lab.CloudSubscription.Id', '11111111-1111-1111-1111-111111111111')
-$source = $source.Replace('@lab.CloudResourceGroup(1).Name', 'ResourceGroup1')
+$source = $source.Replace('@lab.CloudResourceGroup(ResourceGroup1).Name', 'ResourceGroup1')
 $cases = '${JSON.stringify(cases)}' | ConvertFrom-Json
+function Import-Module {
+    param($Name)
+    if (($Name -join ',') -ne 'Az.Accounts,Az.Websites') { throw 'Unexpected Azure module import' }
+    if ($script:current.moduleInformation) {
+        Write-Information "Loaded Azure modules" -InformationAction Continue
+    }
+    if ($script:current.importFailure) { throw 'Azure module load failed' }
+}
 function Get-AzContext {
+    if ($script:current.moduleInformation) {
+        Write-Information "Loaded Module 'Az.Accounts'" -InformationAction Continue
+    }
     if ($script:current.noContext) { return }
     $id = if ($script:current.wrongSubscription) { '22222222-2222-2222-2222-222222222222' }
         else { '11111111-1111-1111-1111-111111111111' }
@@ -203,6 +219,9 @@ function Get-AzContext {
 }
 function Get-AzWebApp {
     param($ResourceGroupName)
+    if ($script:current.moduleInformation) {
+        Write-Information "Loaded Module 'Az.Websites'" -InformationAction Continue
+    }
     $script:queried = $true
     if ($ResourceGroupName -cne 'ResourceGroup1') { throw 'Wrong resource group' }
     if ($script:current.readFailure) { throw 'Azure read failed' }
@@ -215,14 +234,17 @@ function Set-LabVariable {
     param($Name, $Value)
     if ($script:current.publishFailure) { throw 'Variable publication failed' }
     $script:published = @{ Name = $Name; Value = $Value }
+    'native-variable-metadata'
 }
 $results = foreach ($case in $cases) {
     $script:current = $case
     $script:published = $null
     $script:queried = $false
     $failure = $null
-    try { & ([scriptblock]::Create($source)) } catch { $failure = $_.Exception.Message }
-    [pscustomobject]@{ Name = $case.name; Published = $script:published; Queried = $script:queried; Error = $failure }
+    $output = @()
+    try { $output = @(& ([scriptblock]::Create($source)) 6>&1) } catch { $failure = $_.Exception.Message }
+    [pscustomobject]@{ Name = $case.name; Published = $script:published; Queried = $script:queried;
+        Error = $failure; OutputCount = $output.Count; Metadata = ($output -contains 'native-variable-metadata') }
 }
 ConvertTo-Json -InputObject @($results) -Depth 4 -Compress
 `;
@@ -237,12 +259,16 @@ ConvertTo-Json -InputObject @($results) -Depth 4 -Compress
         if (expected.error) {
             assert.equal(result.Published, null, expected.name);
             assert.ok(result.Error?.includes(expected.error), `${expected.name}: ${result.Error}`);
+            assert.equal(result.OutputCount, 0, expected.name);
         } else {
             assert.equal(result.Error, null, expected.name);
             assert.deepEqual(result.Published,
                 { Name: "CaldovaWebAppUrl", Value: `https://${expected.hostname}` });
+            assert.equal(result.OutputCount, 1, expected.name);
+            assert.equal(result.Metadata, true, expected.name);
         }
-        assert.equal(result.Queried, !(expected.wrongSubscription || expected.noContext), expected.name);
+        assert.equal(result.Queried,
+            !(expected.wrongSubscription || expected.noContext || expected.importFailure), expected.name);
     }
 });
 

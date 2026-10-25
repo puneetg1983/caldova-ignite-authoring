@@ -195,11 +195,12 @@ Skillable documents [setting lab variables from lifecycle actions](https://docs.
 with `Set-LabVariable` and displaying them using `@lab.Variable(name)`.
 The ARM template's `webAppUrl` output alone does not populate an instruction token.
 
-PREL38 profile **224911** now has the separate **Publish Caldova app URL**
-action (**187064**), saved through the supported authoring UI. An independent
-full-profile export at **2026-10-25 19:03:13 UTC** verified the script against
-the repository, all four original lifecycle actions unchanged, and all other
-profile settings and live instructions unchanged.
+PREL38 profile **224911** contains the separate **Publish Caldova app URL**
+action (**187064**), **disabled while live verification is deferred**. It was
+initially saved through the supported authoring UI. A full-profile export at
+**2026-10-25 19:03:13 UTC** verified the then-current script, all four original
+lifecycle actions unchanged, and all other profile settings and instructions
+unchanged.
 
 For this binding, use an **Execute Script in Cloud Platform** action targeting the lab's
 assigned Azure subscription. Use **Post-Build**, **Blocking**, and the Azure
@@ -212,21 +213,33 @@ be prepared; do not hide a failed action behind a fixed or guessed URL.
 The script checks the assigned subscription and resource group, requires exactly
 one Caldova App Service, and sets `CaldovaWebAppUrl` from its actual
 `DefaultHostName`, the same Azure-returned value used by the ARM output.
+The resource-group token uses the profile's alias,
+`@lab.CloudResourceGroup(ResourceGroup1).Name`, not a numeric ordinal.
 It performs no Azure resource or RBAC writes and supports regional hostnames.
 It must run in Skillable's cloud action environment, which supplies both the
 Azure context and `Set-LabVariable`, not in a learner terminal or on the host.
 Do not prefill the variable with an example URL.
 
-The saved lifecycle configuration is verified, but execution and resolved learner
-rendering are not. The supplied running instance was built before this action
-was installed; saving a Post-Build action does not run it retroactively.
-The current-instance management page was reached, but the host Windows desktop
-locked before execution could be inspected. No replacement lab was launched.
-The URL-only native instruction correction has not been published, and the
-remaining review draft must not be published with it. Before publication, check
-that the learner sees their actual HTTPS URL, not a blank value or unresolved
-token, and that native typing opens that app inside the VM. The troubleshooting
-lookup is a temporary escape hatch, not a substitute for this publication check.
+Current-instance checks reached the cloud runner but exposed Azure module
+information being reported as an error, followed by an invalid resource-group
+binding. The repository script now suppresses only Azure informational output
+and uses the correct profile alias; the corrected version is **not live-verified
+or deployed**. Post-Build execution on a new lab has not been tested.
+
+URL debugging is deferred. The temporary verification heading, URL control,
+and activity were removed, and the original native guide was restored.
+An independent full-profile export at **2026-10-25 22:19:23 UTC** verified
+zero activities, all four original lifecycle actions unchanged, all other
+profile fields unchanged, and all 47 media/export entries byte-identical.
+The only remaining lifecycle change from the installed configuration is
+**187064.Enabled = false**, preventing the unverified action from delaying
+new lab launches.
+
+Do not enable the publisher or publish the URL-only correction until a supported
+live check establishes the actual resolved HTTPS URL and native typing opens
+that app inside the VM. No replacement lab was launched. The broader review
+draft remains unpublished, and the troubleshooting lookup is not a substitute
+for automatic URL delivery.
 
 ### Facilitator preparation: PowerPoint and Azure MCP in the VM
 
