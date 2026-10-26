@@ -187,7 +187,7 @@ Your repository URL should look like `https://github.com/User1-12345678_events/c
 ++++List the configuration of the Caldova App Service and provide the full HTTPS link to its website.++++
 
 2. Send the message, review the configuration, and ask questions about any unfamiliar settings. Keep this configuration thread for the optional Health check exercise.
-3. Open the website link in a new **VM browser** tab and confirm the app loads. **Bookmark the page or copy the full URL for the next exercise.** Keep the SRE Agent tab open. If the link is missing or does not open, use the manual URL steps under **Additional guidance > Debug the product-search failure**.
+3. Open the website link in a new **VM browser** tab and confirm the app loads. **Bookmark the page or copy the full URL for the next exercise.** Keep the SRE Agent tab open.
 
 ![Example App Service configuration response](images/app-configuration/default-hostname.png)
 

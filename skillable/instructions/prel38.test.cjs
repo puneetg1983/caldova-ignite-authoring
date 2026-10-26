@@ -141,7 +141,8 @@ test("PREL38: configuration inquiry is required; health-check change is optional
     assert.match(configuration, /provide the full HTTPS link to its website/);
     assert.match(configuration, /Open the website link in a new \*\*VM browser\*\* tab and confirm the app loads/);
     assert.match(configuration, /\*\*Bookmark the page or copy the full URL for the next exercise\.\*\*/);
-    assert.match(configuration, /link is missing or does not open.*Additional guidance > Debug the product-search failure/);
+    assert.doesNotMatch(configuration, /link is missing|manual URL steps|portal\.azure\.com/);
+    assert.match(guidance, /Website link missing or not opening/);
     assert.doesNotMatch(configuration, /Find \*\*Default Hostname\*\*|followed by that hostname/);
     assert.ok(configuration.includes("images/app-configuration/default-hostname.png"));
     assert.match(configuration, /Health check configuration exercise is optional/);
