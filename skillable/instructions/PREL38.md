@@ -184,9 +184,10 @@ Your repository URL should look like `https://github.com/User1-12345678_events/c
 
 1. Select **New chat** to start a separate configuration thread, not the Getting started thread. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
-++++List the configuration of the Caldova App Service.++++
+++++List the configuration of the Caldova App Service and provide the full HTTPS link to its website.++++
 
 2. Send the message, review the configuration, and ask questions about any unfamiliar settings. Keep this configuration thread for the optional Health check exercise.
+3. Open the website link in a new **VM browser** tab and confirm the app loads. **Bookmark the page or copy the full URL for the next exercise.** Keep the SRE Agent tab open. If the link is missing or does not open, use the manual URL steps under **Additional guidance > Debug the product-search failure**.
 
 ![Example App Service configuration response](images/app-configuration/default-hostname.png)
 
@@ -196,25 +197,17 @@ The Health check configuration exercise is optional; see **Additional guidance**
 
 **Goal:** Investigate the search problem, fix it, and confirm customer-visible recovery.
 
-1. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type the Azure Portal URL below, or click it to type automatically. Then press **Enter inside the VM**:
-
-+++https://portal.azure.com+++
-
-2. In Azure Portal, select **Resource groups** and open the resource group assigned to this lab, shown in **Resources**. In its resource list, open **caldova-webapp-...** with type **App Service**, not the App Service plan.
-3. On the web app's **Overview** page, find **Default domain**. Select **Browse** to open the app, or copy the domain and paste or type `https://` followed by that domain into a new VM browser tab, then press **Enter inside the VM**. Keep the SRE Agent tab open.
-
-Example only: `https://caldova-webapp-<unique-suffix>.azurewebsites.net`. Your suffix will differ, and Azure may include extra regional hostname components. Use the complete **Default domain** shown for your app, not this example.
-
-4. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
+1. Open your bookmarked website in the **VM browser**, or select the address bar in a new tab and paste or type the full URL copied during **Inquire and configure Web App**, then press **Enter inside the VM**.
+2. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
 
 ![Product-name search fails with HTTP 500](images/prel38-walkthrough/search-failure.png)
 
-5. Return to the SRE Agent tab and select **New chat**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+3. Return to the SRE Agent tab and select **New chat**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++Product search fails with HTTP 500, but browsing works. Find out why, fix the running app, and check that searching for jacket returns products.++++
 
-6. Send the message, follow the investigation, and answer the agent's questions.
-7. Return to the app tab and repeat the same `jacket` search. Confirm matching products appear and catalog browsing still works.
+4. Send the message, follow the investigation, and answer the agent's questions.
+5. Return to the app tab and repeat the same `jacket` search. Confirm matching products appear and catalog browsing still works.
 
 ## Schedule a weekly cost review
 
@@ -293,9 +286,20 @@ Under **Favorites**, select **Team onboarding**. If absent, select **Search Thre
 
 ### Inquire and configure Web App
 
-Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the optional Health check change. Find your app URL in Azure Portal using the steps in **Debug the product-search failure**.
+Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the optional Health check change. Bookmark or copy the website link returned by the configuration prompt for the next exercise. If it is missing or does not open, use the manual steps below.
 
 ### Debug the product-search failure
+
+**Website link missing or not opening?** Find the actual app URL manually:
+
+1. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type the Azure Portal URL below, or click it to type automatically. Then press **Enter inside the VM**:
+
++++https://portal.azure.com+++
+
+2. In Azure Portal, select **Resource groups** and open the resource group assigned to this lab, shown in **Resources**. In its resource list, open **caldova-webapp-...** with type **App Service**, not the App Service plan.
+3. On the web app's **Overview** page, find **Default domain**. Select **Browse** to open the app, or copy the domain and paste or type `https://` followed by that domain into a new VM browser tab, then press **Enter inside the VM**. Bookmark the page or copy its full URL, and keep the SRE Agent tab open.
+
+Example only: `https://caldova-webapp-<unique-suffix>.azurewebsites.net`. Your suffix will differ, and Azure may include extra regional hostname components. Use the complete **Default domain** shown for your app, not this example.
 
 **Cannot find the web app?** Confirm Azure Portal is using the lab's Azure account and assigned subscription from **Resources**, then reopen the assigned resource group and clear resource-list filters. Look for **caldova-webapp-...** with type **App Service**. If it is absent or access is denied, ask the facilitator; do not create resources or change permissions. If the app does not open, copy its complete **Default domain** from **Overview** and try the HTTPS address in the VM browser. Do not use the example URL or another learner's hostname.
 

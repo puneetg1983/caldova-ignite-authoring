@@ -238,11 +238,14 @@ corrected script saved in that disabled action, with all other profile fields
 unchanged. A proposed new verification activity was cancelled without saving;
 no new activity or instruction controls were published.
 
-The current PREL38 review draft uses the subsequently user-approved manual
-route instead: **Azure Portal > Resource groups > assigned resource group >
-caldova-webapp-... (App Service) > Overview > Default domain / Browse**. Its URL
-example is illustrative only; learners use their app's complete default domain.
-This path does not depend on the disabled publisher. Do not enable that action
+The current PREL38 review draft asks the agent for the full HTTPS website link
+alongside the App Service configuration. Learners open it and bookmark or copy
+the URL for the search-debugging exercise. If the link is missing or does not
+open, Additional guidance provides the manual route: **Azure Portal > Resource
+groups > assigned resource group > caldova-webapp-... (App Service) > Overview >
+Default domain / Browse**. Its URL example is illustrative only; learners use
+their app's complete default domain. This flow does not depend on the disabled
+publisher. Do not enable that action
 without a successful supported runtime check. No replacement lab was launched,
 and the broader review draft remains unpublished.
 

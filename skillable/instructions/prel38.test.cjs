@@ -65,7 +65,7 @@ test("PREL38: all chat prompts use native Copy and Type Text, not static fences"
         assert.match(instruction, /Copy\/paste or type the prompt below, or click it to type automatically:/);
     }
     assert.doesNotMatch(source, /use \*\*Copy & Type Text\*\*/i);
-    assert.ok(prompts.includes("List the configuration of the Caldova App Service."));
+    assert.ok(prompts.includes("List the configuration of the Caldova App Service and provide the full HTTPS link to its website."));
 });
 
 test("PREL38: Quickstart review and background import precede repository connection", () => {
@@ -138,6 +138,10 @@ test("PREL38: configuration inquiry is required; health-check change is optional
     assert.match(configuration, /\*\*New chat\*\*.*separate configuration thread, not the Getting started thread/);
     assert.doesNotMatch(configuration, /In the same Getting started thread/);
     assert.match(configuration, /Keep this configuration thread for the optional Health check/);
+    assert.match(configuration, /provide the full HTTPS link to its website/);
+    assert.match(configuration, /Open the website link in a new \*\*VM browser\*\* tab and confirm the app loads/);
+    assert.match(configuration, /\*\*Bookmark the page or copy the full URL for the next exercise\.\*\*/);
+    assert.match(configuration, /link is missing or does not open.*Additional guidance > Debug the product-search failure/);
     assert.doesNotMatch(configuration, /Find \*\*Default Hostname\*\*|followed by that hostname/);
     assert.ok(configuration.includes("images/app-configuration/default-hostname.png"));
     assert.match(configuration, /Health check configuration exercise is optional/);
@@ -150,19 +154,23 @@ test("PREL38: configuration inquiry is required; health-check change is optional
 test("PREL38: debugging uses one natural prompt and verifies the original symptom", () => {
     const debug = section("Debug the product-search failure");
     assert.doesNotMatch(debug, /repository|indexing|retrieve source files/i);
-    assert.match(debug, /^1\. Open a new tab in the \*\*VM browser\*\*/m);
-    assert.match(debug, /Open a new tab in the \*\*VM browser\*\*/);
-    assert.ok(debug.includes("+++https://portal.azure.com+++"));
-    assert.match(debug, /Copy\/paste or type the Azure Portal URL below, or click it to type automatically/);
-    assert.match(debug, /\*\*Resource groups\*\*.*resource group assigned to this lab/);
-    assert.match(debug, /\*\*caldova-webapp-\.\.\.\*\* with type \*\*App Service\*\*, not the App Service plan/);
-    assert.match(debug, /\*\*Overview\*\*.*\*\*Default domain\*\*.*\*\*Browse\*\*/);
-    assert.match(debug, /copy the domain and paste or type `https:\/\/`/);
-    assert.match(debug, /Example only: `https:\/\/caldova-webapp-<unique-suffix>\.azurewebsites\.net`/);
-    assert.match(debug, /Use the complete \*\*Default domain\*\* shown for your app, not this example/);
+    assert.match(debug, /^1\. Open your bookmarked website in the \*\*VM browser\*\*/m);
+    assert.match(debug, /paste or type the full URL copied during \*\*Inquire and configure Web App\*\*/);
+    assert.doesNotMatch(debug, /portal\.azure\.com|Resource groups|Default domain/);
+    const urlFallback = guidance.split("### Debug the product-search failure\n")[1]
+        .split("\n### ")[0];
+    assert.match(urlFallback, /Website link missing or not opening/);
+    assert.ok(urlFallback.includes("+++https://portal.azure.com+++"));
+    assert.match(urlFallback, /Copy\/paste or type the Azure Portal URL below, or click it to type automatically/);
+    assert.match(urlFallback, /\*\*Resource groups\*\*.*resource group assigned to this lab/);
+    assert.match(urlFallback, /\*\*caldova-webapp-\.\.\.\*\* with type \*\*App Service\*\*, not the App Service plan/);
+    assert.match(urlFallback, /\*\*Overview\*\*.*\*\*Default domain\*\*.*\*\*Browse\*\*/);
+    assert.match(urlFallback, /copy the domain and paste or type `https:\/\/`/);
+    assert.match(urlFallback, /Example only: `https:\/\/caldova-webapp-<unique-suffix>\.azurewebsites\.net`/);
+    assert.match(urlFallback, /Use the complete \*\*Default domain\*\* shown for your app, not this example/);
     assert.match(debug, /press \*\*Enter inside the VM\*\*/i);
     assert.doesNotMatch(debug, /configuration thread|Default Hostname|followed by that hostname/);
-    assert.equal((debug.match(/^\d\. /gm) || []).length, 7);
+    assert.equal((debug.match(/^\d\. /gm) || []).length, 5);
     assert.match(debug, /Confirm matching products appear and catalog browsing still works/);
     assert.match(debug, /`jacket`.*\*\*Search\*\*.*\*\*500 - Search failed\*\*/);
     assert.ok(prompts.includes("Product search fails with HTTP 500, but browsing works. Find out why, fix the running app, and check that searching for jacket returns products."));
