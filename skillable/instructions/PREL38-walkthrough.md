@@ -271,6 +271,14 @@ steps and example remain under Additional guidance only if that link is missing
 or does not open. This revised handoff has not been rerun, retimed, or published;
 the existing configuration screenshot predates the expanded prompt.
 
+The next review clarified that Additional guidance is for troubleshooting and
+help following the instructions, not optional activities. The optional Health
+check now appears directly under configuration, report refinement under the
+report exercise, and approved AAU changes under consumption. Skills, custom
+agents, incident management, and response plans are grouped in Optional exercises
+before completion. Their safeguards and dependency order are unchanged. This is
+an authoring reorganization, not a new timed run or live-guide publication.
+
 The historical CSV, screenshot manifest, operator durations, and human estimates
 remain unchanged.
 

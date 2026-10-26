@@ -191,7 +191,15 @@ Your repository URL should look like `https://github.com/User1-12345678_events/c
 
 ![Example App Service configuration response](images/app-configuration/default-hostname.png)
 
-The Health check configuration exercise is optional; see **Additional guidance**.
+### Optional: App Service Health check
+
+**Goal:** Explore endpoint monitoring separately from product-search recovery.
+
+In the same configuration conversation, select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+
+++++Configure the Caldova App Service Health check path to /api/health. Explain the impact before making the change.++++
+
+Before approving, confirm the target app, successful endpoint response, restart impact, and rollback. Verify the saved setting afterward. This endpoint does not detect the search fault.
 
 ## Debug the product-search failure
 
@@ -237,12 +245,20 @@ The Health check configuration exercise is optional; see **Additional guidance**
 ++++Create a visually rich live report called "Caldova Traffic and Health" using the last 24 hours of connected telemetry. Put a dependency graph at the top, showing each component and its health. Below it, show traffic trends, request counts, failure rate, response times, top requested and failing URLs, and country/region where available. Use clear charts, tables, and health indicators. Label missing data and unknown health, and keep it read-only.++++
 
 3. Click the arrow beside your response and answer any further questions. Review the report-saving approval and allow only the expected read-only telemetry tools.
-4. **Don't wait for completion.** Select **Automation > Weekly Caldova cost review** and check its latest run. Finish other pending activities; if none remain, scroll to **Additional guidance** and try an optional activity.
+4. **Don't wait for completion.** Select **Automation > Weekly Caldova cost review** and check its latest run. Finish other pending activities; if none remain, scroll to **Optional exercises** and try one.
 5. Return later through **Live reports > Caldova Traffic and Health** once the report is saved. Review the dependency graph first, then the charts and tables.
 6. Open the **version picker** to inspect saved versions. If an earlier version exists, compare it, then return to the current version. Versions preserve layout and configuration, not historical telemetry.
 7. Select the share icon at the upper right (**Copy link to report**). Recipients must already have access to the agent; sharing the link does not grant access.
 
 ![Saved versions, dependency health first, and the report-sharing control](images/prel38-walkthrough/live-report-versions.png)
+
+### Optional: Keep improving your live report
+
+Select **Live reports > Caldova Traffic and Health > Open authoring thread**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+
+++++Group the dependency graph by service and make unhealthy components stand out.++++
+
+Answer any questions. Return through **Live reports > Caldova Traffic and Health** to inspect the update and compare versions.
 
 ## Review agent consumption and the AAU budget
 
@@ -252,80 +268,11 @@ The Health check configuration exercise is optional; see **Additional guidance**
 2. In **Consumption by thread**, find your configuration, search investigation, cost-review execution, and report-authoring threads where listed. Compare their AAUs and status; active threads can still consume more.
 3. Click a thread title to open its conversation. Review the agent's steps, tool calls, approvals, and result. Repeat for the weekly cost task's execution thread, not just the chat that created the schedule.
 4. Return to **Agent consumption**. Use the **Chats** and **Scheduled tasks** cards to compare those types, then clear the filter. Select **Refresh** to update usage; select **Download** if you want a CSV of the currently filtered threads.
-5. Under **Monthly AAU limit**, select **Change AAU allocation** and inspect the active-flow allowance. Record a proposed limit, then close without saving so the remaining exercises can continue. See **Additional guidance > Agent consumption and budget changes** for applying a facilitator-approved limit after the lab activities.
+5. Under **Monthly AAU limit**, select **Change AAU allocation** and inspect the active-flow allowance. Record a proposed limit, then close without saving so the remaining exercises can continue.
 
 The **active-flow** limit controls the agent's processing allowance, not the cost of the Caldova Azure resources. The fixed **always-on** charge is separate and continues even when active flow is stopped or its limit is reached.
 
-## Complete
-
-Confirm search works, review the cost findings and PowerPoint, inspect the live report, and record which threads consumed AAUs. If time allows, try the optional skills, custom-agent, incident-management, and response-plan exercises below. Record anything still running or blocked. Follow the facilitator's cleanup instructions; do not reset the lab or delete shared resources.
-
-## Additional guidance
-
-Use the guidance for your current section, or ask the facilitator.
-
-### Open Azure SRE Agent
-
-Focus the destination field **inside the VM**. Copy/paste or type the prompt or URL, or click its text in these instructions to type automatically. For automatic typing, keep it focused until typing finishes. Then select **Send** or press **Enter** as instructed. Use **Resources > Azure Portal** for Azure sign-in details, not the VM account.
-
-**Type Text did not work?** Type `https://sre.azure.com` manually in the VM browser's address bar, then press **Enter inside the VM**. Do not change VM settings or permissions.
-
-**Password requested instead of TAP?** Use the Azure password in **Resources > Azure Portal**, not the VM password.
-
-### Review Azure resources and telemetry
-
-If the wizard is closed, go to **Operations hub > Overview > Complete setup**. Ask the facilitator if the option is absent. Review only the existing resource group; do not add broader access.
-
-### Connect the imported repository
-
-Do not add a duplicate connection or use a personal account. If the agent reports that indexing is still running, continue another activity and return later. If it cannot retrieve the imported source, ask the facilitator.
-
-### Review the Getting started thread
-
-Under **Favorites**, select **Team onboarding**. If absent, select **Search Threads**, search `get to know`, and open your lab user's greeting.
-
-### Inquire and configure Web App
-
-Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the optional Health check change. Bookmark or copy the website link returned by the configuration prompt for the next exercise. If it is missing or does not open, use the manual steps below.
-
-### Debug the product-search failure
-
-**Website link missing or not opening?** Find the actual app URL manually:
-
-1. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type the Azure Portal URL below, or click it to type automatically. Then press **Enter inside the VM**:
-
-+++https://portal.azure.com+++
-
-2. In Azure Portal, select **Resource groups** and open the resource group assigned to this lab, shown in **Resources**. In its resource list, open **caldova-webapp-...** with type **App Service**, not the App Service plan.
-3. On the web app's **Overview** page, find **Default domain**. Select **Browse** to open the app, or copy the domain and paste or type `https://` followed by that domain into a new VM browser tab, then press **Enter inside the VM**. Bookmark the page or copy its full URL, and keep the SRE Agent tab open.
-
-Example only: `https://caldova-webapp-<unique-suffix>.azurewebsites.net`. Your suffix will differ, and Azure may include extra regional hostname components. Use the complete **Default domain** shown for your app, not this example.
-
-**Cannot find the web app?** Confirm Azure Portal is using the lab's Azure account and assigned subscription from **Resources**, then reopen the assigned resource group and clear resource-list filters. Look for **caldova-webapp-...** with type **App Service**. If it is absent or access is denied, ask the facilitator; do not create resources or change permissions. If the app does not open, copy its complete **Default domain** from **Overview** and try the HTTPS address in the VM browser. Do not use the example URL or another learner's hostname.
-
-If search already works, tell the facilitator; do not break the app yourself. Verify recovery by repeating the search in the app.
-
-A source-code pull request is not a deployment. If the running app still fails after a proposed fix, tell the agent the result and ask it to restore live search. Returning an empty result set is not recovery for the `jacket` search.
-
-### Schedule a weekly cost review
-
-If the task is not listed yet, return to its creation chat and answer any pending questions or approvals. Continue another activity and check again; do not create a duplicate task.
-
-Select **Automation > Weekly Caldova cost review** to check its latest run. Do not start a duplicate run. Open the execution thread to verify the findings and PowerPoint, rather than relying on the run status alone. If a run fails or the PowerPoint is missing, record the issue and ask the facilitator.
-
-If the downloaded PowerPoint cannot open because the VM has no compatible viewer, keep the file and ask the facilitator for a viewing option. Do not install software or grant additional access.
-
-### Create a live traffic and health report
-
-If telemetry is empty, browse the app and try search, then return after another activity. Missing data or unknown dependency health does not mean the app is healthy. Ask the facilitator about connector or query errors; do not add permissions.
-
-While working on another activity, check the report's authoring thread for pending questions or approvals. **Allow once** may be needed to save the report with its expected read-only telemetry tools; saving the report does not change Azure resources. An empty gallery does not necessarily mean generation is still running.
-
-The 24-hour report can still include earlier failures after a fix. Verify recovery with fresh app requests rather than expecting historical failure charts to turn green immediately.
-
-### Agent consumption and budget changes
-
-Usage can lag behind the conversation. Select the correct month, clear type/day/status filters, and select **Refresh** before concluding that a thread is missing or has used no AAUs. Use thread titles and execution details to identify work; do not assume a report or scheduled task is represented only by its creation chat.
+### Optional: Apply an approved AAU limit
 
 After completing the other activities, including any optional exercises you plan to try, apply a budget change **only with the facilitator's approved value**:
 
@@ -335,23 +282,7 @@ After completing the other activities, including any optional exercises you plan
 
 The active-flow limit does not cap the separate always-on charge or other Azure resource charges. Do not stop or delete the assigned agent to experiment with billing.
 
-### Optional: App Service Health check
-
-**Goal:** Explore endpoint monitoring separately from product-search recovery.
-
-Return to the configuration conversation and select its message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
-
-++++Configure the Caldova App Service Health check path to /api/health. Explain the impact before making the change.++++
-
-Before approving, confirm the target app, successful endpoint response, restart impact, and rollback. Verify the saved setting afterward. This endpoint does not detect the search fault.
-
-### Optional: Keep improving your live report
-
-Select **Live reports > Caldova Traffic and Health > Open authoring thread**. Select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
-
-++++Group the dependency graph by service and make unhealthy components stand out.++++
-
-Answer any questions. Return through **Live reports > Caldova Traffic and Health** to inspect the update and compare versions.
+## Optional exercises
 
 ### Optional: Create a search-check skill
 
@@ -420,6 +351,77 @@ If your lab has no approved incident source or test-alert setup, review the conn
 5. With the facilitator's approval, select **Create** (the final button can be labelled **Create incident response plan**). Confirm the saved plan is **On** and in **Review** mode.
 6. Have the facilitator trigger the approved test alert without breaking the app. Open the resulting incident investigation, verify its custom agent and read-only evidence, then inspect that thread under **Settings > Agent consumption**.
 7. When the test finishes, select only `caldova-search-review`, then **Turn off > Yes**. Confirm **Off** so it does not keep starting work after the exercise. Do not disable other plans.
+
+## Complete
+
+Confirm search works, review the cost findings and PowerPoint, inspect the live report, and record which threads consumed AAUs. Finish any optional exercises you chose. Record anything still running or blocked. Follow the facilitator's cleanup instructions; do not reset the lab or delete shared resources.
+
+## Additional guidance
+
+Use this section if you are stuck or need more help following an instruction, or ask the facilitator. Optional exercises are included with the main activities above, not here.
+
+### Open Azure SRE Agent
+
+Focus the destination field **inside the VM**. Copy/paste or type the prompt or URL, or click its text in these instructions to type automatically. For automatic typing, keep it focused until typing finishes. Then select **Send** or press **Enter** as instructed. Use **Resources > Azure Portal** for Azure sign-in details, not the VM account.
+
+**Type Text did not work?** Type `https://sre.azure.com` manually in the VM browser's address bar, then press **Enter inside the VM**. Do not change VM settings or permissions.
+
+**Password requested instead of TAP?** Use the Azure password in **Resources > Azure Portal**, not the VM password.
+
+### Review Azure resources and telemetry
+
+If the wizard is closed, go to **Operations hub > Overview > Complete setup**. Ask the facilitator if the option is absent. Review only the existing resource group; do not add broader access.
+
+### Connect the imported repository
+
+Do not add a duplicate connection or use a personal account. If the agent reports that indexing is still running, continue another activity and return later. If it cannot retrieve the imported source, ask the facilitator.
+
+### Review the Getting started thread
+
+Under **Favorites**, select **Team onboarding**. If absent, select **Search Threads**, search `get to know`, and open your lab user's greeting.
+
+### Inquire and configure Web App
+
+Keep Getting started for the app overview. Use **New chat** for configuration, and return to that separate configuration thread for the optional Health check change. Bookmark or copy the website link returned by the configuration prompt for the next exercise. If it is missing or does not open, use the manual steps below.
+
+### Debug the product-search failure
+
+**Website link missing or not opening?** Find the actual app URL manually:
+
+1. Open a new tab in the **VM browser** and select its address bar. Copy/paste or type the Azure Portal URL below, or click it to type automatically. Then press **Enter inside the VM**:
+
++++https://portal.azure.com+++
+
+2. In Azure Portal, select **Resource groups** and open the resource group assigned to this lab, shown in **Resources**. In its resource list, open **caldova-webapp-...** with type **App Service**, not the App Service plan.
+3. On the web app's **Overview** page, find **Default domain**. Select **Browse** to open the app, or copy the domain and paste or type `https://` followed by that domain into a new VM browser tab, then press **Enter inside the VM**. Bookmark the page or copy its full URL, and keep the SRE Agent tab open.
+
+Example only: `https://caldova-webapp-<unique-suffix>.azurewebsites.net`. Your suffix will differ, and Azure may include extra regional hostname components. Use the complete **Default domain** shown for your app, not this example.
+
+**Cannot find the web app?** Confirm Azure Portal is using the lab's Azure account and assigned subscription from **Resources**, then reopen the assigned resource group and clear resource-list filters. Look for **caldova-webapp-...** with type **App Service**. If it is absent or access is denied, ask the facilitator; do not create resources or change permissions. If the app does not open, copy its complete **Default domain** from **Overview** and try the HTTPS address in the VM browser. Do not use the example URL or another learner's hostname.
+
+If search already works, tell the facilitator; do not break the app yourself. Verify recovery by repeating the search in the app.
+
+A source-code pull request is not a deployment. If the running app still fails after a proposed fix, tell the agent the result and ask it to restore live search. Returning an empty result set is not recovery for the `jacket` search.
+
+### Schedule a weekly cost review
+
+If the task is not listed yet, return to its creation chat and answer any pending questions or approvals. Continue another activity and check again; do not create a duplicate task.
+
+Select **Automation > Weekly Caldova cost review** to check its latest run. Do not start a duplicate run. Open the execution thread to verify the findings and PowerPoint, rather than relying on the run status alone. If a run fails or the PowerPoint is missing, record the issue and ask the facilitator.
+
+If the downloaded PowerPoint cannot open because the VM has no compatible viewer, keep the file and ask the facilitator for a viewing option. Do not install software or grant additional access.
+
+### Create a live traffic and health report
+
+If telemetry is empty, browse the app and try search, then return after another activity. Missing data or unknown dependency health does not mean the app is healthy. Ask the facilitator about connector or query errors; do not add permissions.
+
+While working on another activity, check the report's authoring thread for pending questions or approvals. **Allow once** may be needed to save the report with its expected read-only telemetry tools; saving the report does not change Azure resources. An empty gallery does not necessarily mean generation is still running.
+
+The 24-hour report can still include earlier failures after a fix. Verify recovery with fresh app requests rather than expecting historical failure charts to turn green immediately.
+
+### Agent consumption and budget changes
+
+Usage can lag behind the conversation. Select the correct month, clear type/day/status filters, and select **Refresh** before concluding that a thread is missing or has used no AAUs. Use thread titles and execution details to identify work; do not assume a report or scheduled task is represented only by its creation chat.
 
 ### Reference guides
 

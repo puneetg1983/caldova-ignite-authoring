@@ -11,6 +11,7 @@ const pages = visible.split(/\r?\n===\r?\n/);
 const sre = pages[3];
 const [main, guidance] = sre.split("## Additional guidance");
 const section = heading => main.split(`## ${heading}\n`)[1]?.split("\n## ")[0];
+const optionalExercises = main.split("## Optional exercises\n")[1]?.split("\n## Complete")[0];
 const prompts = [...source.matchAll(/^\+{4}([^\r\n]+)\+{4}$/gm)].map(match => match[1]);
 const template = JSON.parse(readFileSync(join(__dirname, "..",
     "Caldova-WebAppP1v3-with-SREAgent-MI.json"), "utf8"));
@@ -145,11 +146,11 @@ test("PREL38: configuration inquiry is required; health-check change is optional
     assert.match(guidance, /Website link missing or not opening/);
     assert.doesNotMatch(configuration, /Find \*\*Default Hostname\*\*|followed by that hostname/);
     assert.ok(configuration.includes("images/app-configuration/default-hostname.png"));
-    assert.match(configuration, /Health check configuration exercise is optional/);
-    assert.doesNotMatch(main, /configure.*Health check path to \/api\/health/i);
-    assert.match(guidance, /### Optional: App Service Health check/);
-    assert.match(guidance, /successful endpoint response, restart impact, and rollback/);
-    assert.match(guidance, /This endpoint does not detect the search fault/);
+    assert.match(configuration, /### Optional: App Service Health check/);
+    assert.doesNotMatch(configuration.split("\n### Optional:")[0], /configure.*Health check path to \/api\/health/i);
+    assert.match(configuration, /In the same configuration conversation/);
+    assert.match(configuration, /successful endpoint response, restart impact, and rollback/);
+    assert.match(configuration, /This endpoint does not detect the search fault/);
 });
 
 test("PREL38: debugging uses one natural prompt and verifies the original symptom", () => {
@@ -317,14 +318,17 @@ test("PREL38: report puts dependency health first; versions and sharing are requ
     assert.match(report, /If an earlier version exists/);
     assert.match(report, /\*\*Copy link to report\*\*/);
     assert.match(report, /sharing the link does not grant access/);
-    assert.doesNotMatch(report, /Reload|Builder|Open authoring thread/);
-    assert.match(guidance, /### Optional: Keep improving your live report/);
-    assert.match(guidance, /\*\*Live reports > Caldova Traffic and Health > Open authoring thread\*\*/);
-    assert.ok(guidance.indexOf("### Optional: Keep improving") > guidance.indexOf("### Optional: App Service"));
+    assert.doesNotMatch(report.split("\n### Optional:")[0], /Reload|Builder|Open authoring thread/);
+    assert.match(report, /### Optional: Keep improving your live report/);
+    assert.match(report, /\*\*Live reports > Caldova Traffic and Health > Open authoring thread\*\*/);
+    assert.match(report, /scroll to \*\*Optional exercises\*\* and try one/);
 });
 
 test("PREL38: extra help is compiled once at the end and does not claim missing data is healthy", () => {
     assert.equal((source.match(/^## Additional guidance$/gm) || []).length, 1);
+    assert.doesNotMatch(guidance, /^### Optional:|^## Optional exercises/m);
+    assert.match(guidance, /if you are stuck or need more help following an instruction/);
+    assert.ok(main.indexOf("## Complete") > main.indexOf("## Optional exercises"));
     assert.ok(main.indexOf("## Complete") > main.indexOf("## Create a live traffic and health report"));
     assert.doesNotMatch(main, /Operations hub > Overview|Search Threads|Browser did not open/);
     assert.match(guidance, /Missing data or unknown dependency health does not mean the app is healthy/);
@@ -347,42 +351,43 @@ test("PREL38: consumption review drills into execution threads and separates AAU
     assert.match(consumption, /execution thread, not just the chat that created the schedule/);
     assert.match(consumption, /close without saving/);
     assert.match(consumption, /always-on.*separate/s);
-    assert.match(guidance, /500 to 1,000,000/);
-    assert.match(guidance, /Increases take effect immediately; decreases apply next month/);
-    assert.match(guidance, /Do not lower the allowance while lab work is still running/);
-    assert.match(guidance, /does not cap the separate always-on charge or other Azure resource charges/);
-    assert.match(guidance, /Do not stop or delete the assigned agent/);
+    assert.match(consumption, /### Optional: Apply an approved AAU limit/);
+    assert.match(consumption, /500 to 1,000,000/);
+    assert.match(consumption, /Increases take effect immediately; decreases apply next month/);
+    assert.match(consumption, /Do not lower the allowance while lab work is still running/);
+    assert.match(consumption, /does not cap the separate always-on charge or other Azure resource charges/);
+    assert.match(consumption, /Do not stop or delete the assigned agent/);
 });
 
 test("PREL38: optional skills and custom agents have explicit creation and verification steps", () => {
-    assert.match(guidance, /### Optional: Create a search-check skill/);
-    assert.match(guidance, /\*\*Builder > Agent Canvas > Create > Skill\*\*/);
-    assert.match(guidance, /`SKILL\.md`.*frontmatter/);
-    assert.match(guidance, /confirm `caldova-search-check` appears/);
-    assert.match(guidance, /Verify the agent loads the skill/);
-    assert.match(guidance, /\*\*Builder > Agent Canvas > Create > Custom Agent\*\*/);
-    assert.match(guidance, /\*\*Choose skills\*\*.*only `caldova-search-check`/);
-    assert.match(guidance, /empty selection inherits global tools/);
-    assert.match(guidance, /read-only tools are unavailable, cancel/);
-    assert.match(guidance, /\*\*Test playground\*\*/);
-    assert.match(guidance, /type `\/agent` and select `caldova-search-reviewer`/);
-    assert.doesNotMatch(main, /## Optional:|SKILL\.md|Create > Custom Agent/);
+    assert.match(optionalExercises, /### Optional: Create a search-check skill/);
+    assert.match(optionalExercises, /\*\*Builder > Agent Canvas > Create > Skill\*\*/);
+    assert.match(optionalExercises, /`SKILL\.md`.*frontmatter/);
+    assert.match(optionalExercises, /confirm `caldova-search-check` appears/);
+    assert.match(optionalExercises, /Verify the agent loads the skill/);
+    assert.match(optionalExercises, /\*\*Builder > Agent Canvas > Create > Custom Agent\*\*/);
+    assert.match(optionalExercises, /\*\*Choose skills\*\*.*only `caldova-search-check`/);
+    assert.match(optionalExercises, /empty selection inherits global tools/);
+    assert.match(optionalExercises, /read-only tools are unavailable, cancel/);
+    assert.match(optionalExercises, /\*\*Test playground\*\*/);
+    assert.match(optionalExercises, /type `\/agent` and select `caldova-search-reviewer`/);
+    assert.doesNotMatch(guidance, /SKILL\.md|Create > Custom Agent/);
 });
 
 test("PREL38: optional incident setup restricts alerts, explicitly selects Review, and disables its own test plan", () => {
-    assert.match(guidance, /### Optional: Configure incident management/);
-    assert.match(guidance, /\*\*Connect an incident platform > Choose platform > Azure Monitor\*\*/);
-    assert.match(guidance, /Save\*\* only after the facilitator confirms isolated lab alerts/);
-    assert.match(guidance, /Do not change pre-existing\/shared plans/);
-    assert.match(guidance, /### Optional: Configure an incident response plan/);
-    assert.match(guidance, /\*\*Title contains\*\* to `caldova-lab-search`/);
-    assert.match(guidance, /\*\*Agent autonomy level > Review\*\*; new plans default to Autonomous/);
-    assert.match(guidance, /cooldown\*\* enabled/);
-    assert.match(guidance, /filters do not overlap another enabled plan/);
-    assert.match(guidance, /empty preview is not proof of successful routing/);
-    assert.match(guidance, /trigger the approved test alert without breaking the app/);
-    assert.match(guidance, /select only `caldova-search-review`.*\*\*Turn off > Yes\*\*/);
-    assert.match(guidance, /Do not disable other plans/);
+    assert.match(optionalExercises, /### Optional: Configure incident management/);
+    assert.match(optionalExercises, /\*\*Connect an incident platform > Choose platform > Azure Monitor\*\*/);
+    assert.match(optionalExercises, /Save\*\* only after the facilitator confirms isolated lab alerts/);
+    assert.match(optionalExercises, /Do not change pre-existing\/shared plans/);
+    assert.match(optionalExercises, /### Optional: Configure an incident response plan/);
+    assert.match(optionalExercises, /\*\*Title contains\*\* to `caldova-lab-search`/);
+    assert.match(optionalExercises, /\*\*Agent autonomy level > Review\*\*; new plans default to Autonomous/);
+    assert.match(optionalExercises, /cooldown\*\* enabled/);
+    assert.match(optionalExercises, /filters do not overlap another enabled plan/);
+    assert.match(optionalExercises, /empty preview is not proof of successful routing/);
+    assert.match(optionalExercises, /trigger the approved test alert without breaking the app/);
+    assert.match(optionalExercises, /select only `caldova-search-review`.*\*\*Turn off > Yes\*\*/);
+    assert.match(optionalExercises, /Do not disable other plans/);
 });
 
 test("PREL38: facilitator preparation distinguishes licensed VM software from the app ARM deployment", () => {

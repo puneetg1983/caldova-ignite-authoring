@@ -63,10 +63,12 @@ then **Done and go to agent**, the Getting started thread (at most five minutes)
 and the remaining exercises. Environment/health findings are reviewed in that
 thread, not repeated as a separate discovery exercise. A short note at the top
 points learners to **Additional guidance** at the end or to the facilitator.
-Optional help is collected there by section, including sign-in and browser
+Troubleshooting help is collected there by section, including sign-in and browser
 fallbacks, thread/wizard navigation, and task/report troubleshooting, rather
 than interrupting the main instructions. Required approval and verification
-steps stay in the main flow.
+steps stay in the main flow. Optional exercises stay with their related
+activities or in the separate **Optional exercises** section before completion,
+not in Additional guidance.
 Configuration review and repository connection stay inside the SRE Agent context
 wizard; the review does not require an Azure Portal or Builder detour.
 PREL38 stays on **Quickstart** for **Azure resources -> Show details** and
@@ -122,9 +124,10 @@ that timing claim. LAB720's 25-minute optimization is deferred for discussion.
 
 PREL38 starts configuration inquiry in **New chat**, separate from Getting
 started, and keeps the optional `/api/health` change in that configuration
-thread. Debugging provides the full learner-specific app URL through
-`@lab.Variable(CaldovaWebAppUrl)`, with native text entry into the VM browser.
-Learners do not need to find a hostname or ask the agent for their URL.
+thread, with the optional steps directly under the configuration exercise.
+The configuration prompt also asks for the full HTTPS website link. Learners
+bookmark or copy that URL and reuse it in the debugging exercise; manual Azure
+Portal lookup is a fallback in Additional guidance, not part of the main flow.
 An existing T56 capture illustrates the configuration response in
 `images/app-configuration/default-hostname.png`, not a required URL lookup.
 There is no separate repository-readiness exercise before debugging.
@@ -132,14 +135,14 @@ Debugging must repair the running app and return real `jacket`
 products; an undeployed code PR or empty result is not recovery. Cost automation
 and live-report generation overlap other activities, with explicit checks for
 pending questions/approvals and completed artifacts. Report versions and sharing
-are required; conversational refinement remains optional at the end.
+are required; conversational refinement is optional within the report exercise.
 
 The expanded source adds **Settings -> Agent consumption** with per-thread AAU
 review, execution-thread inspection, filtered CSV export, and active-flow
 allocation controls. Budget changes are deferred until the other exercises
 finish and require a facilitator-approved value. Always-on charges and other
-Azure resource costs are not covered by the active-flow limit. Additional
-guidance contains optional skill, custom-agent, incident-source, and narrowly
+Azure resource costs are not covered by the active-flow limit. The **Optional
+exercises** section contains skill, custom-agent, incident-source, and narrowly
 filtered Review-mode response-plan exercises, including turning off the new
 test plan. These additions have not been runtime-tested or retimed, and have
 not replaced the earlier live Skillable revision. The walkthrough retains its
