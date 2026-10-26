@@ -424,6 +424,11 @@ test("PREL38: core AAU activity briefly explores usage and limits without a deep
     assert.match(optionalExercises, /execution thread, not just the chat that created the schedule/);
     assert.ok(consumption.includes("images/prel38-revision/aau-limit.png"));
     assert.ok(consumption.includes("images/prel38-revision/aau-allocation-controls.png"));
+    assert.ok(consumption.indexOf("images/prel38-revision/aau-allocation-controls.png") <
+        consumption.indexOf("3. Briefly review"), "Allocation controls precede usage exploration");
+    assert.ok(consumption.indexOf("images/prel38-revision/aau-allocation-controls.png") <
+        consumption.indexOf("images/prel38-revision/consumption-threads-reference.png"),
+    "Change AAU screenshot precedes the thread exploration screenshot");
     assert.match(guidance, /open \*\*Build \+ setup\*\*, expand \*\*Monitor\*\*, and select \*\*Agent consumption\*\*/);
     assert.match(guidance, /Earlier navigation uses \*\*Settings > Agent consumption\*\*/);
     assert.match(guidance, /Do not restart the agent, switch navigation modes, enable features, or change permissions/);
