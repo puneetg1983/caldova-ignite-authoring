@@ -83,9 +83,9 @@ Use the assigned `caldova-sreagent-<suffix>`. The Web App, resource group, and t
 6. Inspect the App Service configuration and save the website URL.
 7. Investigate the product-search failure and verify recovery.
 8. Schedule a weekly cost review with forecasting, savings recommendations, and an HTML slide deck.
-9. Create a live report with an Azure-icon dependency-health graph, interactive views, versions, and sharing.
-10. Review workflow consumption and plan the agent's active-flow AAU budget.
-11. Optionally explore the Agent Canvas, skills, custom agents, integrations, and triggers without creating anything.
+9. Create an interactive live report with an Azure-icon dependency-health graph and service details.
+10. Explore the agent's AAU limit and how it makes spending predictable, controlled, and visible.
+11. Use remaining time to explore report versions, detailed usage, Agent Canvas, skills, custom agents, integrations, and triggers; try creating a capability if time permits.
 
 **Keep work moving:** Imports, agent replies, task creation, report authoring, and scheduled runs can take several minutes. Answer pending questions or approvals, then continue an independent exercise instead of waiting. Return before a dependent step, such as connecting the imported repository or searching the website. Do not submit duplicate requests.
 
@@ -104,7 +104,11 @@ Your private copy lets the agent inspect the application's code and propose chan
 4. Under **Owner**, select the **same GHE lab account**. Set **Repository Name** to `caldova-ignite-authoring` and visibility to **Private**.
 5. Select **Begin import**, leave the status tab open, and continue to exercise 2 **without waiting**.
 
+The destination form below shows where to select your lab account, name your repository copy, and keep it private.
+
 ![GitHub import destination fields with the lab account masked and Private selected](images/github-import/destination.png)
+
+This progress screen means the import is running. Leave it open and use the waiting time to open your assigned SRE Agent.
 
 ![GitHub preparing the new repository while the import runs in the background](images/github-import/progress.png)
 
@@ -122,9 +126,13 @@ The resource list identifies which agent you are opening. Its context wizard con
 3. Use the **Azure account** in **Resources > Azure Portal**, not the VM account. At **Temporary Access Pass**, use the **TAP** control in Resources.
 4. In the SRE Agent resource list, select your assigned `caldova-sreagent-<suffix>` using its full actual name. Reuse this agent throughout the lab; do not create another.
 
+The resource list below identifies the assigned Caldova agent. Open its name rather than starting a new deployment.
+
 ![SRE Agent resource list with the assigned Caldova agent; subscription masked](images/prel38-revision/agent-list.png)
 
 5. On **More context. Better investigations.**, keep **Quickstart** selected and the **context wizard** open. Review resources and connect the imported repository in the next exercises before selecting **Done and go to agent**.
+
+The context wizard groups the Azure resources, logs, and code available to the agent. Keep this screen open for the next two exercises.
 
 ![Context wizard after opening the assigned agent, with Quickstart selected, Code, and connected Logs](images/prel38-revision/context-wizard.png)
 
@@ -141,7 +149,11 @@ Stay on **Quickstart** in the **context wizard**. GitHub is **not connected yet*
 1. Under **Azure resources**, click **Show details**. Review the configured **Resource group**. Leave it unchanged.
 2. Under **Logs**, click **Show details**. Confirm **Application Insights** and **Log Analytics** both show **Connected**.
 
+The expanded Azure resource card shows the resource-group boundary for this lab; it is not a request to add access.
+
 ![Azure resources expanded to show Resource group scope](images/context-wizard/azure-resource-scope.png)
+
+The Logs card confirms which telemetry sources are connected. These provide the evidence for the investigation and Live Report.
 
 ![Logs details with Application Insights and Log Analytics Connected](images/context-wizard/logs-connected.png)
 
@@ -167,9 +179,15 @@ Code context lets the agent relate runtime errors to their implementation and pr
 
 Your repository URL should look like `https://github.com/User1-12345678_events/caldova-ignite-authoring`. Replace the example username with your actual lab GitHub username; do not use the original `puneetg1983` repository URL.
 
+The repository dialog takes the URL of your imported lab copy, as illustrated below.
+
 ![Add repositories dialog with GitHub selected and the Repository URL field](images/context-wizard/repository-connection.png)
 
+OAuth connects that repository using your lab GitHub identity. Review the account before authorizing the connection.
+
 ![OAuth connection method and Sign in to GitHub](images/context-wizard/github-oauth.png)
+
+After saving, the Code card should list your imported repository. This confirms the connection without another readiness exercise.
 
 ![Code details with one saved repository](images/context-wizard/repository-saved.png)
 
@@ -186,6 +204,8 @@ Use this introduction to build an application mental model before making operati
 3. Chat with it to understand the app better. Select the chat box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
 
 ++++What is this app about, and what can customers do with it?++++
+
+The example below shows how the onboarding thread combines saved context with questions you can answer to refine the agent's understanding.
 
 ![Example onboarding thread showing saved context and follow-up questions](images/getting-started/thread-overview.png)
 
@@ -205,6 +225,8 @@ Knowing the hosting settings and the actual website address helps you distinguis
 3. Open the website link in a new **VM browser** tab and confirm the app loads. **Bookmark the page or copy the full URL for the next exercise.** Keep the SRE Agent tab open.
 
 The reply can take time. If it is still running, start the independent scheduled-task or live-report exercise, then return for the website link before debugging.
+
+In the configuration response, look for the assigned web app's full HTTPS website link. Save your own URL rather than copying the example instance below.
 
 ![Example App Service configuration response](images/app-configuration/default-hostname.png)
 
@@ -226,6 +248,8 @@ This exercise connects a real customer symptom with telemetry, code, and a verif
 
 1. Open your bookmarked website in the **VM browser**, or select the address bar in a new tab and paste or type the full URL copied during **Inquire and configure Web App**, then press **Enter inside the VM**.
 2. Select **Catalog** and confirm browsing works. Under **Search by product name**, enter `jacket` and click **Search**. Observe **500 - Search failed**.
+
+This is the customer-visible failure to investigate: product-name search returns HTTP 500 even though catalog browsing works.
 
 ![Product-name search fails with HTTP 500](images/prel38-walkthrough/search-failure.png)
 
@@ -253,16 +277,24 @@ SRE Agent is not just for investigating and fixing incidents. **Scheduled tasks*
 2. Send the message and answer **any questions from the agent**. Task creation can take several minutes. **Don't wait for completion**: start the live-report exercise and return to this thread later.
 3. **Only after the agent confirms the scheduled task has been created**, select **Automation > Weekly Caldova cost review**. Check its schedule and latest run status. If no run has started or is pending, select **Run task now** once; do not duplicate an agent-triggered run.
 
-![Run task now and the linked execution thread](images/prel38-walkthrough/cost-task-run.png)
+Once creation is confirmed, the task details show its schedule, run control, and linked execution thread.
+
+![Run task now and the linked execution thread for Weekly Caldova cost review](images/prel38-revision/scheduled-task-run.png)
 
 4. **Don't wait for completion.** Scroll to **Create a live traffic and health report** below and continue.
-5. After that activity, return to **Automation > Weekly Caldova cost review**. Open its latest execution thread, review the findings, and open the HTML slide deck in the VM browser. The run has its own thread, separate from the conversation that created the task.
+5. After that activity, return to **Automation > Weekly Caldova cost review**. Open its latest execution thread, review the findings, and open the HTML slide deck in the VM browser. Select the HTML download link in the result, then select **Open file** in the VM browser's **Downloads** panel. The run has its own thread, separate from the conversation that created the task.
+
+This HTML deck was produced by the scheduled task's execution, not its creation chat. Its cost breakdown combines a chart, resource table, and explicit pricing assumptions. Treat these amounts as example estimates, not your lab's bill; your data and generated layout will differ.
+
+![Scheduled task's HTML slide deck rendered in the VM browser with a cost chart, resource table, and estimate assumptions](images/prel38-revision/scheduled-task-html.png)
 
 ## 9. Create a live traffic and health report
 
-**Goal:** Visualize dependencies and health, inspect traffic, and explore report versions and sharing.
+**Goal:** Build and use an interactive UI through conversation, using a traffic and health view as this lab's example.
 
-**Live Reports are a UI for AI:** describe the operational view you need, then inspect and refine dashboard-like views through the same agent. This brings dependency maps, telemetry, reporting, and supported interactions into one workflow instead of requiring a separate dashboard-building exercise. Interactivity depends on the report's available tools and components; do not assume every chart or node is clickable.
+**Live Reports are a UI for AI, not just operational dashboards.** Describe an interactive application in chat, then refine it with the agent. It could be a service-health workspace, a guided approval app, or a **CRM-style application** for exploring customer records, filtering opportunities, and starting supported follow-up workflows. The connected data, tools, and permissions determine what it can actually read or do; creating the UI does not grant access to a CRM or other system.
+
+In this lab, build a read-only traffic and health application: a dependency map becomes the entry point for exploring service telemetry. This is one example of the broader idea, not a limit on what a UI for AI can be. Interactivity depends on the report's available tools and components; do not assume every chart or node is clickable.
 
 1. In the left navigation, select **Live reports > + New report**.
 2. When the agent asks what report you want, select **Enter a custom response** **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
@@ -276,57 +308,87 @@ SRE Agent is not just for investigating and fixing incidents. **Scheduled tasks*
 
    A node's details may open **below the graph**; scroll inside the report to see them. These panels can summarize the report's existing log-query results rather than make a new request. Read health rings as telemetry-based indicators, not a separate Azure Resource Health check.
 
-7. Open the **version picker** to inspect saved versions. If an earlier version exists, compare it, then return to the current version. Versions preserve layout and configuration, not historical telemetry.
-8. Select the share icon at the upper right (**Copy link to report**). Recipients must already have access to the agent; sharing the link does not grant access.
+The map below uses service icons and health rings to make the system easy to scan. Inferred connections and unknown health are labelled rather than presented as verified dependencies.
 
 ![Fresh lab report with official Azure service icons, health rings, inferred connections, and a health legend](images/prel38-revision/live-report-graph.png)
 
-![Clicking the Web App icon opens request, failure, response-time, and endpoint details below the graph](images/prel38-revision/live-report-service-details.png)
+Clicking a service can reveal an interactive details panel below the graph. Here the Web App panel shows request counts, failures, response times, and endpoints from the report's existing telemetry.
 
-![Version picker showing the current report and two earlier saved versions](images/prel38-revision/live-report-versions.png)
+![Clicking the Web App icon opens request, failure, response-time, and endpoint details below the graph](images/prel38-revision/live-report-service-details.png)
 
 These examples are from a targeted lab check. Your telemetry, resource names, health, and saved versions will differ. The Web App details summarize observed requests; the Application Insights node describes telemetry collection, not whether the monitored app is healthy.
 
 ## 10. Review agent consumption and the AAU budget
 
-**Goal:** Plan an agent-workflow budget using Azure Agent Units (AAUs) and the evidence from individual execution threads.
+**Goal:** Understand how an AAU limit makes agent spending **predictable, controlled, and visible**.
 
-This is a **budgeting exercise, not another Azure resource-cost analysis**. Set an active-flow allowance in advance, decide which workflows deserve the agent's attention, then inspect what those workflows actually consumed. Start with a small set of high-value workflows, gain confidence in their outcomes and AAU usage, and add more workflows deliberately. Compare observed consumption per completed run and intended frequency when planning; do not assume one run predicts every future run.
+This is a **budgeting exercise, not another Azure resource-cost analysis**. Set an active-flow allowance before giving the agent work, see how much of it has been used, and control how much processing you authorize. You can start small, gain confidence, and increase the allowance as you add useful workflows. A limit bounds active-flow spending; it does not make every task consume the same amount.
 
-1. In the left navigation, select **Settings > Agent consumption**. Select the current month and review **Total active flow consumption** and **Daily active flow consumption**.
+1. In the left navigation, select **Build + setup > Monitor > Agent consumption**. Locate **Monthly AAU limit** and the current active-flow usage.
 
-![Reference example of total and daily active-flow consumption](images/prel38-revision/agent-consumption-reference.png)
+The limit card below separates the fixed always-on flow from the active-flow allowance. This example has 10,000 active-flow AAUs; your allocation may differ. **Change AAU allocation** is the entry point for controlling that allowance, not another resource-cost report.
 
-2. In **Consumption by thread**, find your configuration, search investigation, cost-review execution, and report-authoring threads where listed. Compare their AAUs and status; active threads can still consume more.
-3. Click a thread title to open its conversation. Review the agent's steps, tool calls, approvals, and result. Repeat for the weekly cost task's execution thread, not just the chat that created the schedule.
+![Monthly AAU limit showing always-on flow plus 10,000 active-flow AAUs and Change AAU allocation](images/prel38-revision/aau-limit.png)
 
-![Reference example of thread titles, types, AAUs, and execution status](images/prel38-revision/consumption-threads-reference.png)
+2. Select **Change AAU allocation**. Explore the active-flow allowance and the control for increasing or decreasing it. Use the facilitator's approved allocation if a change is part of your lab; otherwise close the panel after inspecting it.
 
-*AAU screenshots: Microsoft, [Monitor agent usage](https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), reproduced unchanged. These are documentation examples, not measurements from this lab.*
+The allocation panel lets you inspect the monthly active-flow allowance. In this example it remains unchanged at 10,000 AAUs; select **Cancel** if you are only exploring.
 
-4. Return to **Agent consumption**. Use the **Chats** and **Scheduled tasks** cards to compare those types, then clear the filter. Select **Refresh** to update usage; select **Download** if you want a CSV of the currently filtered threads.
-5. Under **Monthly AAU limit**, select **Change AAU allocation** and inspect the active-flow allowance. Record a proposed limit, then close without saving so the remaining exercises can continue.
+![Change AAU allocation panel with the monthly active-flow allowance and Cancel control](images/prel38-revision/aau-allocation-controls.png)
 
-The **active-flow** limit controls the agent's processing allowance, not the cost of the Caldova Azure resources. The fixed **always-on** charge is separate and continues even when active flow is stopped or its limit is reached.
+3. Understand the boundary: when the active-flow limit is reached, chat and actions stop until the allowance is available again. An increase takes effect immediately; decreasing it can interrupt current work and takes effect next month. The fixed **always-on** charge is separate and continues while the agent exists.
 
-Choose one workflow you would start with and one you would add later. Record why each merits the agent's attention and how its execution-thread consumption would affect your planned budget. Do not save a budget change in this lab.
+The active-flow allowance does not cap the Caldova Azure resources or the separate always-on charge. Detailed usage, thread inspection, and CSV download are optional activities below. If this lab does not expose Agent consumption, use **Additional guidance > Agent consumption and budget changes**.
 
 ## 11. Explore agent capabilities (optional)
 
-**Goal:** Understand how to extend and govern an agent, and choose where these capabilities would help your own operations.
+**Goal:** Use your remaining time to discover how to extend the agent and which capabilities fit your own work.
 
-This is an **exploration-only** exercise. Inspect existing views and examples; do not create or save skills, custom agents, connectors, policies, hooks, incident connections, response plans, or HTTP triggers. No additional credentials, permissions, test alerts, or outages are needed.
+Time is limited, so start by exploring the available views and examples. **If time permits, try creating and testing a skill or custom agent** with the agent's help. Use the lab's existing permissions and approved connections; exploring does not require additional credentials, resource changes, or test incidents.
+
+### Explore Live Report versions and sharing
+
+1. Open **Live reports > Caldova Traffic and Health**, then open the **version picker** to see the saved versions. Each saved edit creates another version; versions preserve layout and configuration, not historical telemetry. Keep the current version selected for interactive tool calls.
+
+The dropdown below shows the current report and its earlier saved versions. Viewing this list is enough to understand versioning.
+
+![Version picker showing the current report and two earlier saved versions](images/prel38-revision/live-report-versions.png)
+
+2. Explore the share icon (**Copy link to report**). Recipients must already have access to the agent; sharing the link does not grant access.
+
+### Explore detailed AAU usage and download
+
+1. In **Build + setup > Monitor > Agent consumption**, explore **Total active flow consumption** and **Daily active flow consumption**. Use the **Chats** and **Scheduled tasks** cards to see how usage is grouped, then clear the filter.
+
+This Microsoft reference example illustrates visible usage against an allowance and a daily breakdown. It is not this lab's usage or the allocation-editing panel.
+
+![Reference example of total and daily active-flow consumption](images/prel38-revision/agent-consumption-reference.png)
+
+2. In **Consumption by thread**, find a completed workflow. Click a thread title to open its conversation and review the agent's steps, tool calls, approvals, and result. For the cost task, use its execution thread, not just the chat that created the schedule.
+
+The thread table below shows where individual AAU consumption and execution status are visible. This deeper inspection helps explain usage but is not needed to understand or control the main AAU limit.
+
+![Reference example of thread titles, types, AAUs, and execution status](images/prel38-revision/consumption-threads-reference.png)
+
+3. If useful, select **Refresh**, apply a filter, and select **Download** to export the currently filtered threads as CSV. Both this download and the detailed usage exploration are optional.
+
+*AAU reference screenshots: Microsoft, [Monitor agent usage](https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), reproduced unchanged. These are documentation examples, not measurements from this lab.*
 
 ### Explore Agent Canvas and Skill Builder
 
 1. Open **Build + setup** (**Builder** in the earlier navigation) and explore **Agent Canvas**, if available. Inspect the existing agent and its capabilities. If a capability is not available in this lab, read its purpose below and continue.
-2. Explore **Skills** and the skill-building view, if available. Read an existing example or the description; leave any draft without saving.
-3. Explore the available custom-agent, connector, tool, policy, and hook views without changing settings. Use the examples below to decide which capability fits a workflow.
+2. Explore **Skills** and **Skill Builder**, if available. You do not need to write skill files manually: **chat with the agent**, describe the procedure you want, refine its draft, and then create and try the skill if time permits.
+3. For example, build a reusable skill for troubleshooting **web-service issues**, not just one Caldova search failure. In the skill-building conversation, select the message field **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+
+++++Help me build a reusable skill for troubleshooting web-service issues. Cover HTTP errors, latency, timeouts, DNS/TLS, application and dependency logs, recent changes, and testing recovery from the user's perspective. Ask about my environment and team procedures, draft the skill, and help me refine it before I create and try it. Do not change application resources.++++
+
+4. Review and refine the proposed guidance with the agent. If time permits, create the skill and ask a relevant troubleshooting question to try it; the agent loads relevant skills when needed. Use the same conversational approach to shape a custom specialist in **Agent Canvas**.
+5. Explore the available connector, tool, policy, and hook views. Use the examples below to decide which capability fits a workflow.
 
 | Capability | Why you would use it | Caldova example |
 | --- | --- | --- |
-| Skill | Reusable instructions or a runbook that the agent can load when relevant; standardizes a procedure without creating a separate specialist. | A product-search check that distinguishes browsing, health-endpoint status, and real matching search results. |
-| Custom agent | A focused specialist with its own instructions and selected skills/tools, invoked deliberately or routed to by a workflow. | A read-only search-health reviewer or a FinOps reviewer with a narrow remit. |
+| Skill | Reusable instructions or a runbook that the agent can load when relevant; standardizes a procedure without creating a separate specialist. | A web-service troubleshooting procedure covering errors, latency, dependencies, recent changes, and end-to-end recovery tests. |
+| Custom agent | A focused specialist with its own instructions and selected skills/tools, invoked deliberately or routed to by a workflow. | A web-service troubleshooting specialist using the reusable skill, or a FinOps specialist with a narrow remit. |
 | Connector | Gives the agent an authenticated connection to a data or service surface. | Azure telemetry, the imported GitHub repository, or an approved incident platform. |
 | Tool | A specific operation the agent can perform through its available integrations; inspect its inputs and whether it reads or changes state. | Query request failures, inspect an NSG, or propose a pull request with review. |
 | Policy | Constrains agent behavior and approval boundaries so useful automation stays within the intended scope. | Require human review before a deployment or RBAC change. |
@@ -334,8 +396,9 @@ This is an **exploration-only** exercise. Inspect existing views and examples; d
 
 ### Explore incident management and HTTP triggers
 
-1. Open **Incidents > Triggers + response plans**. Review any existing incident sources, filters, response plans, and autonomy settings without connecting or enabling anything.
-2. Explore the **HTTP trigger** entry or documentation if available. Inspect the concept only; do not create a trigger, copy access-bearing callback URLs, or send a request.
+1. Open **Incidents**. Incident management requires a connection to an incident-management platform. Explore **Connect an incident platform** or the available integration options to see which providers the agent supports and what connection information they require. Use the lab's existing connections; a new connection needs the appropriate platform credentials and approval.
+2. Open **Incidents > Triggers + response plans** and explore how incident sources, filters, response plans, and autonomy settings would route work once an incident platform is connected.
+3. Explore the **HTTP trigger** entry or documentation if available. Consider which external application could call a workflow and what authentication and tool access it would need. Treat callback URLs as credentials; use only an approved setup if trying a trigger.
 
 Incident management turns incoming alerts into routed investigation workflows instead of waiting for an operator to start a chat. A response plan chooses which alerts deserve attention, which specialist handles them, and what requires approval. Narrow filters and cooldowns help avoid overlapping work and repeated AAU consumption.
 
@@ -343,7 +406,7 @@ An HTTP trigger lets an external system start a defined agent workflow on demand
 
 ## Complete
 
-Confirm search works, review the cost findings and HTML slide deck, inspect the live report, and record which workflows you would budget for using their thread-level AAUs. Finish any optional exploration you chose. Record anything still running or blocked. Follow the facilitator's cleanup instructions; do not reset the lab or delete shared resources.
+Confirm search works, review the cost findings and HTML slide deck, use the interactive live report, and explain how the AAU limit makes spending predictable, controlled, and visible. Finish any optional exploration you chose. Record anything still running or blocked. Follow the facilitator's cleanup instructions; do not reset the lab or delete shared resources.
 
 ## Additional guidance
 
@@ -418,7 +481,7 @@ Send the message, continue an independent activity, and return for any save appr
 
 ### Agent consumption and budget changes
 
-If **Agent consumption** is not offered under **Settings**, use the labelled reference screenshots to discuss workflow budgets and ask the facilitator about availability. Do not restart the agent, switch navigation modes, enable features, or change permissions to reveal the page. Record that live consumption and allocation inspection were unavailable, not that usage was zero.
+In the new navigation, open **Build + setup**, expand **Monitor**, and select **Agent consumption**. Earlier navigation uses **Settings > Agent consumption**. If neither route is available, ask the facilitator and use the labelled screenshots to discuss the limit and usage. Do not restart the agent, switch navigation modes, enable features, or change permissions to reveal the page. Record any unavailable inspection rather than treating missing usage as zero.
 
 Usage can lag behind the conversation. Select the correct month, clear type/day/status filters, and select **Refresh** before concluding that a thread is missing or has used no AAUs. Use thread titles and execution details to identify work; do not assume a report or scheduled task is represented only by its creation chat.
 

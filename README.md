@@ -142,27 +142,41 @@ pending questions/approvals and completed artifacts. The scheduled task produces
 a self-contained HTML slide deck; learners inspect Automation only after its
 creation is confirmed. Scheduled automation examples include NSG/RBAC audits,
 security-inventory-backed CVE reviews, FinOps, anomalies, reports, and reviewed
-pull requests. Live Reports are introduced as a UI for AI, requesting Azure
-service icons with health rings, a legend, and drill-down/filtering where the
-available tools support it. Report versions and sharing remain required.
+pull requests. Live Reports are introduced as a UI for AI that can become an
+interactive application, including a CRM-style workspace when the required
+data, tools, and permissions are connected. This lab's read-only service view
+uses Azure icons, health rings, and supported drill-downs as one example.
+Viewing report versions and exploring sharing are optional; version comparison
+is not required. Every screenshot has explanatory text above it.
 
-The expanded source adds **Settings -> Agent consumption** with per-thread AAU
-review, execution-thread inspection, filtered CSV export, and active-flow
-allocation controls. This is agent-attention budgeting, not a repeat of Azure
-resource-cost analysis: start with a small set of valuable workflows, inspect
-actual per-run consumption, and plan before expanding. Learners inspect the
-limit without saving changes. Always-on charges and other Azure resource costs
-are separate. Optional activities are exploration-only: Agent Canvas, Skill
-Builder, custom agents, connectors, tools, policies, hooks, incident management,
-and HTTP triggers. No optional creation, connection, alert, callback invocation,
-or configuration write is required. These changes do not replace the earlier
+The core **Build + setup -> Monitor -> Agent consumption** activity now focuses on predictable,
+controlled, visible spending: locate the monthly limit, explore its allocation
+control, and understand the active-flow boundary and separate always-on charge.
+Changes use a facilitator-approved allowance. Per-thread review, execution-thread
+AAU inspection, usage filtering, and CSV download are in the final optional section.
+Optional Agent Canvas, Skill Builder, custom agents, integrations, and triggers
+are exploration-first because time is limited; learners may create and test a
+skill or specialist if time permits. The skill example is a reusable web-service
+troubleshooting procedure, drafted and refined by chatting with the agent rather
+than manually writing files. Incident exploration starts with the available
+incident-platform connection options and their credential requirements.
+No optional creation or new integration is required. These changes do not replace the earlier
 live Skillable revision or retime the original walkthrough; new checks must be
-recorded separately. The new lab's Settings view did not expose Agent consumption.
-An offered legacy-navigation switch required an agent restart and was cancelled;
-no restart or settings change was made. AAU images in the revised guide are
-explicitly attributed, unchanged Microsoft Learn reference screenshots under
-CC BY 4.0, not fresh lab measurements. The learner fallback records unavailable
-live inspection rather than inventing usage or changing the environment.
+recorded separately. Earlier Settings-only checks missed the page's new location
+under Build + setup -> Monitor; the user identified it and the native submenu
+confirmed it. No restart or feature/permission change was needed. The core limit
+screenshot was supplied by the user and preserved unchanged with its own
+provenance. The optional usage-chart/table images remain attributed, unchanged
+Microsoft Learn references under CC BY 4.0, not current-lab measurements.
+The actual allocation panel was also inspected and captured, then cancelled
+without editing or saving the allowance.
+
+The weekly task was created and its separate execution produced
+`caldova-cost-review-2026-10-26.html`. The real download was opened through
+the VM browser's Downloads -> Open file control. Fresh screenshots show the
+task's execution link and the rendered HTML cost chart, resource table, and
+pricing assumptions. These are estimated prices, not verified billing actuals;
+the check does not audit every slide or establish a fresh 45-minute lab timing.
 
 The report's App Service and Application Insights SVG assets in that directory
 are copied unchanged from Microsoft's official Azure icon pack, not substituted

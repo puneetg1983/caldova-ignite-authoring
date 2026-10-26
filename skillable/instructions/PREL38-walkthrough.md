@@ -403,9 +403,10 @@ configuration**, not **Agent consumption**. The offered legacy-navigation
 switch displayed **Restart and Save**; it was cancelled at **02:07:02 UTC**.
 No restart, feature enablement, permissions change, or AAU allocation save was
 performed. Live AAU consumption, thread drill-down, and limit inspection were
-therefore unavailable, not zero.
+not reached in that Settings-only check. The later navigation correction below
+supersedes the initial inference that the view was unavailable.
 
-The AAU images are unchanged Microsoft Learn documentation examples from
+The two AAU usage-chart/table reference images are unchanged Microsoft Learn documentation examples from
 `https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage`,
 attributed to Microsoft under CC BY 4.0. They are labelled as references in the
 learner guide and must not be represented as this lab's usage.
@@ -419,11 +420,103 @@ The original 72m35s trial, 13m02s guarded-operation total, action CSV and image
 manifest remain unchanged. These targeted checks are not a fresh end-to-end
 45-minute timing claim, live-guide publication, or Word/LAB720 synchronization.
 
+## Learner-scope refinement after the report check
+
+The next authoring review broadens **UI for AI** beyond operational dashboards
+to interactive applications, including a CRM-style workspace when the required
+data, tools, and permissions are connected. The service-health example remains
+read-only. Report-version viewing and sharing move to the final optional
+section; comparing versions is not a learner requirement.
+
+The core AAU activity now covers predictable, controlled, visible spending:
+locate the limit, explore allocation controls, and understand the active-flow
+boundary and separate always-on charge. Detailed usage, thread conversations,
+filtering, and CSV download are optional. Allocation-change behavior was checked
+against Microsoft's current `pricing-billing` and `monitor-agent-usage` pages,
+not inferred from a consumption chart.
+
+Optional capabilities are exploration-first because time is limited, not
+prohibited from creation. Learners may chat with the agent to draft and refine
+a reusable web-service troubleshooting skill, then create and try it if time
+permits. The same approach can shape a custom specialist. Incident exploration
+starts with the available incident-platform connection options and their
+credential requirements. The current source has **eight native typing
+prompts**, including the optional skill-building example, each under 650
+characters. Every screenshot has explanatory text above it; no images are
+back-to-back.
+
+The exact corporate-window guard initially blocked the new capture at
+**03:02:29 UTC**. The user restored the window, and the authorized lab was
+captured at **03:04:23** without changing the helper or bypassing the guard.
+Automation showed **zero scheduled tasks** at **03:04:44**. The exact learner
+request for the weekly cost task and self-contained HTML slide deck was then
+submitted at **03:06:55**. The prior historical deck was a different format;
+it is not evidence of this HTML request's output.
+
+Settings was checked again at **03:07:27**, including its remaining content
+at **03:08:25**. It still exposed only General and Workspace configuration,
+not Agent consumption or Change AAU allocation. No restart, feature toggle,
+permission change, or allocation save was performed. The existing Microsoft
+consumption-chart reference is not a screenshot of the limit editor.
+
+The user corrected the navigation: **Build + setup > Monitor > Agent
+consumption**. The native Build + setup menu confirmed that entry at
+**03:12:31 UTC**; the earlier Settings-only checks had missed it. The user also
+provided the actual monthly-limit card, showing the separate always-on flow,
+an example 10,000 active-flow AAU allowance, and **Change AAU allocation**.
+That image was imported unchanged at **03:13:11 UTC** as `aau-limit.png`.
+Its manifest identifies a user-provided capture, source attachment and hash,
+and import time; it does not invent a capture time or call it a documentation
+reference. Learners are not instructed to set this example allowance.
+
+A subsequent click was blocked before input when the corporate window lost
+foreground. After the user restored it, capture **03:15:36 UTC** showed a real
+**Scheduled Task: Weekly Caldova cost review** execution, started at
+**03:15:06 UTC**, gathering resource and telemetry data. This is separate from
+the task-creation chat; it was still processing, not a completed HTML result.
+The corrected Agent consumption route then opened at **03:16:03 UTC**.
+No restart, new feature, or permissions change was needed.
+
+The loaded consumption page at **03:16:30 UTC** displayed approximately
+151 of 10,000 active-flow AAUs, grouped as chat usage at that observation.
+The allocation panel opened at **03:16:45**, showed the 10,000 allowance and
+500-1,000,000 supported range, and was closed with **Cancel** at **03:17:07**.
+No value was edited or saved. `aau-allocation-controls.png` is a reviewed crop
+of that actual panel, separately attributed from the user-provided limit card.
+These observations correct the prior navigation miss; usage can refresh later
+and is not a fixed expected learner result.
+
+Automation listed exactly one weekly task at **03:17:09 UTC**. Its details
+showed a Monday 2:00 AM schedule, the existing execution link, and a **Success**
+status at **03:17:23**; the displayed schedule did not identify a timezone.
+The execution thread was still generating its HTML output when inspected
+after that status, so the status alone was not treated as artifact evidence.
+No duplicate task or run was started.
+
+By **03:20:05 UTC**, the execution had written the 406-line
+`caldova-cost-review-2026-10-26.html` and exposed its download link. The finished
+link was selected at **03:21:32**, and the VM browser's **Downloads > Open file**
+opened the real local HTML in a new tab at **03:22:02**. The cover rendered the
+weekly review and example metrics; subsequent inspection showed a data-ingestion
+chart/table and the cost-breakdown chart, resource table, and assumptions.
+The latter was captured at **03:23:51** and cropped as `scheduled-task-html.png`.
+`scheduled-task-run.png` is a crop of the actual task details, not the earlier
+PowerPoint trial. Both are linked in the revised learner guide with explanatory
+text above them and source hashes/times in the revision manifest.
+
+The deck estimated approximately $231/month using resource inventory,
+telemetry, and stated pricing assumptions; this is not a verified bill.
+SRE Agent charges were marked separate in its table. This verifies the real
+scheduled execution's HTML download and rendered example, not a locally
+recreated deck, every slide's accuracy, a timezone audit, or a new end-to-end
+45-minute run. The frozen historical PowerPoint observations remain unchanged.
+
 ## Historical options discussed after the original trial
 
-These options predate the numbered revision above. In particular, the user has
-now chosen browser-viewable HTML slides and exploration-only optional work;
-the old viewer/creation tradeoffs are not pending learner requirements.
+These options predate both revisions above. The current choices are
+browser-viewable HTML slides and exploration-first optional work, with
+chat-led skill creation if time permits. The old viewer/creation tradeoffs
+are not pending learner requirements.
 
 | Option | Benefit / tradeoff |
 | --- | --- |

@@ -82,6 +82,60 @@
     "kind": "lab-capture"
   },
   {
+    "file": "aau-allocation-controls.png",
+    "source_capture": "R154-inspect-allocation-controls-readonly-private.png",
+    "source_sha256": "2876aaf59199f03a7e05a9ccf785f1f1cab609bbcc418e3738b5aae619d7b682",
+    "captured_at": "2026-10-26T03:16:45.6235851+00:00",
+    "crop_xywh": [
+      579,
+      556,
+      613,
+      290
+    ],
+    "masks_xywh": [],
+    "sha256": "3e3a61f7c83664ff780b0aa6d6cddeffa433dfaf1806ac79dd45196f1c2c1d58",
+    "kind": "lab-capture"
+  },
+  {
+    "file": "scheduled-task-html.png",
+    "source_capture": "R174-html-cost-chart-with-estimate-assumptions-private.png",
+    "source_sha256": "3144c2be99a017c9c70e1d7e262d0a992c7a8c743fca1f851c77516982de227a",
+    "captured_at": "2026-10-26T03:23:51.7267842+00:00",
+    "crop_xywh": [
+      68,
+      203,
+      1610,
+      1016
+    ],
+    "masks_xywh": [],
+    "sha256": "0f6ab2cedfbf94a5211eca61392dccb8e7935aeef072d4e6038e619e04378476",
+    "kind": "lab-capture"
+  },
+  {
+    "file": "scheduled-task-run.png",
+    "source_capture": "R158-open-weekly-task-details-private.png",
+    "source_sha256": "66d684e41bdae24dcab176eca9d17a3526cfe7ca3f0da9be40e9e134c598f75a",
+    "captured_at": "2026-10-26T03:17:23.5593723+00:00",
+    "crop_xywh": [
+      272,
+      282,
+      1446,
+      223
+    ],
+    "masks_xywh": [],
+    "sha256": "c2fae50942282b9bb4d37bfe654a19fc8b810d7cbfa32f673be235c39928a22f",
+    "kind": "lab-capture"
+  },
+  {
+    "file": "aau-limit.png",
+    "kind": "user-provided-capture",
+    "source_attachment": "30f55c94-5ea9-4090-8bac-b7bceeb84c21-7a05008d-1fd6-4960-89c2-e4db0a5be0e0-clipboard.png",
+    "source_sha256": "21f2c8d359eecf3922fdade2cfe9ee74e6fe2072b02f22c41d4416e8e3be86ab",
+    "unchanged": true,
+    "imported_at": "2026-10-25T20:13:11.9789684-07:00",
+    "sha256": "21f2c8d359eecf3922fdade2cfe9ee74e6fe2072b02f22c41d4416e8e3be86ab"
+  },
+  {
     "file": "agent-consumption-reference.png",
     "kind": "documentation-reference",
     "source_url": "https://learn.microsoft.com/en-us/azure/sre-agent/media/monitor-agent-usage/consumption-summary-daily.png",

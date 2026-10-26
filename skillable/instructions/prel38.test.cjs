@@ -62,7 +62,7 @@ test("PREL38: opens SRE Agent in exercise 2 and delegates VM/Azure prerequisites
 });
 
 test("PREL38: all chat prompts use native Copy and Type Text, not static fences", () => {
-    assert.equal(prompts.length, 7);
+    assert.equal(prompts.length, 8);
     assert.doesNotMatch(source, /^```text$/m);
     assert.equal((source.match(/^\+{4}/gm) || []).length, prompts.length);
     for (const line of source.split("\n").filter(line => line.startsWith("+++"))) {
@@ -323,6 +323,10 @@ test("PREL38: scheduled automation explains recurring workflows and produces HTM
     assert.match(cost, /do not duplicate an agent-triggered run/);
     assert.match(cost, /Task creation can take several minutes/);
     assert.match(cost, /open the HTML slide deck in the VM browser/);
+    assert.match(cost, /\*\*Open file\*\*.*\*\*Downloads\*\*/);
+    assert.ok(cost.includes("images/prel38-revision/scheduled-task-run.png"));
+    assert.ok(cost.includes("images/prel38-revision/scheduled-task-html.png"));
+    assert.match(cost, /produced by the scheduled task's execution, not its creation chat/);
     assert.doesNotMatch(source, /PowerPoint|PPT installed|compatible viewer/);
     assert.match(cost, /\*\*Don't wait for completion\.\*\*/);
     assert.match(cost, /latest execution thread/);
@@ -333,6 +337,10 @@ test("PREL38: Live Reports explain UI for AI and request service icons, health r
     assert.match(report, /\*\*Live reports > \+ New report\*\*/);
     assert.match(report, /\*\*Enter a custom response\*\*/);
     assert.match(report, /Live Reports are a UI for AI/);
+    assert.match(report, /not just operational dashboards/);
+    assert.match(report, /interactive application in chat/);
+    assert.match(report, /CRM-style application/);
+    assert.match(report, /connected data, tools, and permissions/i);
     assert.match(report, /Before the metric cards.*dependency graph using Azure service SVG icons/);
     assert.match(report, /circular health-colored rings, not text-only rectangles/);
     assert.match(report, /Include a legend; label unknown health and inferred connections/);
@@ -356,10 +364,11 @@ test("PREL38: Live Reports explain UI for AI and request service icons, health r
     assert.match(report, /report-saving approval.*expected read-only telemetry tools/);
     assert.match(report, /\*\*Don't wait for completion\.\*\*/);
     assert.match(report, /Finish other pending activities/);
-    assert.match(report, /\*\*version picker\*\*/);
-    assert.match(report, /If an earlier version exists/);
-    assert.match(report, /\*\*Copy link to report\*\*/);
-    assert.match(report, /sharing the link does not grant access/);
+    assert.doesNotMatch(report, /version picker|compare it|Copy link to report/);
+    assert.match(optionalExercises, /\*\*version picker\*\*/);
+    assert.match(optionalExercises, /Keep the current version selected/);
+    assert.match(optionalExercises, /\*\*Copy link to report\*\*/);
+    assert.match(optionalExercises, /sharing the link does not grant access/);
     assert.match(report, /If a graph node offers a drill-down, click it/);
     assert.match(report, /do not treat a decorative node as a working link/);
     assert.match(report, /\*\*Open authoring thread\*\*.*existing report, not a duplicate/);
@@ -381,51 +390,67 @@ test("PREL38: extra help is compiled once at the end and does not claim missing 
     assert.match(main, /Record anything still running or blocked/);
 });
 
-test("PREL38: consumption review budgets agent attention using actual execution threads", () => {
+test("PREL38: core AAU activity covers the visible limit, with usage drill-down and download optional", () => {
     const consumption = section("Review agent consumption and the AAU budget");
     assert.ok(main.indexOf("## Review agent consumption") > main.indexOf("## Create a live traffic"));
     assert.ok(main.indexOf("## Complete") > main.indexOf("## Review agent consumption"));
-    for (const control of ["Settings > Agent consumption", "Consumption by thread",
-        "Chats", "Scheduled tasks", "Refresh", "Download", "Change AAU allocation"]) {
+    for (const control of ["Build + setup > Monitor > Agent consumption", "Monthly AAU limit", "Change AAU allocation"]) {
         assert.ok(consumption.includes(`**${control}**`), control);
     }
-    assert.match(consumption, /Click a thread title/);
-    assert.match(consumption, /execution thread, not just the chat that created the schedule/);
-    assert.match(consumption, /close without saving/);
+    assert.match(consumption, /predictable, controlled, and visible/);
+    assert.match(consumption, /Use the facilitator's approved allocation/);
+    assert.doesNotMatch(consumption, /Click a thread title|Consumption by thread|\*\*Download\*\*|\*\*Chats\*\*|\*\*Scheduled tasks\*\*/);
     assert.match(consumption, /always-on.*separate/s);
     assert.match(consumption, /budgeting exercise, not another Azure resource-cost analysis/);
-    assert.match(consumption, /Set an active-flow allowance in advance/);
-    assert.match(consumption, /which workflows deserve the agent's attention/);
-    assert.match(consumption, /Start with a small set of high-value workflows/);
-    assert.match(consumption, /Compare observed consumption per completed run and intended frequency/);
-    assert.match(consumption, /Do not save a budget change in this lab/);
-    assert.ok(consumption.includes("images/prel38-revision/agent-consumption-reference.png"));
-    assert.ok(consumption.includes("images/prel38-revision/consumption-threads-reference.png"));
-    assert.match(consumption, /documentation examples, not measurements from this lab/);
-    assert.match(consumption, /CC BY 4\.0.*reproduced unchanged/);
-    assert.match(guidance, /If \*\*Agent consumption\*\* is not offered under \*\*Settings\*\*/);
+    assert.match(consumption, /before giving the agent work/);
+    assert.match(consumption, /chat and actions stop/);
+    assert.match(consumption, /increase takes effect immediately/);
+    assert.match(consumption, /decreasing it can interrupt current work and takes effect next month/);
+    for (const control of ["Consumption by thread", "Chats", "Scheduled tasks", "Refresh", "Download"]) {
+        assert.ok(optionalExercises.includes(`**${control}**`), control);
+    }
+    assert.match(optionalExercises, /Click a thread title/);
+    assert.match(optionalExercises, /execution thread, not just the chat that created the schedule/);
+    assert.match(optionalExercises, /Both this download and the detailed usage exploration are optional/);
+    assert.ok(optionalExercises.includes("images/prel38-revision/agent-consumption-reference.png"));
+    assert.ok(optionalExercises.includes("images/prel38-revision/consumption-threads-reference.png"));
+    assert.match(optionalExercises, /documentation examples, not measurements from this lab/);
+    assert.match(optionalExercises, /CC BY 4\.0.*reproduced unchanged/);
+    assert.ok(consumption.includes("images/prel38-revision/aau-limit.png"));
+    assert.ok(consumption.includes("images/prel38-revision/aau-allocation-controls.png"));
+    assert.match(guidance, /open \*\*Build \+ setup\*\*, expand \*\*Monitor\*\*, and select \*\*Agent consumption\*\*/);
+    assert.match(guidance, /Earlier navigation uses \*\*Settings > Agent consumption\*\*/);
     assert.match(guidance, /Do not restart the agent, switch navigation modes, enable features, or change permissions/);
-    assert.match(guidance, /live consumption and allocation inspection were unavailable, not that usage was zero/);
+    assert.match(guidance, /Record any unavailable inspection rather than treating missing usage as zero/);
 });
 
-test("PREL38: optional Agent Canvas and Skill Builder explain capabilities without creating them", () => {
-    assert.match(optionalExercises, /exploration-only/);
+test("PREL38: optional skills are built conversationally and can be tried if time permits", () => {
+    assert.match(optionalExercises, /Time is limited/);
+    assert.match(optionalExercises, /If time permits, try creating and testing a skill or custom agent/);
     assert.match(optionalExercises, /\*\*Build \+ setup\*\* \(\*\*Builder\*\* in the earlier navigation\)/);
     assert.match(optionalExercises, /explore \*\*Agent Canvas\*\*, if available/);
     assert.match(optionalExercises, /Skill Builder/);
     for (const capability of ["Skill", "Custom agent", "Connector", "Tool", "Policy", "Hook"]) {
         assert.ok(optionalExercises.includes(`| ${capability} |`), capability);
     }
-    assert.match(optionalExercises, /do not create or save skills, custom agents, connectors, policies, hooks/);
-    assert.match(optionalExercises, /leave any draft without saving/);
+    assert.match(optionalExercises, /do not need to write skill files manually/);
+    assert.match(optionalExercises, /\*\*chat with the agent\*\*/);
+    assert.match(optionalExercises, /troubleshooting \*\*web-service issues\*\*/);
+    assert.ok(prompts.some(prompt => prompt.startsWith("Help me build a reusable skill for troubleshooting web-service issues.")));
+    assert.match(optionalExercises, /Review and refine the proposed guidance/);
+    assert.match(optionalExercises, /create the skill and ask a relevant troubleshooting question to try it/);
+    assert.doesNotMatch(optionalExercises, /exploration-only|do not create or save skills|leave any draft without saving/);
     assert.doesNotMatch(optionalExercises, /Create > Skill|Create > Custom Agent|Set \*\*Name\*\*|select \*\*Create\*\*/);
 });
 
-test("PREL38: optional incident and HTTP triggers explain routing without creating or invoking anything", () => {
+test("PREL38: optional incident exploration starts with incident-platform connection options", () => {
     assert.match(optionalExercises, /Explore incident management and HTTP triggers/);
     assert.match(optionalExercises, /\*\*Incidents > Triggers \+ response plans\*\*/);
-    assert.match(optionalExercises, /without connecting or enabling anything/);
-    assert.match(optionalExercises, /do not create a trigger, copy access-bearing callback URLs, or send a request/);
+    assert.match(optionalExercises, /requires a connection to an incident-management platform/);
+    assert.match(optionalExercises, /\*\*Connect an incident platform\*\*/);
+    assert.match(optionalExercises, /providers the agent supports/);
+    assert.match(optionalExercises, /appropriate platform credentials and approval/);
+    assert.match(optionalExercises, /Treat callback URLs as credentials/);
     assert.match(optionalExercises, /Narrow filters and cooldowns/);
     assert.match(optionalExercises, /Scheduled tasks run by time; incident triggers react to alerts; HTTP triggers react/);
     assert.doesNotMatch(optionalExercises, /trigger the approved test alert|Title contains|Turn off > Yes/);
@@ -446,7 +471,11 @@ test("PREL38: facilitator preparation distinguishes licensed VM software from th
 test("PREL38: image links resolve and the original 40-image snapshot remains byte-identical", () => {
     for (const match of source.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)) {
         assert.ok(existsSync(join(__dirname, ...match[1].split("/"))), match[1]);
+        const introduction = visible.slice(0, visible.indexOf(match[0])).trimEnd().split("\n").at(-1);
+        assert.ok(introduction && !/^(?:!\[|#|\+{3,4})/.test(introduction),
+            `Screenshot needs explanatory text immediately above it: ${match[1]}`);
     }
+    assert.doesNotMatch(visible, /!\[[^\]]*\]\([^)]+\)\s*!\[/);
     const backup = join(__dirname, "backups", "2026-10-24", "PREL38");
     const manifest = JSON.parse(readFileSync(join(backup, "manifest.json"), "utf8"));
     const hash = bytes => createHash("sha256").update(bytes).digest("hex");
@@ -497,7 +526,7 @@ test("PREL38: walkthrough links resolve and evidence crops match their provenanc
     }
 });
 
-test("PREL38: revision evidence distinguishes fresh lab captures from attributed documentation references", () => {
+test("PREL38: revision evidence distinguishes lab, user-provided, and documentation captures", () => {
     const directory = join(__dirname, "images", "prel38-revision");
     const manifest = JSON.parse(readFileSync(join(directory, "manifest.json"), "utf8"));
     assert.deepEqual(manifest.map(image => image.file).sort(),
@@ -523,6 +552,13 @@ test("PREL38: revision evidence distinguishes fresh lab captures from attributed
                 assert.ok(rectangle[0] + rectangle[2] <= image.crop_xywh[2]);
                 assert.ok(rectangle[1] + rectangle[3] <= image.crop_xywh[3]);
             }
+        } else if (image.kind === "user-provided-capture") {
+            assert.match(image.source_attachment, /^[a-z0-9-]+\.png$/);
+            assert.equal(image.source_sha256, image.sha256);
+            assert.equal(image.unchanged, true);
+            assert.ok(Number.isFinite(Date.parse(image.imported_at)));
+            assert.equal(image.captured_at, undefined);
+            assert.equal(image.source_capture, undefined);
         } else {
             assert.equal(image.kind, "documentation-reference");
             assert.match(image.source_url,
@@ -533,9 +569,18 @@ test("PREL38: revision evidence distinguishes fresh lab captures from attributed
         }
     }
     assert.ok(manifest.find(image => image.file === "agent-list.png").masks_xywh.length > 0);
+    assert.equal(manifest.find(image => image.file === "aau-limit.png")?.kind, "user-provided-capture");
+    assert.equal(manifest.find(image => image.file === "aau-allocation-controls.png")?.kind, "lab-capture");
+    for (const file of ["scheduled-task-run.png", "scheduled-task-html.png"]) {
+        const image = manifest.find(entry => entry.file === file);
+        assert.equal(image?.kind, "lab-capture", file);
+        assert.ok(image.crop_xywh[1] >= 140, `Browser chrome must be excluded: ${file}`);
+    }
     for (const file of ["live-report-graph.png", "live-report-service-details.png",
         "live-report-versions.png"]) {
-        assert.ok(section("Create a live traffic and health report")
+        const activity = file === "live-report-versions.png" ? optionalExercises :
+            section("Create a live traffic and health report");
+        assert.ok(activity
             .includes(`images/prel38-revision/${file}`), file);
         const image = manifest.find(entry => entry.file === file);
         assert.equal(image?.kind, "lab-capture", file);
