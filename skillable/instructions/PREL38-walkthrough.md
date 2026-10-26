@@ -282,7 +282,76 @@ an authoring reorganization, not a new timed run or live-guide publication.
 The historical CSV, screenshot manifest, operator durations, and human estimates
 remain unchanged.
 
-## Options to discuss before changing scope
+## Targeted checks for the numbered revision
+
+The subsequent review numbers the SRE module's eleven exercises, moves opening
+the agent to exercise 2 after the background import, and explains each
+exercise's operational purpose. Scheduled tasks now request a self-contained
+HTML slide deck. Agent consumption is explicitly agent-attention budgeting,
+and optional capabilities are exploration-only rather than creation exercises.
+Task creation must be confirmed before opening Automation; independent work
+continues while agent replies, task execution, and report authoring run.
+
+A fresh user-supplied lab was used on **2026-10-26 UTC** for a targeted
+resource-list, context, and Live Report check. Its existing context showed two
+log providers and one resource group connected. This check continued with that
+Azure/log context only: the GitHub import, OAuth connection, search repair,
+scheduled HTML-deck execution, and other modules were not rerun.
+
+| Observed event | UTC |
+| --- | --- |
+| Fresh SRE Agent resource-list capture | 02:01:58 |
+| More context / Quickstart capture | 02:03:15 |
+| Initial Live Report design submitted | 02:05:43 |
+| SaveReport approval observed | 02:10:42 |
+| Save approved with the single read-only Monitor log-query connector | 02:11:40 |
+| First saved report visible | 02:11:45 |
+| Loaded report with real metrics visible | 02:12:11 |
+| Existing-report graph correction submitted | 02:14:22 |
+
+The first saved report appeared about **6 minutes 2 seconds after submission**.
+That observed interval includes authoring, overlapping documentation work,
+approval inspection, and the operator's approval delay; it is not isolated
+service execution time. The report showed 27 requests, a 66.7% failure rate,
+11.6 ms average response time, and 0.0% availability at that observation.
+Those are this instance's historical telemetry, not search-recovery evidence.
+The authoring thread reported no AppDependencies rows; relationships must not
+be presented as traced dependencies when they are inferred.
+
+The first graph used text rectangles rather than the requested service icons
+and rings. A correction was therefore requested through the **same report's
+authoring thread**, preserving read-only queries and saving a new version
+rather than creating a duplicate. The learner prompt was strengthened to
+request SVG service icons, circular health rings, a graph before metric cards,
+inferred-connection labels, and a responsive layout. This is not evidence that
+the final source prompt produced the final design in one turn.
+
+The new lab's **Settings** view exposed **General** and **Workspace
+configuration**, not **Agent consumption**. The offered legacy-navigation
+switch displayed **Restart and Save**; it was cancelled at **02:07:02 UTC**.
+No restart, feature enablement, permissions change, or AAU allocation save was
+performed. Live AAU consumption, thread drill-down, and limit inspection were
+therefore unavailable, not zero.
+
+The AAU images are unchanged Microsoft Learn documentation examples from
+`https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage`,
+attributed to Microsoft under CC BY 4.0. They are labelled as references in the
+learner guide and must not be represented as this lab's usage.
+
+New assets and provenance are separate from the frozen timed-trial evidence:
+`images/prel38-revision/manifest.json` records fresh private capture hashes,
+UTC capture times, crops and masks, or documentation source URLs, retrieval
+times, licensing and hashes. Browser chrome and account headers are excluded
+from public lab images; the resource-list subscription is masked.
+The original 72m35s trial, 13m02s guarded-operation total, action CSV and image
+manifest remain unchanged. These targeted checks are not a fresh end-to-end
+45-minute timing claim, live-guide publication, or Word/LAB720 synchronization.
+
+## Historical options discussed after the original trial
+
+These options predate the numbered revision above. In particular, the user has
+now chosen browser-viewable HTML slides and exploration-only optional work;
+the old viewer/creation tradeoffs are not pending learner requirements.
 
 | Option | Benefit / tradeoff |
 | --- | --- |

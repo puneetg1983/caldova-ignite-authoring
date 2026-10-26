@@ -1,7 +1,7 @@
 const assert = require("node:assert/strict");
 const { createHash } = require("node:crypto");
 const { execFileSync } = require("node:child_process");
-const { readFileSync, existsSync } = require("node:fs");
+const { readFileSync, existsSync, readdirSync } = require("node:fs");
 const { join } = require("node:path");
 const test = require("node:test");
 
@@ -9,9 +9,10 @@ const source = readFileSync(join(__dirname, "PREL38.md"), "utf8").replace(/\r\n/
 const visible = source.replace(/<!--[\s\S]*?-->/g, "");
 const pages = visible.split(/\r?\n===\r?\n/);
 const sre = pages[3];
-const [main, guidance] = sre.split("## Additional guidance");
+const [numberedMain, guidance] = sre.split("## Additional guidance");
+const main = numberedMain.replace(/^## \d+\. /gm, "## ");
 const section = heading => main.split(`## ${heading}\n`)[1]?.split("\n## ")[0];
-const optionalExercises = main.split("## Optional exercises\n")[1]?.split("\n## Complete")[0];
+const optionalExercises = section("Explore agent capabilities (optional)");
 const prompts = [...source.matchAll(/^\+{4}([^\r\n]+)\+{4}$/gm)].map(match => match[1]);
 const template = JSON.parse(readFileSync(join(__dirname, "..",
     "Caldova-WebAppP1v3-with-SREAgent-MI.json"), "utf8"));
@@ -22,22 +23,35 @@ test("PREL38: identity and four native pages remain; authoring labels are hidden
         ["Start", "Modernization", "ARM/Azure Copilot", "SRE Agent"]);
     assert.doesNotMatch(visible, /Screenshot placeholder|Authoring placeholder|STEVEN TODO|UNPUBLISHED|SRE lab duration:|No new per-exercise|maximum 5 minutes/);
     assert.match(pages[0], /Need help\? See \*\*Additional guidance\*\* at the end/);
-    assert.equal(pages[0].match(/^## (.+)$/m)?.[1], "1. Open Azure SRE Agent");
+    assert.equal(pages[0].match(/^## (.+)$/m)?.[1], "GitHub and Copilot");
     assert.doesNotMatch(source, /## (?:\d\. )?Sign in to the lab VM|## (?:\d\. )?Azure Portal/);
-    assert.doesNotMatch(sre, /## Sign in to Azure SRE Agent/);
-    assert.match(sre, /Return to the SRE Agent tab opened on Start/);
+    assert.doesNotMatch(pages[0], /## .*Open Azure SRE Agent|More context\. Better investigations/);
+    const exercises = [...numberedMain.matchAll(/^## (\d+)\. (.+)$/gm)];
+    assert.deepEqual(exercises.map(match => Number(match[1])),
+        Array.from({ length: 11 }, (_, index) => index + 1));
+    assert.equal(exercises[1][2], "Open Azure SRE Agent");
+    for (const exercise of exercises) {
+        assert.match(section(exercise[2]), /\*\*Goal:\*\*/);
+    }
+    assert.match(main, /Keep work moving.*Imports, agent replies, task creation, report authoring/s);
+    assert.match(main, /Return before a dependent step/);
 });
 
-test("PREL38: starts with an in-VM SRE URL and delegates VM/Azure prerequisites to Resources", () => {
+test("PREL38: opens SRE Agent in exercise 2 and delegates VM/Azure prerequisites to Resources", () => {
+    const opening = section("Open Azure SRE Agent");
     assert.match(pages[0], /VM access and Azure sign-in details are already provided in \*\*Resources\*\*/);
-    assert.match(pages[0], /\*\*Microsoft Edge inside the lab VM\*\*.*address bar/);
-    assert.ok(pages[0].includes("+++https://sre.azure.com+++"));
-    assert.match(pages[0], /Press \*\*Enter inside the VM\*\*/);
-    assert.match(pages[0], /\*\*Azure account\*\* in \*\*Resources > Azure Portal\*\*, not the VM account/);
-    assert.match(pages[0], /At \*\*Temporary Access Pass\*\*, use the \*\*TAP\*\* control in Resources/);
-    assert.match(pages[0], /\*\*More context\. Better investigations\.\*\* with \*\*Quickstart\*\* selected/);
-    assert.match(pages[0], /Keep this \*\*context wizard\*\* open/);
-    assert.ok(pages[0].includes("images/context-wizard/overview.png"));
+    assert.match(opening, /\*\*Microsoft Edge inside the lab VM\*\*.*address bar/);
+    assert.ok(opening.includes("+++https://sre.azure.com+++"));
+    assert.match(opening, /Press \*\*Enter inside the VM\*\*/);
+    assert.match(opening, /\*\*Azure account\*\* in \*\*Resources > Azure Portal\*\*, not the VM account/);
+    assert.match(opening, /At \*\*Temporary Access Pass\*\*, use the \*\*TAP\*\* control in Resources/);
+    assert.match(opening, /SRE Agent resource list.*select your assigned/);
+    assert.match(opening, /\*\*More context\. Better investigations\.\*\*.*\*\*Quickstart\*\*/);
+    assert.match(opening, /\*\*context wizard\*\* open/);
+    const agentList = opening.indexOf("images/prel38-revision/agent-list.png");
+    const wizard = opening.indexOf("images/prel38-revision/context-wizard.png");
+    assert.ok(agentList > 0);
+    assert.ok(wizard > agentList);
     assert.doesNotMatch(source, /@lab\.VirtualMachine|@lab\.CtrlAltDelete|VM username \||VM password \|/);
     assert.doesNotMatch(source, /Azure password \||@lab\.CloudPortalCredential|@lab\.[^\s+]*TAP/i);
     assert.match(guidance, /Password requested instead of TAP/);
@@ -48,7 +62,7 @@ test("PREL38: starts with an in-VM SRE URL and delegates VM/Azure prerequisites 
 });
 
 test("PREL38: all chat prompts use native Copy and Type Text, not static fences", () => {
-    assert.equal(prompts.length, 9);
+    assert.equal(prompts.length, 6);
     assert.doesNotMatch(source, /^```text$/m);
     assert.equal((source.match(/^\+{4}/gm) || []).length, prompts.length);
     for (const line of source.split("\n").filter(line => line.startsWith("+++"))) {
@@ -134,7 +148,7 @@ test("PREL38: Getting started has its time guidance in a note, not the heading",
     assert.doesNotMatch(gettingStarted, /Search Threads|Favorites|Operations hub|discovery/i);
 });
 
-test("PREL38: configuration inquiry is required; health-check change is optional and separate", () => {
+test("PREL38: configuration inquiry saves the website URL; optional Health check stays read-only", () => {
     const configuration = section("Inquire and configure Web App");
     assert.match(configuration, /\*\*New chat\*\*.*separate configuration thread, not the Getting started thread/);
     assert.doesNotMatch(configuration, /In the same Getting started thread/);
@@ -146,11 +160,13 @@ test("PREL38: configuration inquiry is required; health-check change is optional
     assert.match(guidance, /Website link missing or not opening/);
     assert.doesNotMatch(configuration, /Find \*\*Default Hostname\*\*|followed by that hostname/);
     assert.ok(configuration.includes("images/app-configuration/default-hostname.png"));
-    assert.match(configuration, /### Optional: App Service Health check/);
+    assert.match(configuration, /### Optional: Explore App Service Health check/);
     assert.doesNotMatch(configuration.split("\n### Optional:")[0], /configure.*Health check path to \/api\/health/i);
     assert.match(configuration, /In the same configuration conversation/);
-    assert.match(configuration, /successful endpoint response, restart impact, and rollback/);
-    assert.match(configuration, /This endpoint does not detect the search fault/);
+    assert.match(configuration, /Inspect only; do not change any settings/);
+    assert.match(configuration, /does not prove that product search works/);
+    assert.match(configuration, /Do not approve a configuration write/);
+    assert.match(configuration, /If it is still running, start the independent scheduled-task or live-report exercise/);
 });
 
 test("PREL38: debugging uses one natural prompt and verifies the original symptom", () => {
@@ -288,28 +304,39 @@ ConvertTo-Json -InputObject @($results) -Depth 4 -Compress
     }
 });
 
-test("PREL38: recurring cost review is created in chat, includes forecasts, and overlaps report work", () => {
+test("PREL38: scheduled automation explains recurring workflows and produces HTML slides without blocking", () => {
     const cost = section("Schedule a weekly cost review");
     assert.match(cost, /\*\*New chat\*\*/);
     assert.doesNotMatch(cost, /Create task|New task|Frequency|scheduling questions|short PowerPoint/);
-    for (const text of ["forecast next month", "recommend ways to save money", "beautiful, visually rich PowerPoint",
-        "charts, tables", "label estimates and assumptions", "don't change any resources"]) {
+    for (const text of ["forecast next month", "recommend savings", "self-contained HTML slide deck",
+        "charts, tables", "label estimates and assumptions", "do not change any resources",
+        "NSG-rule", "RBAC-access", "CVE", "vulnerability", "FinOps", "anomaly detection", "pull requests"]) {
         assert.ok(cost.includes(text), text);
     }
     assert.match(cost, /age of the lab, not a limitation of the agent/);
     assert.match(cost, /answer \*\*any questions from the agent\*\*/);
-    assert.match(cost, /If no run has started, select \*\*Run task now\*\*/);
-    assert.match(cost, /Once \*\*Weekly Caldova cost review\*\* appears/);
+    assert.match(cost, /Only after the agent confirms the scheduled task has been created/);
+    assert.match(cost, /If no run has started or is pending, select \*\*Run task now\*\* once/);
+    assert.match(cost, /do not duplicate an agent-triggered run/);
+    assert.match(cost, /Task creation can take several minutes/);
+    assert.match(cost, /open the HTML slide deck in the VM browser/);
+    assert.doesNotMatch(source, /PowerPoint|PPT installed|compatible viewer/);
     assert.match(cost, /\*\*Don't wait for completion\.\*\*/);
     assert.match(cost, /latest execution thread/);
 });
 
-test("PREL38: report puts dependency health first; versions and sharing are required, iteration optional", () => {
+test("PREL38: Live Reports explain UI for AI and request service icons, health rings and supported drill-down", () => {
     const report = section("Create a live traffic and health report");
     assert.match(report, /\*\*Live reports > \+ New report\*\*/);
     assert.match(report, /\*\*Enter a custom response\*\*/);
-    assert.match(report, /Put a dependency graph at the top/);
-    assert.match(report, /Label missing data and unknown health/);
+    assert.match(report, /Live Reports are a UI for AI/);
+    assert.match(report, /Before the metric cards.*dependency graph using Azure service SVG icons/);
+    assert.match(report, /circular health-colored rings, not text-only rectangles/);
+    assert.match(report, /Include a legend; label unknown health and inferred connections/);
+    assert.match(report, /Where supported, make nodes clickable/);
+    assert.match(report, /do not invent links/);
+    assert.match(report, /interactive charts and filters where supported/);
+    assert.match(report, /label missing data/);
     assert.match(report, /keep it read-only/);
     assert.match(report, /report-saving approval.*expected read-only telemetry tools/);
     assert.match(report, /\*\*Don't wait for completion\.\*\*/);
@@ -318,17 +345,17 @@ test("PREL38: report puts dependency health first; versions and sharing are requ
     assert.match(report, /If an earlier version exists/);
     assert.match(report, /\*\*Copy link to report\*\*/);
     assert.match(report, /sharing the link does not grant access/);
-    assert.doesNotMatch(report.split("\n### Optional:")[0], /Reload|Builder|Open authoring thread/);
-    assert.match(report, /### Optional: Keep improving your live report/);
-    assert.match(report, /\*\*Live reports > Caldova Traffic and Health > Open authoring thread\*\*/);
-    assert.match(report, /scroll to \*\*Optional exercises\*\* and try one/);
+    assert.match(report, /If a graph node offers a drill-down, click it/);
+    assert.match(report, /do not treat a decorative node as a working link/);
+    assert.match(report, /\*\*Open authoring thread\*\*.*existing report, not a duplicate/);
+    assert.match(report, /if it confirms creation, check the task/);
 });
 
 test("PREL38: extra help is compiled once at the end and does not claim missing data is healthy", () => {
     assert.equal((source.match(/^## Additional guidance$/gm) || []).length, 1);
     assert.doesNotMatch(guidance, /^### Optional:|^## Optional exercises/m);
     assert.match(guidance, /if you are stuck or need more help following an instruction/);
-    assert.ok(main.indexOf("## Complete") > main.indexOf("## Optional exercises"));
+    assert.ok(main.indexOf("## Complete") > main.indexOf("## Explore agent capabilities (optional)"));
     assert.ok(main.indexOf("## Complete") > main.indexOf("## Create a live traffic and health report"));
     assert.doesNotMatch(main, /Operations hub > Overview|Search Threads|Browser did not open/);
     assert.match(guidance, /Missing data or unknown dependency health does not mean the app is healthy/);
@@ -339,7 +366,7 @@ test("PREL38: extra help is compiled once at the end and does not claim missing 
     assert.match(main, /Record anything still running or blocked/);
 });
 
-test("PREL38: consumption review drills into execution threads and separates AAU limits from Azure costs", () => {
+test("PREL38: consumption review budgets agent attention using actual execution threads", () => {
     const consumption = section("Review agent consumption and the AAU budget");
     assert.ok(main.indexOf("## Review agent consumption") > main.indexOf("## Create a live traffic"));
     assert.ok(main.indexOf("## Complete") > main.indexOf("## Review agent consumption"));
@@ -351,43 +378,42 @@ test("PREL38: consumption review drills into execution threads and separates AAU
     assert.match(consumption, /execution thread, not just the chat that created the schedule/);
     assert.match(consumption, /close without saving/);
     assert.match(consumption, /always-on.*separate/s);
-    assert.match(consumption, /### Optional: Apply an approved AAU limit/);
-    assert.match(consumption, /500 to 1,000,000/);
-    assert.match(consumption, /Increases take effect immediately; decreases apply next month/);
-    assert.match(consumption, /Do not lower the allowance while lab work is still running/);
-    assert.match(consumption, /does not cap the separate always-on charge or other Azure resource charges/);
-    assert.match(consumption, /Do not stop or delete the assigned agent/);
+    assert.match(consumption, /budgeting exercise, not another Azure resource-cost analysis/);
+    assert.match(consumption, /Set an active-flow allowance in advance/);
+    assert.match(consumption, /which workflows deserve the agent's attention/);
+    assert.match(consumption, /Start with a small set of high-value workflows/);
+    assert.match(consumption, /Compare observed consumption per completed run and intended frequency/);
+    assert.match(consumption, /Do not save a budget change in this lab/);
+    assert.ok(consumption.includes("images/prel38-revision/agent-consumption-reference.png"));
+    assert.ok(consumption.includes("images/prel38-revision/consumption-threads-reference.png"));
+    assert.match(consumption, /documentation examples, not measurements from this lab/);
+    assert.match(consumption, /CC BY 4\.0.*reproduced unchanged/);
+    assert.match(guidance, /If \*\*Agent consumption\*\* is not offered under \*\*Settings\*\*/);
+    assert.match(guidance, /Do not restart the agent, switch navigation modes, enable features, or change permissions/);
+    assert.match(guidance, /live consumption and allocation inspection were unavailable, not that usage was zero/);
 });
 
-test("PREL38: optional skills and custom agents have explicit creation and verification steps", () => {
-    assert.match(optionalExercises, /### Optional: Create a search-check skill/);
-    assert.match(optionalExercises, /\*\*Builder > Agent Canvas > Create > Skill\*\*/);
-    assert.match(optionalExercises, /`SKILL\.md`.*frontmatter/);
-    assert.match(optionalExercises, /confirm `caldova-search-check` appears/);
-    assert.match(optionalExercises, /Verify the agent loads the skill/);
-    assert.match(optionalExercises, /\*\*Builder > Agent Canvas > Create > Custom Agent\*\*/);
-    assert.match(optionalExercises, /\*\*Choose skills\*\*.*only `caldova-search-check`/);
-    assert.match(optionalExercises, /empty selection inherits global tools/);
-    assert.match(optionalExercises, /read-only tools are unavailable, cancel/);
-    assert.match(optionalExercises, /\*\*Test playground\*\*/);
-    assert.match(optionalExercises, /type `\/agent` and select `caldova-search-reviewer`/);
-    assert.doesNotMatch(guidance, /SKILL\.md|Create > Custom Agent/);
+test("PREL38: optional Agent Canvas and Skill Builder explain capabilities without creating them", () => {
+    assert.match(optionalExercises, /exploration-only/);
+    assert.match(optionalExercises, /\*\*Build \+ setup\*\* \(\*\*Builder\*\* in the earlier navigation\)/);
+    assert.match(optionalExercises, /explore \*\*Agent Canvas\*\*, if available/);
+    assert.match(optionalExercises, /Skill Builder/);
+    for (const capability of ["Skill", "Custom agent", "Connector", "Tool", "Policy", "Hook"]) {
+        assert.ok(optionalExercises.includes(`| ${capability} |`), capability);
+    }
+    assert.match(optionalExercises, /do not create or save skills, custom agents, connectors, policies, hooks/);
+    assert.match(optionalExercises, /leave any draft without saving/);
+    assert.doesNotMatch(optionalExercises, /Create > Skill|Create > Custom Agent|Set \*\*Name\*\*|select \*\*Create\*\*/);
 });
 
-test("PREL38: optional incident setup restricts alerts, explicitly selects Review, and disables its own test plan", () => {
-    assert.match(optionalExercises, /### Optional: Configure incident management/);
-    assert.match(optionalExercises, /\*\*Connect an incident platform > Choose platform > Azure Monitor\*\*/);
-    assert.match(optionalExercises, /Save\*\* only after the facilitator confirms isolated lab alerts/);
-    assert.match(optionalExercises, /Do not change pre-existing\/shared plans/);
-    assert.match(optionalExercises, /### Optional: Configure an incident response plan/);
-    assert.match(optionalExercises, /\*\*Title contains\*\* to `caldova-lab-search`/);
-    assert.match(optionalExercises, /\*\*Agent autonomy level > Review\*\*; new plans default to Autonomous/);
-    assert.match(optionalExercises, /cooldown\*\* enabled/);
-    assert.match(optionalExercises, /filters do not overlap another enabled plan/);
-    assert.match(optionalExercises, /empty preview is not proof of successful routing/);
-    assert.match(optionalExercises, /trigger the approved test alert without breaking the app/);
-    assert.match(optionalExercises, /select only `caldova-search-review`.*\*\*Turn off > Yes\*\*/);
-    assert.match(optionalExercises, /Do not disable other plans/);
+test("PREL38: optional incident and HTTP triggers explain routing without creating or invoking anything", () => {
+    assert.match(optionalExercises, /Explore incident management and HTTP triggers/);
+    assert.match(optionalExercises, /\*\*Incidents > Triggers \+ response plans\*\*/);
+    assert.match(optionalExercises, /without connecting or enabling anything/);
+    assert.match(optionalExercises, /do not create a trigger, copy access-bearing callback URLs, or send a request/);
+    assert.match(optionalExercises, /Narrow filters and cooldowns/);
+    assert.match(optionalExercises, /Scheduled tasks run by time; incident triggers react to alerts; HTTP triggers react/);
+    assert.doesNotMatch(optionalExercises, /trigger the approved test alert|Title contains|Turn off > Yes/);
 });
 
 test("PREL38: facilitator preparation distinguishes licensed VM software from the app ARM deployment", () => {
@@ -454,6 +480,44 @@ test("PREL38: walkthrough links resolve and evidence crops match their provenanc
         assert.equal(bytes.readUInt32BE(20), image.crop_xywh[3]);
         assert.ok(image.crop_xywh.every(value => Number.isInteger(value) && value >= 0));
     }
+});
+
+test("PREL38: revision evidence distinguishes fresh lab captures from attributed documentation references", () => {
+    const directory = join(__dirname, "images", "prel38-revision");
+    const manifest = JSON.parse(readFileSync(join(directory, "manifest.json"), "utf8"));
+    assert.deepEqual(manifest.map(image => image.file).sort(),
+        readdirSync(directory).filter(file => file.endsWith(".png")).sort());
+    assert.equal(new Set(manifest.map(image => image.file)).size, manifest.length);
+    assert.ok(manifest.length >= 4);
+    for (const image of manifest) {
+        assert.match(image.file, /^[a-z0-9-]+\.png$/);
+        const bytes = readFileSync(join(directory, image.file));
+        assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+        assert.equal(createHash("sha256").update(bytes).digest("hex"), image.sha256);
+        if (image.kind === "lab-capture") {
+            assert.match(image.source_capture, /^R\d+-[a-z0-9-]+-private\.png$/);
+            assert.match(image.source_sha256, /^[a-f0-9]{64}$/);
+            assert.ok(Number.isFinite(Date.parse(image.captured_at)));
+            assert.equal(image.crop_xywh.length, 4);
+            assert.ok(image.crop_xywh.every(value => Number.isInteger(value) && value >= 0));
+            assert.equal(bytes.readUInt32BE(16), image.crop_xywh[2]);
+            assert.equal(bytes.readUInt32BE(20), image.crop_xywh[3]);
+            for (const rectangle of image.masks_xywh) {
+                assert.equal(rectangle.length, 4);
+                assert.ok(rectangle.every(value => Number.isInteger(value) && value >= 0));
+                assert.ok(rectangle[0] + rectangle[2] <= image.crop_xywh[2]);
+                assert.ok(rectangle[1] + rectangle[3] <= image.crop_xywh[3]);
+            }
+        } else {
+            assert.equal(image.kind, "documentation-reference");
+            assert.match(image.source_url,
+                /^https:\/\/learn\.microsoft\.com\/en-us\/azure\/sre-agent\/media\/monitor-agent-usage\/[a-z-]+\.png$/);
+            assert.equal(image.license_url, "https://creativecommons.org/licenses/by/4.0/");
+            assert.equal(image.unchanged, true);
+            assert.ok(Number.isFinite(Date.parse(image.retrieved_at)));
+        }
+    }
+    assert.ok(manifest.find(image => image.file === "agent-list.png").masks_xywh.length > 0);
 });
 
 test("PREL38: measured operator time is distinguished from estimated human time and incomplete checks", () => {

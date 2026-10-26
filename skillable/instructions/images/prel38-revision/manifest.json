@@ -1,0 +1,61 @@
+[
+  {
+    "file": "agent-list.png",
+    "source_capture": "R36-authenticated-sre-portal-private.png",
+    "source_sha256": "0ba5d4187e44af22ccd78782555ba7f6a01155734689f799f2a8f7db5be926e0",
+    "captured_at": "2026-10-26T02:01:58.3825987+00:00",
+    "crop_xywh": [
+      45,
+      250,
+      1650,
+      550
+    ],
+    "masks_xywh": [
+      [
+        505,
+        450,
+        355,
+        65
+      ]
+    ],
+    "sha256": "b627a44cd5851b2132fc19ab3c8b587dbdd977206564480584a4da84fb0f0ca1",
+    "kind": "lab-capture"
+  },
+  {
+    "file": "context-wizard.png",
+    "source_capture": "R39-context-wizard-ready-private.png",
+    "source_sha256": "eacbf5edd095b3bfa99ccc1825dbd18c026e152f965c4730340af2d72001fd5b",
+    "captured_at": "2026-10-26T02:03:15.9712963+00:00",
+    "crop_xywh": [
+      250,
+      250,
+      1250,
+      936
+    ],
+    "masks_xywh": [],
+    "sha256": "b929c8710b689a521be4607ffe2bd2db3961ec490552f94c324ffafff612fff4",
+    "kind": "lab-capture"
+  },
+  {
+    "file": "agent-consumption-reference.png",
+    "kind": "documentation-reference",
+    "source_url": "https://learn.microsoft.com/en-us/azure/sre-agent/media/monitor-agent-usage/consumption-summary-daily.png",
+    "article_url": "https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage",
+    "attribution": "Microsoft",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "unchanged": true,
+    "retrieved_at": "2026-10-26T02:08:25.8831491Z",
+    "sha256": "77d7f69861b7c6e9be5c7d0e63b06681bd00aeaa1068e376dc58df3bbc9a716c"
+  },
+  {
+    "file": "consumption-threads-reference.png",
+    "kind": "documentation-reference",
+    "source_url": "https://learn.microsoft.com/en-us/azure/sre-agent/media/monitor-agent-usage/consumption-thread-table.png",
+    "article_url": "https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage",
+    "attribution": "Microsoft",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "unchanged": true,
+    "retrieved_at": "2026-10-26T02:08:26.4064498Z",
+    "sha256": "77063c8ff9c699963050674ae4d514bded59bf085a34af68ca9cd2a3723f0abf"
+  }
+]

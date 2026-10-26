@@ -308,7 +308,8 @@ test("setup assets are real cropped PNGs and all guides retain the shared reposi
         [...setupImages, ...reviewImages].map(path => path.split("/").at(-1)).sort());
     const guides = ["standard-workflow", "PREL38", "LAB720"].map(name =>
         readFileSync(join(__dirname, `${name}.md`), "utf8"));
-    const steps = source => source.split("## Connect the imported repository")[1]
+    const steps = source => source.replace(/^## \d+\. /gm, "## ")
+        .split("## Connect the imported repository")[1]
         .split("## Review the Getting started thread")[0].match(/^\d\. .+$/gm)
         .map(step => step.replace(" Confirm the repository connection is ready before source-code debugging.", ""));
     for (const guide of guides.slice(1)) assert.deepEqual(steps(guide), steps(guides[0]));

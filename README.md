@@ -46,18 +46,19 @@ workflow. Saving or merging a file here does not change a live lab.
 
 The working guides use native Skillable Markdown with this page order:
 **Start -> Modernization -> ARM/Azure Copilot -> SRE Agent**. No custom theme or
-JavaScript is required. PREL38 now begins with opening `https://sre.azure.com`
-inside the VM and selecting the assigned agent. VM and Azure Portal sign-in
-instructions are delegated to Resources instead of repeated in the guide.
-Shared GitHub/Copilot setup remains on Start. SRE sign-in uses Temporary Access
+JavaScript is required. PREL38 keeps GitHub/Copilot setup on Start; its SRE
+module has eleven numbered exercises. Exercise 1 starts the repository import,
+then exercise 2 opens `https://sre.azure.com` inside the VM and selects the
+assigned agent before showing its context wizard. VM and Azure Portal sign-in
+details are delegated to Resources. SRE sign-in uses Temporary Access
 Pass (TAP) from Resources by default, with password guidance at the end and no
-inline credential table or duplicate sign-in section on the final SRE page.
+inline credential table or duplicate opening section on Start.
 LAB720 and the shared reference retain their previous setup until reviewed.
 The guides contain the SRE activities with the requested setup corrections and
 explicit import/connection prerequisites. PREL38 has been revised and exercised
 against the running lab; LAB720 retains its earlier draft and named screenshot
 placeholders. These Markdown changes do not update the Word files.
-The SRE sequence is background repository import, configuration review in the
+The SRE sequence is background repository import, agent selection, configuration review in the
 context wizard shown at sign-in, connection of the completed imported repository,
 then **Done and go to agent**, the Getting started thread (at most five minutes),
 and the remaining exercises. Environment/health findings are reviewed in that
@@ -67,7 +68,7 @@ Troubleshooting help is collected there by section, including sign-in and browse
 fallbacks, thread/wizard navigation, and task/report troubleshooting, rather
 than interrupting the main instructions. Required approval and verification
 steps stay in the main flow. Optional exercises stay with their related
-activities or in the separate **Optional exercises** section before completion,
+activities or in **Explore agent capabilities (optional)** before completion,
 not in Additional guidance.
 Configuration review and repository connection stay inside the SRE Agent context
 wizard; the review does not require an Azure Portal or Builder detour.
@@ -93,8 +94,11 @@ runtime check before publication.
 The separate `overview.png` is cropped from the user's context-wizard screenshot
 provided on 2026-10-25. It shows **More context. Better investigations.**,
 **Quickstart**, the unconnected Code card, and part of Logs. Its account/agent
-header is excluded. It illustrates the opening section, not a new agent-side
-capture or evidence that fresh sign-in was rerun.
+header is excluded. It remains an earlier reference, not evidence that fresh sign-in was rerun.
+PREL38's numbered opening exercise now uses separate fresh resource-list and
+context-wizard captures in `images/prel38-revision/`, in that order. Account
+headers and browser chrome are cropped out; the resource-list subscription is
+masked.
 
 The user also supplied `repository-connection.png` on 2026-10-25. This already
 cropped **Add repositories** dialog contains no account details and is preserved
@@ -123,8 +127,8 @@ review without a compatible viewer, and the other teams' pages remain outside
 that timing claim. LAB720's 25-minute optimization is deferred for discussion.
 
 PREL38 starts configuration inquiry in **New chat**, separate from Getting
-started, and keeps the optional `/api/health` change in that configuration
-thread, with the optional steps directly under the configuration exercise.
+started, and keeps an optional read-only `/api/health` explanation in that
+configuration thread, directly under the configuration exercise.
 The configuration prompt also asks for the full HTTPS website link. Learners
 bookmark or copy that URL and reuse it in the debugging exercise; manual Azure
 Portal lookup is a fallback in Additional guidance, not part of the main flow.
@@ -134,19 +138,31 @@ There is no separate repository-readiness exercise before debugging.
 Debugging must repair the running app and return real `jacket`
 products; an undeployed code PR or empty result is not recovery. Cost automation
 and live-report generation overlap other activities, with explicit checks for
-pending questions/approvals and completed artifacts. Report versions and sharing
-are required; conversational refinement is optional within the report exercise.
+pending questions/approvals and completed artifacts. The scheduled task produces
+a self-contained HTML slide deck; learners inspect Automation only after its
+creation is confirmed. Scheduled automation examples include NSG/RBAC audits,
+security-inventory-backed CVE reviews, FinOps, anomalies, reports, and reviewed
+pull requests. Live Reports are introduced as a UI for AI, requesting Azure
+service icons with health rings, a legend, and drill-down/filtering where the
+available tools support it. Report versions and sharing remain required.
 
 The expanded source adds **Settings -> Agent consumption** with per-thread AAU
 review, execution-thread inspection, filtered CSV export, and active-flow
-allocation controls. Budget changes are deferred until the other exercises
-finish and require a facilitator-approved value. Always-on charges and other
-Azure resource costs are not covered by the active-flow limit. The **Optional
-exercises** section contains skill, custom-agent, incident-source, and narrowly
-filtered Review-mode response-plan exercises, including turning off the new
-test plan. These additions have not been runtime-tested or retimed, and have
-not replaced the earlier live Skillable revision. The walkthrough retains its
-original measurement baseline and explicitly distinguishes this expansion.
+allocation controls. This is agent-attention budgeting, not a repeat of Azure
+resource-cost analysis: start with a small set of valuable workflows, inspect
+actual per-run consumption, and plan before expanding. Learners inspect the
+limit without saving changes. Always-on charges and other Azure resource costs
+are separate. Optional activities are exploration-only: Agent Canvas, Skill
+Builder, custom agents, connectors, tools, policies, hooks, incident management,
+and HTTP triggers. No optional creation, connection, alert, callback invocation,
+or configuration write is required. These changes do not replace the earlier
+live Skillable revision or retime the original walkthrough; new checks must be
+recorded separately. The new lab's Settings view did not expose Agent consumption.
+An offered legacy-navigation switch required an agent restart and was cancelled;
+no restart or settings change was made. AAU images in the revised guide are
+explicitly attributed, unchanged Microsoft Learn reference screenshots under
+CC BY 4.0, not fresh lab measurements. The learner fallback records unavailable
+live inspection rather than inventing usage or changing the environment.
 
 The PREL38 deployment source seeds the package's actual search failure using
 `Catalog__AsOfDate=2026-12-15` and probes
