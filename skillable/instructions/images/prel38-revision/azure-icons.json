@@ -1,0 +1,19 @@
+{
+  "source_url": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip",
+  "source_sha256": "921594ccd1bf3d9c0a1bd7b6d924e050551a59342f2b353bb74bdcf761c35141",
+  "terms_url": "https://learn.microsoft.com/en-us/azure/architecture/icons/#icon-terms",
+  "retrieved_at": "2026-10-26T02:29:09.6846618Z",
+  "unchanged": true,
+  "icons": [
+    {
+      "entry": "Azure_Public_Service_Icons/Icons/web/10035-icon-service-App-Services.svg",
+      "file": "azure-app-service.svg",
+      "sha256": "529d83fc80637a96b6d27f6cfac7536e1c5f9b1b67f58aef4e2e3d6f47fd4925"
+    },
+    {
+      "entry": "Azure_Public_Service_Icons/Icons/monitor/00012-icon-service-Application-Insights.svg",
+      "file": "azure-application-insights.svg",
+      "sha256": "36c73dea8b1598fbfff84890a2b409600f1339eec8c1bf1a896439e9da8f9dca"
+    }
+  ]
+}

@@ -520,6 +520,26 @@ test("PREL38: revision evidence distinguishes fresh lab captures from attributed
     assert.ok(manifest.find(image => image.file === "agent-list.png").masks_xywh.length > 0);
 });
 
+test("PREL38: service icons preserve Microsoft's official SVG assets and usage terms", () => {
+    const directory = join(__dirname, "images", "prel38-revision");
+    const metadata = JSON.parse(readFileSync(join(directory, "azure-icons.json"), "utf8"));
+    assert.equal(metadata.source_url,
+        "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip");
+    assert.match(metadata.source_sha256, /^[a-f0-9]{64}$/);
+    assert.equal(metadata.terms_url, "https://learn.microsoft.com/en-us/azure/architecture/icons/#icon-terms");
+    assert.equal(metadata.unchanged, true);
+    assert.ok(Number.isFinite(Date.parse(metadata.retrieved_at)));
+    assert.deepEqual(metadata.icons.map(icon => icon.file).sort(),
+        ["azure-app-service.svg", "azure-application-insights.svg"]);
+    for (const icon of metadata.icons) {
+        const bytes = readFileSync(join(directory, icon.file));
+        assert.equal(createHash("sha256").update(bytes).digest("hex"), icon.sha256);
+        assert.match(icon.entry, /^Azure_Public_Service_Icons\/Icons\/(?:web|monitor)\/\d+-icon-service-[a-z-]+\.svg$/i);
+        assert.match(bytes.toString("utf8"), /<svg\b/);
+        assert.doesNotMatch(bytes.toString("utf8"), /<script\b|<foreignObject\b|\bonload\s*=/i);
+    }
+});
+
 test("PREL38: measured operator time is distinguished from estimated human time and incomplete checks", () => {
     const walkthrough = readFileSync(join(__dirname, "PREL38-walkthrough.md"), "utf8");
     assert.match(walkthrough, /72 minutes 35 seconds of operator wall time/);

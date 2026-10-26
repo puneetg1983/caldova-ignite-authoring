@@ -164,6 +164,13 @@ explicitly attributed, unchanged Microsoft Learn reference screenshots under
 CC BY 4.0, not fresh lab measurements. The learner fallback records unavailable
 live inspection rather than inventing usage or changing the environment.
 
+The report's App Service and Application Insights SVG assets in that directory
+are copied unchanged from Microsoft's official Azure icon pack, not substituted
+generic glyphs. `azure-icons.json` records archive entries and hashes. Their
+[Azure icon terms](https://learn.microsoft.com/en-us/azure/architecture/icons/#icon-terms)
+permit architecture diagrams, training materials, and documentation; the
+separate Microsoft Learn AAU screenshots use CC BY 4.0.
+
 The PREL38 deployment source seeds the package's actual search failure using
 `Catalog__AsOfDate=2026-12-15` and probes
 `/api/search/by-name?name=jacket`, replacing the unused fault flag and old
