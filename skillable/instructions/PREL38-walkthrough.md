@@ -136,7 +136,8 @@ Reviewed the successful endpoint, assigned target, restart/single-instance impac
 
 The exact deployed `webapp.zip` was separately validated locally with .NET 8. With the future catalog date, health and browsing were 200 while product search was 500. With the corrected date, all were 200. The isolated checks took approximately **1.93 seconds** and **0.64 seconds**, including local startup; they are not live-agent recovery or learner timings.
 
-Only these deployment variables changed in `Caldova-WebAppP1v3-with-SREAgent-MI.json`:
+Historical publication note: only these deployment variables changed in the
+then-separate `Caldova-WebAppP1v3-with-SREAgent-MI.json`:
 
 | Variable | Revised value |
 | --- | --- |
@@ -145,6 +146,12 @@ Only these deployment variables changed in `Caldova-WebAppP1v3-with-SREAgent-MI.
 | `availabilityPath` | `/api/search/by-name?name=jacket` |
 
 Managed identity, RBAC, agent safeguards, and other resources were not changed by this source revision. Existing-instance repair does not update future lab deployments.
+
+The repository has since consolidated both labs into
+`Caldova-WebAppP1v3-with-SREAgent.json`, with subscription Contributor and
+12 general-endpoint availability tests plus one failed-request alert. The
+search-specific availability test below describes the historical publication,
+not the current shared source. Consolidation does not update hosted templates.
 
 Hosted **cloud template 6969** was subsequently updated through its supported editor. **Used By (1)** was followed and verified as PREL38 profile **224911** before editing. An official rollback download was taken, the source editor was compared with it, only the three variable values were replaced, and a required change note was supplied. A fresh official download confirmed the exact intended result with no other template changes at **02:09:33 UTC**. Before SHA256: `ea56aac264c463a3918c7e283a923d482ac332abf9b79202dde170530899b5fb`; after SHA256: `c2c973a2b433773d1711b882e79d55d62372b5f15c72fa4a1002f11806a07466`. This verifies persistence, not a new lab deployment.
 

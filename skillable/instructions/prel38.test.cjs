@@ -12,7 +12,7 @@ const [main, guidance] = sre.split("## Additional guidance");
 const section = heading => main.split(`## ${heading}\n`)[1]?.split("\n## ")[0];
 const prompts = [...source.matchAll(/^\+{4}([^\r\n]+)\+{4}$/gm)].map(match => match[1]);
 const template = JSON.parse(readFileSync(join(__dirname, "..",
-    "Caldova-WebAppP1v3-with-SREAgent-MI.json"), "utf8"));
+    "Caldova-WebAppP1v3-with-SREAgent.json"), "utf8"));
 
 test("PREL38: identity and four native pages remain; authoring labels are hidden", () => {
     assert.match(source, /profile 224911, instruction set 359549/);
@@ -250,10 +250,17 @@ test("PREL38: image links resolve and the original 40-image snapshot remains byt
     }
 });
 
-test("PREL38: deployment seeds and probes the actual search failure without changing MI permissions", () => {
+test("PREL38: shared deployment retains the search fault, subscription Contributor, and 13 alerts", () => {
     assert.equal(template.variables.faultSettingName, "Catalog__AsOfDate");
     assert.equal(template.variables.faultSettingValue, "2026-12-15");
-    assert.equal(template.variables.availabilityPath, "/api/search/by-name?name=jacket");
+    assert.equal(template.variables.availabilityTests.length, 12);
+    const webtest = template.resources.find(resource => resource.type === "Microsoft.Insights/webtests");
+    assert.equal(webtest.copy.count, "[length(variables('availabilityTests'))]");
+    const alerts = template.resources.filter(resource => resource.type === "Microsoft.Insights/metricAlerts");
+    assert.equal(alerts.length, 2);
+    assert.equal(alerts.filter(resource => resource.copy).length, 1);
+    assert.equal(alerts.find(resource => resource.copy).copy.count, "[length(variables('availabilityTests'))]");
+    assert.equal(alerts.find(resource => !resource.copy).properties.criteria.allOf[0].metricName, "requests/failed");
     assert.doesNotMatch(JSON.stringify(template), /BreakMyWebApp|YSOD\.aspx/);
     assert.equal(template.resources.find(resource => resource.type === "Microsoft.Web/serverfarms").sku.capacity, 1);
     const nested = template.resources.find(resource => resource.type === "Microsoft.Resources/deployments").properties.template;
@@ -261,6 +268,10 @@ test("PREL38: deployment seeds and probes the actual search failure without chan
         resource.type === "Microsoft.Resources/deployments" &&
         JSON.stringify(resource).includes("b24988ac-6180-42a0-ab88-20f7382dd24c"));
     assert.ok(contributor, "Subscription Contributor deployment must be retained");
+    assert.equal(contributor.subscriptionId, "[split(parameters('webAppResourceGroupId'), '/')[2]]");
+    assert.equal(contributor.resourceGroup, undefined);
+    assert.equal(contributor.properties.template.$schema,
+        "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#");
     assert.ok(template.outputs.webAppUrl);
 });
 

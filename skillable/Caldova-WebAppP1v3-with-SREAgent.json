@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "metadata": {
-    "description": "Skillable deployment with no top-level parameter prompts. Fixed settings are variables. A blocking Post-Build lifecycle action resolves the assigned learner and grants SRE Agent Administrator access; this template does not assign learner access."
+    "description": "Skillable deployment with no top-level parameter prompts. Fixed settings are variables. A blocking Post-Build lifecycle action resolves the assigned learner and grants SRE Agent Administrator access; this template does not assign learner access. The SRE Agent managed identity receives Contributor at subscription scope. The deployment principal must be allowed to create role assignments at subscription scope."
   },
   "variables": {
     "location": "swedencentral",
@@ -376,8 +376,8 @@
             "identityName": "[concat('caldova-sre-mi-', parameters('labSuffix'))]",
             "identityId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]",
             "agentId": "[resourceId('Microsoft.App/agents', variables('agentName'))]",
-            "groupPermissionsDeploymentName": "[concat('sre-permissions-', guid(variables('identityId'), parameters('webAppResourceGroupId')))]",
-            "groupPermissionsDeploymentId": "[extensionResourceId(parameters('webAppResourceGroupId'), 'Microsoft.Resources/deployments', variables('groupPermissionsDeploymentName'))]",
+            "subscriptionPermissionsDeploymentName": "[concat('sre-sub-permissions-', guid(variables('identityId'), split(parameters('webAppResourceGroupId'), '/')[2]))]",
+            "subscriptionPermissionsDeploymentId": "[subscriptionResourceId(split(parameters('webAppResourceGroupId'), '/')[2], 'Microsoft.Resources/deployments', variables('subscriptionPermissionsDeploymentName'))]",
             "permissionTargets": [
               {
                 "scopeId": "[parameters('logAnalyticsWorkspaceResourceId')]",
@@ -399,9 +399,9 @@
             {
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2022-09-01",
-              "name": "[variables('groupPermissionsDeploymentName')]",
+              "name": "[variables('subscriptionPermissionsDeploymentName')]",
               "subscriptionId": "[split(parameters('webAppResourceGroupId'), '/')[2]]",
-              "resourceGroup": "[split(parameters('webAppResourceGroupId'), '/')[4]]",
+              "location": "[parameters('agentLocation')]",
               "dependsOn": ["[variables('identityId')]"],
               "properties": {
                 "mode": "Incremental",
@@ -412,7 +412,7 @@
                   }
                 },
                 "template": {
-                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                   "contentVersion": "1.0.0.0",
                   "parameters": {
                     "principalId": { "type": "string" }
@@ -421,9 +421,9 @@
                     {
                       "type": "Microsoft.Authorization/roleAssignments",
                       "apiVersion": "2022-04-01",
-                      "name": "[guid(toLower(resourceGroup().id), parameters('principalId'), 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+                      "name": "[guid(toLower(subscription().id), parameters('principalId'), 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
                       "properties": {
-                        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+                        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
                         "principalId": "[parameters('principalId')]",
                         "principalType": "ServicePrincipal"
                       }
@@ -504,7 +504,7 @@
               },
               "dependsOn": [
                 "[variables('identityId')]",
-                "[variables('groupPermissionsDeploymentId')]",
+                "[variables('subscriptionPermissionsDeploymentId')]",
                 "labPermissions"
               ],
               "properties": {
