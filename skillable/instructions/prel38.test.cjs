@@ -91,9 +91,10 @@ test("PREL38: Quickstart review and background import precede repository connect
     assert.doesNotMatch(review, /Full setup|Builder|review.*\*\*Subscription\*\*/);
     for (const label of ["Azure resources", "Logs"]) {
         assert.ok(review.includes(`Under **${label}**, click **Show details**`));
-        assert.ok(review.includes(`Click **+** under **${label}**`));
+        assert.ok(optionalExercises.includes(`Click **+** under **${label}**`));
     }
-    assert.equal((review.match(/Close or cancel without adding anything/g) || []).length, 2);
+    assert.doesNotMatch(review, /Optional|Click \*\*\+\*\*/);
+    assert.equal((optionalExercises.match(/Close or cancel without adding anything/g) || []).length, 2);
     assert.match(section("Start the GitHub import in the background"), /without waiting/);
     assert.ok(main.indexOf("## Start the GitHub import") < main.indexOf("## Connect the imported repository"));
     assert.ok(main.indexOf("## Connect the imported repository") < main.indexOf("## Review the Getting started thread"));
@@ -152,7 +153,7 @@ test("PREL38: configuration inquiry saves the website URL; optional Health check
     const configuration = section("Inquire and configure Web App");
     assert.match(configuration, /\*\*New chat\*\*.*separate configuration thread, not the Getting started thread/);
     assert.doesNotMatch(configuration, /In the same Getting started thread/);
-    assert.match(configuration, /Keep this configuration thread for the optional Health check/);
+    assert.doesNotMatch(configuration, /optional|Health check/i);
     assert.match(configuration, /provide the full HTTPS link to its website/);
     assert.match(configuration, /Open the website link in a new \*\*VM browser\*\* tab and confirm the app loads/);
     assert.match(configuration, /\*\*Bookmark the page or copy the full URL for the next exercise\.\*\*/);
@@ -160,12 +161,12 @@ test("PREL38: configuration inquiry saves the website URL; optional Health check
     assert.match(guidance, /Website link missing or not opening/);
     assert.doesNotMatch(configuration, /Find \*\*Default Hostname\*\*|followed by that hostname/);
     assert.ok(configuration.includes("images/app-configuration/default-hostname.png"));
-    assert.match(configuration, /### Optional: Explore App Service Health check/);
-    assert.doesNotMatch(configuration.split("\n### Optional:")[0], /configure.*Health check path to \/api\/health/i);
-    assert.match(configuration, /In the same configuration conversation/);
-    assert.match(configuration, /Inspect only; do not change any settings/);
-    assert.match(configuration, /does not prove that product search works/);
-    assert.match(configuration, /Do not approve a configuration write/);
+    const health = optionalExercises.split("### Explore App Service Health check\n")[1]
+        .split("\n### ")[0];
+    assert.match(health, /Return to the configuration conversation from exercise 6/);
+    assert.match(health, /Inspect only; do not change any settings/);
+    assert.match(health, /does not prove that product search works/);
+    assert.match(health, /Do not approve a configuration write/);
     assert.match(configuration, /If it is still running, start the independent scheduled-task or live-report exercise/);
 });
 
@@ -390,7 +391,7 @@ test("PREL38: extra help is compiled once at the end and does not claim missing 
     assert.match(main, /Record anything still running or blocked/);
 });
 
-test("PREL38: core AAU activity covers the visible limit, with usage drill-down and download optional", () => {
+test("PREL38: core AAU activity briefly explores usage and limits without a deep dive", () => {
     const consumption = section("Review agent consumption and the AAU budget");
     assert.ok(main.indexOf("## Review agent consumption") > main.indexOf("## Create a live traffic"));
     assert.ok(main.indexOf("## Complete") > main.indexOf("## Review agent consumption"));
@@ -398,30 +399,40 @@ test("PREL38: core AAU activity covers the visible limit, with usage drill-down 
         assert.ok(consumption.includes(`**${control}**`), control);
     }
     assert.match(consumption, /predictable, controlled, and visible/);
-    assert.match(consumption, /Use the facilitator's approved allocation/);
-    assert.doesNotMatch(consumption, /Click a thread title|Consumption by thread|\*\*Download\*\*|\*\*Chats\*\*|\*\*Scheduled tasks\*\*/);
+    assert.match(consumption, /select \*\*Cancel\*\* without changing it/);
+    assert.doesNotMatch(consumption, /Click a thread title|Consumption by thread|\*\*Download\*\*|apply a filter|if a change is part of your lab/);
+    for (const control of ["Total active flow consumption", "Daily active flow consumption", "Chats", "Scheduled tasks"]) {
+        assert.ok(consumption.includes(`**${control}**`), control);
+    }
+    assert.match(consumption, /quick overview, not a thread-by-thread investigation/);
     assert.match(consumption, /always-on.*separate/s);
     assert.match(consumption, /budgeting exercise, not another Azure resource-cost analysis/);
     assert.match(consumption, /before giving the agent work/);
     assert.match(consumption, /chat and actions stop/);
-    assert.match(consumption, /increase takes effect immediately/);
-    assert.match(consumption, /decreasing it can interrupt current work and takes effect next month/);
+    assert.match(optionalExercises, /facilitator has approved an allocation change/);
+    assert.match(optionalExercises, /increase takes effect immediately/);
+    assert.match(optionalExercises, /decreasing it can interrupt current work and takes effect next month/);
     for (const control of ["Consumption by thread", "Chats", "Scheduled tasks", "Refresh", "Download"]) {
         assert.ok(optionalExercises.includes(`**${control}**`), control);
     }
     assert.match(optionalExercises, /Click a thread title/);
     assert.match(optionalExercises, /execution thread, not just the chat that created the schedule/);
-    assert.match(optionalExercises, /Both this download and the detailed usage exploration are optional/);
-    assert.ok(optionalExercises.includes("images/prel38-revision/agent-consumption-reference.png"));
-    assert.ok(optionalExercises.includes("images/prel38-revision/consumption-threads-reference.png"));
-    assert.match(optionalExercises, /documentation examples, not measurements from this lab/);
-    assert.match(optionalExercises, /CC BY 4\.0.*reproduced unchanged/);
     assert.ok(consumption.includes("images/prel38-revision/aau-limit.png"));
     assert.ok(consumption.includes("images/prel38-revision/aau-allocation-controls.png"));
     assert.match(guidance, /open \*\*Build \+ setup\*\*, expand \*\*Monitor\*\*, and select \*\*Agent consumption\*\*/);
     assert.match(guidance, /Earlier navigation uses \*\*Settings > Agent consumption\*\*/);
     assert.match(guidance, /Do not restart the agent, switch navigation modes, enable features, or change permissions/);
     assert.match(guidance, /Record any unavailable inspection rather than treating missing usage as zero/);
+});
+
+test("PREL38: optional tasks are grouped at the end without screenshots", () => {
+    const required = main.split("## Explore agent capabilities (optional)")[0];
+    assert.doesNotMatch(required, /### Optional:|Optional - explore connection options/);
+    assert.doesNotMatch(optionalExercises, /!\[[^\]]*\]\(|<img\b/i);
+    assert.match(required, /!\[[^\]]*\]\(/);
+    assert.match(optionalExercises, /### Explore additional resource scopes and log connectors/);
+    assert.match(optionalExercises, /### Explore App Service Health check/);
+    assert.doesNotMatch(section("Create a live traffic and health report"), /continue to \*\*Explore agent capabilities/);
 });
 
 test("PREL38: optional skills are built conversationally and can be tried if time permits", () => {
@@ -578,10 +589,12 @@ test("PREL38: revision evidence distinguishes lab, user-provided, and documentat
     }
     for (const file of ["live-report-graph.png", "live-report-service-details.png",
         "live-report-versions.png"]) {
-        const activity = file === "live-report-versions.png" ? optionalExercises :
-            section("Create a live traffic and health report");
-        assert.ok(activity
-            .includes(`images/prel38-revision/${file}`), file);
+        const path = `images/prel38-revision/${file}`;
+        if (file === "live-report-versions.png") {
+            assert.ok(!visible.includes(path), "Version screenshot remains evidence, not learner content");
+        } else {
+            assert.ok(section("Create a live traffic and health report").includes(path), file);
+        }
         const image = manifest.find(entry => entry.file === file);
         assert.equal(image?.kind, "lab-capture", file);
         assert.ok(image.crop_xywh[1] >= 393, `Account/browser header must be excluded: ${file}`);

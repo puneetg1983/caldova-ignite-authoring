@@ -511,6 +511,26 @@ scheduled execution's HTML download and rendered example, not a locally
 recreated deck, every slide's accuracy, a timezone audit, or a new end-to-end
 45-minute run. The frozen historical PowerPoint observations remain unchanged.
 
+## Focused required flow and screenshot-free optional section
+
+The next authoring revision groups all optional tasks in exercise 11. The
+Quickstart connection-options note and read-only App Service Health check
+exercise move out of the regular activities. Required activities no longer
+direct learners into optional work while waiting.
+
+The regular AAU exercise now includes a brief look at total and daily usage,
+the Chats/Scheduled tasks breakdown, and usage against the allowance. Learners
+inspect the allocation control and cancel without changing it. Thread
+investigation, filtering, CSV export, and approved allocation changes remain
+in the final optional section; this is not a required usage deep dive.
+
+All screenshots are removed from the optional section, including version
+viewing and detailed AAU references. Their original files and provenance remain
+as historical evidence; required-exercise screenshots are retained. This is a
+source-organization change, not a new VM run, timing claim, or live publication.
+It supersedes the earlier placement descriptions above without changing their
+recorded observations.
+
 ## Historical options discussed after the original trial
 
 These options predate both revisions above. The current choices are

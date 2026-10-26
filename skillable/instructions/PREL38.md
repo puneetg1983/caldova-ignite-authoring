@@ -84,7 +84,7 @@ Use the assigned `caldova-sreagent-<suffix>`. The Web App, resource group, and t
 7. Investigate the product-search failure and verify recovery.
 8. Schedule a weekly cost review with forecasting, savings recommendations, and an HTML slide deck.
 9. Create an interactive live report with an Azure-icon dependency-health graph and service details.
-10. Explore the agent's AAU limit and how it makes spending predictable, controlled, and visible.
+10. Review overall and daily AAU usage, the workflow-type breakdown, and the limit that makes spending predictable, controlled, and visible.
 11. Use remaining time to explore report versions, detailed usage, Agent Canvas, skills, custom agents, integrations, and triggers; try creating a capability if time permits.
 
 **Keep work moving:** Imports, agent replies, task creation, report authoring, and scheduled runs can take several minutes. Answer pending questions or approvals, then continue an independent exercise instead of waiting. Return before a dependent step, such as connecting the imported repository or searching the website. Do not submit duplicate requests.
@@ -157,12 +157,6 @@ The Logs card confirms which telemetry sources are connected. These provide the 
 
 ![Logs details with Application Insights and Log Analytics Connected](images/context-wizard/logs-connected.png)
 
-> [!Note] **Optional - explore connection options**
->
-> Click **+** under **Azure resources** to see how you could connect a management group, subscription, or another resource group. Close or cancel without adding anything.
->
-> Click **+** under **Logs** to explore the available log connectors. Close or cancel without adding anything.
-
 Continue to **Connect the imported repository**.
 
 ## 4. Connect the imported repository
@@ -221,7 +215,7 @@ Knowing the hosting settings and the actual website address helps you distinguis
 
 ++++List the configuration of the Caldova App Service and provide the full HTTPS link to its website.++++
 
-2. Send the message, review the configuration, and ask questions about any unfamiliar settings. Keep this configuration thread for the optional Health check exercise.
+2. Send the message, review the configuration, and ask questions about any unfamiliar settings.
 3. Open the website link in a new **VM browser** tab and confirm the app loads. **Bookmark the page or copy the full URL for the next exercise.** Keep the SRE Agent tab open.
 
 The reply can take time. If it is still running, start the independent scheduled-task or live-report exercise, then return for the website link before debugging.
@@ -229,16 +223,6 @@ The reply can take time. If it is still running, start the independent scheduled
 In the configuration response, look for the assigned web app's full HTTPS website link. Save your own URL rather than copying the example instance below.
 
 ![Example App Service configuration response](images/app-configuration/default-hostname.png)
-
-### Optional: Explore App Service Health check
-
-**Goal:** Understand endpoint monitoring separately from product-search recovery, without changing settings.
-
-In the same configuration conversation, select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
-
-++++Explain the Caldova App Service Health check setting and how /api/health could be used. Compare it with checking product search. Inspect only; do not change any settings.++++
-
-Review the current setting and the explanation. A working `/api/health` does not prove that product search works. Do not approve a configuration write for this optional exploration.
 
 ## 7. Debug the product-search failure
 
@@ -302,7 +286,7 @@ In this lab, build a read-only traffic and health application: a dependency map 
 ++++Create a live report called "Caldova Traffic and Health" using 24 hours of connected telemetry. Before the metric cards, draw a dependency graph using Azure service SVG icons inside circular health-colored rings, not text-only rectangles. Include a legend; label unknown health and inferred connections. Where supported, make nodes clickable for service health and metrics/logs; do not invent links. Below, show request counts, failure rate, response times, top requested/failing URLs, and geography where available. Use interactive charts and filters where supported, use a responsive layout, label missing data, and keep it read-only.++++
 
 3. Click the arrow beside your response and answer any further questions. Review the report-saving approval and allow only the expected read-only telemetry tools.
-4. Report authoring and saving can take several minutes. **Don't wait for completion.** Return to the scheduled task's creation thread; if it confirms creation, check the task under **Automation**. Finish other pending activities or continue to **Explore agent capabilities (optional)**, then return.
+4. Report authoring and saving can take several minutes. **Don't wait for completion.** Return to the scheduled task's creation thread; if it confirms creation, check the task under **Automation**. Finish other pending activities, then return.
 5. Return later through **Live reports > Caldova Traffic and Health** once the report is saved. Review the dependency graph first, then the charts and tables.
 6. Review the Azure service icons, health rings, and legend. If a graph node offers a drill-down, click it and inspect the service details or related telemetry, then return to the report. Try any available chart filters. If those interactions are unavailable, note that limitation; do not treat a decorative node as a working link. If the layout differs from your request, use **Open authoring thread** to ask for a correction to the existing report, not a duplicate.
 
@@ -330,15 +314,17 @@ The limit card below separates the fixed always-on flow from the active-flow all
 
 ![Monthly AAU limit showing always-on flow plus 10,000 active-flow AAUs and Change AAU allocation](images/prel38-revision/aau-limit.png)
 
-2. Select **Change AAU allocation**. Explore the active-flow allowance and the control for increasing or decreasing it. Use the facilitator's approved allocation if a change is part of your lab; otherwise close the panel after inspecting it.
+2. Briefly review **Total active flow consumption**, **Daily active flow consumption**, and the breakdown under **Chats** and **Scheduled tasks**. Compare the used AAUs with the allowance and notice which workflow type accounts for the usage. This is a quick overview, not a thread-by-thread investigation.
 
-The allocation panel lets you inspect the monthly active-flow allowance. In this example it remains unchanged at 10,000 AAUs; select **Cancel** if you are only exploring.
+3. Select **Change AAU allocation**. Inspect the current monthly active-flow allowance and the control for increasing or decreasing it, then select **Cancel** without changing it.
+
+The allocation panel lets you inspect the monthly active-flow allowance. In this example it remains unchanged at 10,000 AAUs; select **Cancel** after inspecting it.
 
 ![Change AAU allocation panel with the monthly active-flow allowance and Cancel control](images/prel38-revision/aau-allocation-controls.png)
 
-3. Understand the boundary: when the active-flow limit is reached, chat and actions stop until the allowance is available again. An increase takes effect immediately; decreasing it can interrupt current work and takes effect next month. The fixed **always-on** charge is separate and continues while the agent exists.
+4. Understand the boundary: when the active-flow limit is reached, chat and actions stop until the allowance is available again. The fixed **always-on** charge is separate and continues while the agent exists.
 
-The active-flow allowance does not cap the Caldova Azure resources or the separate always-on charge. Detailed usage, thread inspection, and CSV download are optional activities below. If this lab does not expose Agent consumption, use **Additional guidance > Agent consumption and budget changes**.
+The active-flow allowance does not cap the Caldova Azure resources or the separate always-on charge. If this lab does not expose Agent consumption, use **Additional guidance > Agent consumption and budget changes**.
 
 ## 11. Explore agent capabilities (optional)
 
@@ -346,33 +332,34 @@ The active-flow allowance does not cap the Caldova Azure resources or the separa
 
 Time is limited, so start by exploring the available views and examples. **If time permits, try creating and testing a skill or custom agent** with the agent's help. Use the lab's existing permissions and approved connections; exploring does not require additional credentials, resource changes, or test incidents.
 
+### Explore additional resource scopes and log connectors
+
+Reopen the **context wizard** using **Additional guidance > Review Azure resources and telemetry** if needed. Stay on **Quickstart** to explore how an agent can gain broader context for other environments.
+
+1. Click **+** under **Azure resources** to see how you could connect a management group, subscription, or another resource group. Close or cancel without adding anything.
+2. Click **+** under **Logs** to explore the available log connectors. Close or cancel without adding anything.
+
+### Explore App Service Health check
+
+**Goal:** Understand endpoint monitoring separately from product-search recovery, without changing settings.
+
+Return to the configuration conversation from exercise 6 and select the message box **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+
+++++Explain the Caldova App Service Health check setting and how /api/health could be used. Compare it with checking product search. Inspect only; do not change any settings.++++
+
+Review the current setting and the explanation. A working `/api/health` does not prove that product search works. Do not approve a configuration write for this exploration.
+
 ### Explore Live Report versions and sharing
 
 1. Open **Live reports > Caldova Traffic and Health**, then open the **version picker** to see the saved versions. Each saved edit creates another version; versions preserve layout and configuration, not historical telemetry. Keep the current version selected for interactive tool calls.
-
-The dropdown below shows the current report and its earlier saved versions. Viewing this list is enough to understand versioning.
-
-![Version picker showing the current report and two earlier saved versions](images/prel38-revision/live-report-versions.png)
-
 2. Explore the share icon (**Copy link to report**). Recipients must already have access to the agent; sharing the link does not grant access.
 
-### Explore detailed AAU usage and download
+### Explore detailed AAU usage and allocation changes
 
-1. In **Build + setup > Monitor > Agent consumption**, explore **Total active flow consumption** and **Daily active flow consumption**. Use the **Chats** and **Scheduled tasks** cards to see how usage is grouped, then clear the filter.
-
-This Microsoft reference example illustrates visible usage against an allowance and a daily breakdown. It is not this lab's usage or the allocation-editing panel.
-
-![Reference example of total and daily active-flow consumption](images/prel38-revision/agent-consumption-reference.png)
-
+1. Return to **Build + setup > Monitor > Agent consumption**. Use the **Chats** or **Scheduled tasks** cards to filter usage by workflow type, then clear the filter.
 2. In **Consumption by thread**, find a completed workflow. Click a thread title to open its conversation and review the agent's steps, tool calls, approvals, and result. For the cost task, use its execution thread, not just the chat that created the schedule.
-
-The thread table below shows where individual AAU consumption and execution status are visible. This deeper inspection helps explain usage but is not needed to understand or control the main AAU limit.
-
-![Reference example of thread titles, types, AAUs, and execution status](images/prel38-revision/consumption-threads-reference.png)
-
-3. If useful, select **Refresh**, apply a filter, and select **Download** to export the currently filtered threads as CSV. Both this download and the detailed usage exploration are optional.
-
-*AAU reference screenshots: Microsoft, [Monitor agent usage](https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), reproduced unchanged. These are documentation examples, not measurements from this lab.*
+3. Select **Refresh**, apply a filter, and select **Download** to export the currently filtered threads as CSV.
+4. If the facilitator has approved an allocation change, use **Change AAU allocation** to set that approved allowance. An increase takes effect immediately; decreasing it can interrupt current work and takes effect next month. Otherwise leave the allowance unchanged.
 
 ### Explore Agent Canvas and Skill Builder
 
@@ -410,7 +397,7 @@ Confirm search works, review the cost findings and HTML slide deck, use the inte
 
 ## Additional guidance
 
-Use this section if you are stuck or need more help following an instruction, or ask the facilitator. Optional exercises are included with the main activities above, not here.
+Use this section if you are stuck or need more help following an instruction, or ask the facilitator. All optional tasks are grouped in **Explore agent capabilities (optional)** above, not here.
 
 ### Open Azure SRE Agent
 
@@ -434,7 +421,7 @@ Under **Favorites**, select **Team onboarding**. If absent, select **Search Thre
 
 ### Inquire and configure Web App
 
-Keep Getting started for the app overview. Use **New chat** for configuration and its optional read-only Health check explanation. Bookmark or copy the website link returned by the configuration prompt for the next exercise. If it is missing or does not open, use the manual steps below.
+Keep Getting started for the app overview. Use **New chat** for configuration. Bookmark or copy the website link returned by the configuration prompt for the next exercise. If it is missing or does not open, use the manual steps below.
 
 ### Debug the product-search failure
 

@@ -67,15 +67,15 @@ points learners to **Additional guidance** at the end or to the facilitator.
 Troubleshooting help is collected there by section, including sign-in and browser
 fallbacks, thread/wizard navigation, and task/report troubleshooting, rather
 than interrupting the main instructions. Required approval and verification
-steps stay in the main flow. Optional exercises stay with their related
-activities or in **Explore agent capabilities (optional)** before completion,
-not in Additional guidance.
+steps stay in the main flow. All optional exercises are grouped in
+**Explore agent capabilities (optional)** before completion, without screenshots,
+not interspersed with required activities or placed in Additional guidance.
 Configuration review and repository connection stay inside the SRE Agent context
 wizard; the review does not require an Azure Portal or Builder detour.
 PREL38 stays on **Quickstart** for **Azure resources -> Show details** and
 **Logs -> Show details**. Learners review only the configured resource group and
-connected log sources. An optional note lets them explore **+** under either card,
-then close or cancel without adding scopes or connectors. LAB720 and the shared
+connected log sources. The final optional section lets them explore **+** under
+either card, then close or cancel without adding scopes or connectors. LAB720 and the shared
 reference retain the earlier Full setup review pending approval.
 Repository setup uses **Code -> + -> GitHub**,
 the imported repository URL, **OAuth -> Sign in to GitHub**, consent,
@@ -127,8 +127,8 @@ review without a compatible viewer, and the other teams' pages remain outside
 that timing claim. LAB720's 25-minute optimization is deferred for discussion.
 
 PREL38 starts configuration inquiry in **New chat**, separate from Getting
-started, and keeps an optional read-only `/api/health` explanation in that
-configuration thread, directly under the configuration exercise.
+started. The read-only `/api/health` explanation is in the final optional
+section and returns learners to that configuration thread.
 The configuration prompt also asks for the full HTTPS website link. Learners
 bookmark or copy that URL and reuse it in the debugging exercise; manual Azure
 Portal lookup is a fallback in Additional guidance, not part of the main flow.
@@ -150,9 +150,10 @@ Viewing report versions and exploring sharing are optional; version comparison
 is not required. Every screenshot has explanatory text above it.
 
 The core **Build + setup -> Monitor -> Agent consumption** activity now focuses on predictable,
-controlled, visible spending: locate the monthly limit, explore its allocation
-control, and understand the active-flow boundary and separate always-on charge.
-Changes use a facilitator-approved allowance. Per-thread review, execution-thread
+controlled, visible spending: briefly review total/daily usage and the workflow-type
+breakdown, locate the monthly limit, inspect its allocation control without saving,
+and understand the active-flow boundary and separate always-on charge.
+Allocation changes require a facilitator-approved allowance and stay optional. Per-thread review, execution-thread
 AAU inspection, usage filtering, and CSV download are in the final optional section.
 Optional Agent Canvas, Skill Builder, custom agents, integrations, and triggers
 are exploration-first because time is limited; learners may create and test a
@@ -166,8 +167,9 @@ recorded separately. Earlier Settings-only checks missed the page's new location
 under Build + setup -> Monitor; the user identified it and the native submenu
 confirmed it. No restart or feature/permission change was needed. The core limit
 screenshot was supplied by the user and preserved unchanged with its own
-provenance. The optional usage-chart/table images remain attributed, unchanged
-Microsoft Learn references under CC BY 4.0, not current-lab measurements.
+provenance. Usage-chart/table reference images remain in the evidence assets
+with their Microsoft Learn attribution and CC BY 4.0 provenance; they are no
+longer embedded in the learner guide.
 The actual allocation panel was also inspected and captured, then cancelled
 without editing or saving the allowance.
 
@@ -188,7 +190,8 @@ separate Microsoft Learn AAU screenshots use CC BY 4.0.
 The fresh report check saved three versions and verified both service-node
 panels using connected telemetry. The current version uses the official
 icons, circular health rings, inferred-edge labels, and a legend. New graph,
-Web App details, and version-picker screenshots are in the revised guide.
+Web App detail screenshots are in the revised guide. The version-picker capture
+is retained as evidence but removed from the screenshot-free optional section.
 The Web App panel shows requests, failures, response times, and endpoints;
 Application Insights shows collection and event counts. These summarize the
 existing log queries, not Azure Resource Health or a new per-node request.
