@@ -531,6 +531,14 @@ source-organization change, not a new VM run, timing claim, or live publication.
 It supersedes the earlier placement descriptions above without changing their
 recorded observations.
 
+The user's follow-up clarifies that the AAU thread list is part of the brief
+regular exploration, not the deep dive. Exercise 10 therefore restores the
+existing `consumption-threads-reference.png`, with its Microsoft attribution
+and explicit documentation-example label, and asks learners to scan workflow
+type, AAUs, and status. Opening conversations to inspect steps/tool calls,
+filtering, and exports remain optional. The optional section remains
+screenshot-free. No capture, provenance, or historical timing was changed.
+
 ## Historical options discussed after the original trial
 
 These options predate both revisions above. The current choices are

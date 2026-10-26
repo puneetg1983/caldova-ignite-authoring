@@ -400,10 +400,15 @@ test("PREL38: core AAU activity briefly explores usage and limits without a deep
     }
     assert.match(consumption, /predictable, controlled, and visible/);
     assert.match(consumption, /select \*\*Cancel\*\* without changing it/);
-    assert.doesNotMatch(consumption, /Click a thread title|Consumption by thread|\*\*Download\*\*|apply a filter|if a change is part of your lab/);
-    for (const control of ["Total active flow consumption", "Daily active flow consumption", "Chats", "Scheduled tasks"]) {
+    assert.doesNotMatch(consumption, /Click a thread title|\*\*Download\*\*|apply a filter|if a change is part of your lab/);
+    for (const control of ["Total active flow consumption", "Daily active flow consumption", "Chats", "Scheduled tasks",
+        "Consumption by thread", "Thread type", "AAUs", "Status"]) {
         assert.ok(consumption.includes(`**${control}**`), control);
     }
+    assert.match(consumption, /Scan the visible rows/);
+    assert.ok(consumption.includes("images/prel38-revision/consumption-threads-reference.png"));
+    assert.match(consumption, /Microsoft documentation example, not this lab's usage/);
+    assert.match(consumption, /CC BY 4\.0.*reproduced unchanged/);
     assert.match(consumption, /quick overview, not a thread-by-thread investigation/);
     assert.match(consumption, /always-on.*separate/s);
     assert.match(consumption, /budgeting exercise, not another Azure resource-cost analysis/);

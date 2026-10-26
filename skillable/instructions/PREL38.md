@@ -316,13 +316,21 @@ The limit card below separates the fixed always-on flow from the active-flow all
 
 2. Briefly review **Total active flow consumption**, **Daily active flow consumption**, and the breakdown under **Chats** and **Scheduled tasks**. Compare the used AAUs with the allowance and notice which workflow type accounts for the usage. This is a quick overview, not a thread-by-thread investigation.
 
-3. Select **Change AAU allocation**. Inspect the current monthly active-flow allowance and the control for increasing or decreasing it, then select **Cancel** without changing it.
+3. Scroll to **Consumption by thread**. Scan the visible rows' **Thread type**, **AAUs**, and **Status** to see how individual workflows use the allowance. Comparing these amounts helps you budget agent attention as you add workflows.
+
+The thread list below shows where to find each workflow's AAU consumption. This is a Microsoft documentation example, not this lab's usage; your threads and values will differ, and usage updates can lag.
+
+![Reference example of Consumption by thread showing workflow types, AAUs, and status](images/prel38-revision/consumption-threads-reference.png)
+
+*Reference screenshot: Microsoft, [Monitor agent usage](https://learn.microsoft.com/en-us/azure/sre-agent/monitor-agent-usage), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), reproduced unchanged.*
+
+4. Select **Change AAU allocation**. Inspect the current monthly active-flow allowance and the control for increasing or decreasing it, then select **Cancel** without changing it.
 
 The allocation panel lets you inspect the monthly active-flow allowance. In this example it remains unchanged at 10,000 AAUs; select **Cancel** after inspecting it.
 
 ![Change AAU allocation panel with the monthly active-flow allowance and Cancel control](images/prel38-revision/aau-allocation-controls.png)
 
-4. Understand the boundary: when the active-flow limit is reached, chat and actions stop until the allowance is available again. The fixed **always-on** charge is separate and continues while the agent exists.
+5. Understand the boundary: when the active-flow limit is reached, chat and actions stop until the allowance is available again. The fixed **always-on** charge is separate and continues while the agent exists.
 
 The active-flow allowance does not cap the Caldova Azure resources or the separate always-on charge. If this lab does not expose Agent consumption, use **Additional guidance > Agent consumption and budget changes**.
 

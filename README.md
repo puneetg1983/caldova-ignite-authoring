@@ -151,9 +151,11 @@ is not required. Every screenshot has explanatory text above it.
 
 The core **Build + setup -> Monitor -> Agent consumption** activity now focuses on predictable,
 controlled, visible spending: briefly review total/daily usage and the workflow-type
-breakdown, locate the monthly limit, inspect its allocation control without saving,
-and understand the active-flow boundary and separate always-on charge.
-Allocation changes require a facilitator-approved allowance and stay optional. Per-thread review, execution-thread
+breakdown, scan the thread list's workflow types/AAUs/status, locate the monthly
+limit, inspect its allocation control without saving, and understand the
+active-flow boundary and separate always-on charge. The thread-list reference
+screenshot accompanies that brief required exploration.
+Allocation changes require a facilitator-approved allowance and stay optional. Detailed conversation/tool-call review, execution-thread
 AAU inspection, usage filtering, and CSV download are in the final optional section.
 Optional Agent Canvas, Skill Builder, custom agents, integrations, and triggers
 are exploration-first because time is limited; learners may create and test a
@@ -167,9 +169,9 @@ recorded separately. Earlier Settings-only checks missed the page's new location
 under Build + setup -> Monitor; the user identified it and the native submenu
 confirmed it. No restart or feature/permission change was needed. The core limit
 screenshot was supplied by the user and preserved unchanged with its own
-provenance. Usage-chart/table reference images remain in the evidence assets
-with their Microsoft Learn attribution and CC BY 4.0 provenance; they are no
-longer embedded in the learner guide.
+provenance. The thread-table reference is embedded in the regular AAU exercise,
+clearly labelled as a Microsoft Learn example under CC BY 4.0, not lab usage.
+The usage-chart reference remains in the evidence assets rather than the guide.
 The actual allocation panel was also inspected and captured, then cancelled
 without editing or saving the allowance.
 
