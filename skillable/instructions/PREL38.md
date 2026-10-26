@@ -273,10 +273,19 @@ SRE Agent is not just for investigating and fixing incidents. **Scheduled tasks*
 4. Report authoring and saving can take several minutes. **Don't wait for completion.** Return to the scheduled task's creation thread; if it confirms creation, check the task under **Automation**. Finish other pending activities or continue to **Explore agent capabilities (optional)**, then return.
 5. Return later through **Live reports > Caldova Traffic and Health** once the report is saved. Review the dependency graph first, then the charts and tables.
 6. Review the Azure service icons, health rings, and legend. If a graph node offers a drill-down, click it and inspect the service details or related telemetry, then return to the report. Try any available chart filters. If those interactions are unavailable, note that limitation; do not treat a decorative node as a working link. If the layout differs from your request, use **Open authoring thread** to ask for a correction to the existing report, not a duplicate.
+
+   A node's details may open **below the graph**; scroll inside the report to see them. These panels can summarize the report's existing log-query results rather than make a new request. Read health rings as telemetry-based indicators, not a separate Azure Resource Health check.
+
 7. Open the **version picker** to inspect saved versions. If an earlier version exists, compare it, then return to the current version. Versions preserve layout and configuration, not historical telemetry.
 8. Select the share icon at the upper right (**Copy link to report**). Recipients must already have access to the agent; sharing the link does not grant access.
 
-![Saved versions, dependency health first, and the report-sharing control](images/prel38-walkthrough/live-report-versions.png)
+![Fresh lab report with official Azure service icons, health rings, inferred connections, and a health legend](images/prel38-revision/live-report-graph.png)
+
+![Clicking the Web App icon opens request, failure, response-time, and endpoint details below the graph](images/prel38-revision/live-report-service-details.png)
+
+![Version picker showing the current report and two earlier saved versions](images/prel38-revision/live-report-versions.png)
+
+These examples are from a targeted lab check. Your telemetry, resource names, health, and saved versions will differ. The Web App details summarize observed requests; the Application Insights node describes telemetry collection, not whether the monitored app is healthy.
 
 ## 10. Review agent consumption and the AAU budget
 
@@ -398,6 +407,14 @@ If telemetry is empty, browse the app and try search, then return after another 
 While working on another activity, check the report's authoring thread for pending questions or approvals. **Allow once** may be needed to save the report with its expected read-only telemetry tools; saving the report does not change Azure resources. An empty gallery does not necessarily mean generation is still running.
 
 The 24-hour report can still include earlier failures after a fix. Verify recovery with fresh app requests rather than expecting historical failure charts to turn green immediately.
+
+**Generic symbols instead of Azure service icons, or graph too tall?** Open the existing report's **Open authoring thread**, then select its message field **inside the VM**. Copy/paste or type the prompt below, or click it to type automatically:
+
+++++Replace only the Web App and App Insights glyphs with these Azure SVGs inside the existing health rings. Preserve click handlers and queries. Cap graph height at 400px without distortion. Save a new version, not a new report. Web App: https://raw.githubusercontent.com/puneetg1983/caldova-ignite-authoring/b4d549a6e6d38b260cde398873ec44c5d3caf43c/skillable/instructions/images/prel38-revision/azure-app-service.svg App Insights: https://raw.githubusercontent.com/puneetg1983/caldova-ignite-authoring/b4d549a6e6d38b260cde398873ec44c5d3caf43c/skillable/instructions/images/prel38-revision/azure-application-insights.svg++++
+
+Send the message, continue an independent activity, and return for any save approval. These original Microsoft icons are supplied unchanged under the [Azure icon terms](https://learn.microsoft.com/en-us/azure/architecture/icons/#icon-terms). Keep the health rings around the icons; do not alter their shapes.
+
+**Clicked a node but cannot see details?** Scroll within the report, using its right-hand scrollbar if the mouse wheel does not move it. Look below the graph and legend for the service panel. If no panel or supported interaction appears, record that limitation rather than inventing a link.
 
 ### Agent consumption and budget changes
 

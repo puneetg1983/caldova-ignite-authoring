@@ -37,6 +37,51 @@
     "kind": "lab-capture"
   },
   {
+    "file": "live-report-graph.png",
+    "source_capture": "R124-scroll-report-three-private.png",
+    "source_sha256": "aba28530ba54c5305edfc6fa502b372acd207217bb22fd5d1d11d5906e5573fe",
+    "captured_at": "2026-10-26T02:41:27.6620364+00:00",
+    "crop_xywh": [
+      112,
+      393,
+      1585,
+      762
+    ],
+    "masks_xywh": [],
+    "sha256": "e6d5eeaf49db178a49d3fd28e62a5fe1cbfbbbc3f33de002eb405bd0bc100699",
+    "kind": "lab-capture"
+  },
+  {
+    "file": "live-report-service-details.png",
+    "source_capture": "R130-official-icon-service-details-private.png",
+    "source_sha256": "59b21841c741539540666ea0faa279d2d6f587601adfef09f9737511dc4dcbb0",
+    "captured_at": "2026-10-26T02:42:04.8456567+00:00",
+    "crop_xywh": [
+      112,
+      393,
+      1585,
+      762
+    ],
+    "masks_xywh": [],
+    "sha256": "d19a3ff4820ccd3ec63fbe6b142014b826dc3432abf9ddeb356503a699f84eb7",
+    "kind": "lab-capture"
+  },
+  {
+    "file": "live-report-versions.png",
+    "source_capture": "R116-report-versions-with-official-icons-private.png",
+    "source_sha256": "589d4339e630d66c501c40f43ddadb2dfe387fed93f460bb8e1b55a58e94d85f",
+    "captured_at": "2026-10-26T02:40:01.0346661+00:00",
+    "crop_xywh": [
+      295,
+      393,
+      1410,
+      270
+    ],
+    "masks_xywh": [],
+    "sha256": "cb5eef0067d8cfe265fad1fcfbc4d293791b33369c6fe2fceab64004fe4d0cdf",
+    "kind": "lab-capture"
+  },
+  {
     "file": "agent-consumption-reference.png",
     "kind": "documentation-reference",
     "source_url": "https://learn.microsoft.com/en-us/azure/sre-agent/media/monitor-agent-usage/consumption-summary-daily.png",

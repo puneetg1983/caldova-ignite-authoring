@@ -291,6 +291,10 @@ HTML slide deck. Agent consumption is explicitly agent-attention budgeting,
 and optional capabilities are exploration-only rather than creation exercises.
 Task creation must be confirmed before opening Automation; independent work
 continues while agent replies, task execution, and report authoring run.
+The current numbered draft has seven native typing prompts: six activity
+prompts and one conditional icon-correction prompt in Additional guidance.
+Each is under 650 characters. The larger historical expansion described above
+is not the current prompt count or a new publication claim.
 
 A fresh user-supplied lab was used on **2026-10-26 UTC** for a targeted
 resource-list, context, and Live Report check. Its existing context showed two
@@ -308,6 +312,23 @@ scheduled HTML-deck execution, and other modules were not rerun.
 | First saved report visible | 02:11:45 |
 | Loaded report with real metrics visible | 02:12:11 |
 | Existing-report graph correction submitted | 02:14:22 |
+| Small-edit steering message sent to the same authoring thread | 02:23:23 |
+| Corrected SaveReport approved, same report ID and read-only connector | 02:27:11 |
+| Corrected report visible with health rings and inferred edges | 02:27:15 |
+| Web App node clicked | 02:31:01 |
+| Below-graph Web App telemetry panel inspected | 02:32:21 |
+| Official-icon-only correction submitted to the same report | 02:33:59 |
+| Icon-only SaveReport scope reviewed | 02:38:30 |
+| Same-report icon version approved | 02:39:03 |
+| SaveReport completion observed | 02:39:09 |
+| Official SVGs visibly rendered in the current saved report | 02:39:27 |
+| Version picker showed v1, v2, and current v3 | 02:40:01 |
+| Earlier v2 inspected without restoring it | 02:40:34 |
+| Returned to current v3 | 02:40:54 |
+| Complete graph and legend captured | 02:41:27 |
+| Official Web App icon clicked; details inspected | 02:42:00-02:42:04 |
+| Application Insights node and its distinct panel inspected | 02:42:52 |
+| Lower-chart inspection blocked by corporate-window foreground guard | 02:43:51 |
 
 The first saved report appeared about **6 minutes 2 seconds after submission**.
 That observed interval includes authoring, overlapping documentation work,
@@ -325,6 +346,57 @@ rather than creating a duplicate. The learner prompt was strengthened to
 request SVG service icons, circular health rings, a graph before metric cards,
 inferred-connection labels, and a responsive layout. This is not evidence that
 the final source prompt produced the final design in one turn.
+
+The corrected report appeared **12 minutes 53 seconds after the correction
+request**, including the steering message, overlapping work, approval handling,
+and delayed inspection of the latest thread output. It used generic inline
+globe/chart glyphs, not the requested Azure architecture icons. Clicking the
+Web App node did open a real in-report panel below the graph: 39 requests,
+30.8% success, 27 failed requests, 10.4 ms average response, and 74.0 ms p95.
+Its endpoint table listed 27 `GET /api/search/by-name` requests and 12
+`GET /index.html` requests. These later query results differ from the first
+capture; they are not a fixed snapshot or evidence of recovery.
+
+The panel summarizes existing Monitor log queries. It does not invoke ARM,
+Azure Resource Health, or fresh per-node requests. The report's scrollbar
+revealed the panel when a wheel attempt over the graph did not move the view.
+
+Two original Microsoft SVGs were copied unchanged from the official Azure
+architecture icon archive, with archive-entry and SHA-256 provenance in
+`images/prel38-revision/azure-icons.json`. Public URLs pinned to commit
+`b4d549a6e6d38b260cde398873ec44c5d3caf43c` returned identical bytes without
+authentication. A **617-character** follow-up requested only those two icon
+replacements, a nondistorted 400px graph-height cap, preserved handlers and
+queries, and another version of the same report. This exact fallback is in
+Additional guidance, not an extra creation exercise.
+
+The icon-only save completed about **5 minutes 10 seconds after submission**,
+including reasoning, the small file edit, inspection, and approval delay. The
+current v3 visibly rendered the original blue App Service icon and purple
+Application Insights icon inside the preserved rings. The full graph and
+legend were revealed with the report's scrollbar; a height-cap request did
+not remove the need to scroll at this VM's displayed scale. Synthetic-probe
+and telemetry edges were labelled inferred, and the legend included unknown.
+
+The official Web App icon still opened its panel: **47 requests, 29.8% success,
+33 failures, 9.6 ms average response, and 16.2 ms p95**. Endpoint counts were
+33 for `GET /api/search/by-name` and 14 for `GET /index.html`. Clicking
+Application Insights replaced the panel with **116 total events**: 47 request,
+33 exception, and 36 availability events, one exception type, and collection
+**Active**. This verifies distinct node interactions, not that the Web App
+was healthy. Versions v1-v3 were listed; v2's generic glyphs were inspected
+and the view returned to current v3 without restoring or overwriting history.
+
+Public `live-report-graph.png`, `live-report-service-details.png`, and
+`live-report-versions.png` are reviewed crops of those actual captures. Their
+provenance is in the revision manifest. The service-detail screenshot reflects
+the later query results, not the earlier 39-request observation above.
+
+No new chart-filter or share-recipient-access success is claimed. During a
+final attempt to page down to lower charts, the exact corporate Edge window
+was no longer foreground. The guard blocked the action before input; no
+alternative window, browser, host Azure context, or focus bypass was used.
+The successful node, icon, version, and screenshot checks precede that block.
 
 The new lab's **Settings** view exposed **General** and **Workspace
 configuration**, not **Agent consumption**. The offered legacy-navigation

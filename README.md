@@ -171,6 +171,18 @@ generic glyphs. `azure-icons.json` records archive entries and hashes. Their
 permit architecture diagrams, training materials, and documentation; the
 separate Microsoft Learn AAU screenshots use CC BY 4.0.
 
+The fresh report check saved three versions and verified both service-node
+panels using connected telemetry. The current version uses the official
+icons, circular health rings, inferred-edge labels, and a legend. New graph,
+Web App details, and version-picker screenshots are in the revised guide.
+The Web App panel shows requests, failures, response times, and endpoints;
+Application Insights shows collection and event counts. These summarize the
+existing log queries, not Azure Resource Health or a new per-node request.
+The diagram needed follow-up edits; this is not a one-turn generation or
+fresh 45-minute completion claim. Chart filtering and share-recipient access
+remain unverified. Corporate-window focus was lost during the final lower-chart
+inspection, so guarded VM interaction stopped rather than bypassing the check.
+
 The PREL38 deployment source seeds the package's actual search failure using
 `Catalog__AsOfDate=2026-12-15` and probes
 `/api/search/by-name?name=jacket`, replacing the unused fault flag and old

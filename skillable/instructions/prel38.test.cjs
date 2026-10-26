@@ -62,7 +62,7 @@ test("PREL38: opens SRE Agent in exercise 2 and delegates VM/Azure prerequisites
 });
 
 test("PREL38: all chat prompts use native Copy and Type Text, not static fences", () => {
-    assert.equal(prompts.length, 6);
+    assert.equal(prompts.length, 7);
     assert.doesNotMatch(source, /^```text$/m);
     assert.equal((source.match(/^\+{4}/gm) || []).length, prompts.length);
     for (const line of source.split("\n").filter(line => line.startsWith("+++"))) {
@@ -338,6 +338,18 @@ test("PREL38: Live Reports explain UI for AI and request service icons, health r
     assert.match(report, /interactive charts and filters where supported/);
     assert.match(report, /label missing data/);
     assert.match(report, /keep it read-only/);
+    assert.match(report, /details may open \*\*below the graph\*\*/);
+    assert.match(report, /existing log-query results rather than make a new request/);
+    assert.match(report, /not a separate Azure Resource Health check/);
+    assert.match(guidance, /Generic symbols instead of Azure service icons/);
+    const correction = prompts.find(prompt => prompt.startsWith("Replace only the Web App"));
+    assert.ok(correction);
+    assert.match(correction, /Preserve click handlers and queries/);
+    assert.match(correction, /Save a new version, not a new report/);
+    for (const file of ["azure-app-service.svg", "azure-application-insights.svg"]) {
+        assert.ok(correction.includes(
+            `https://raw.githubusercontent.com/puneetg1983/caldova-ignite-authoring/b4d549a6e6d38b260cde398873ec44c5d3caf43c/skillable/instructions/images/prel38-revision/${file}`));
+    }
     assert.match(report, /report-saving approval.*expected read-only telemetry tools/);
     assert.match(report, /\*\*Don't wait for completion\.\*\*/);
     assert.match(report, /Finish other pending activities/);
@@ -518,6 +530,14 @@ test("PREL38: revision evidence distinguishes fresh lab captures from attributed
         }
     }
     assert.ok(manifest.find(image => image.file === "agent-list.png").masks_xywh.length > 0);
+    for (const file of ["live-report-graph.png", "live-report-service-details.png",
+        "live-report-versions.png"]) {
+        assert.ok(section("Create a live traffic and health report")
+            .includes(`images/prel38-revision/${file}`), file);
+        const image = manifest.find(entry => entry.file === file);
+        assert.equal(image?.kind, "lab-capture", file);
+        assert.ok(image.crop_xywh[1] >= 393, `Account/browser header must be excluded: ${file}`);
+    }
 });
 
 test("PREL38: service icons preserve Microsoft's official SVG assets and usage terms", () => {
