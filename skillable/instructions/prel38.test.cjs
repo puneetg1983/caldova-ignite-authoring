@@ -195,11 +195,14 @@ test("PREL38: debugging uses one natural prompt and verifies the original sympto
     assert.equal((debug.match(/^\+{4}/gm) || []).length, 1);
     assert.match(debug, /repeat the same `jacket` search/);
     assert.match(debug, /catalog browsing still works/);
+    assert.match(debug, /If the issue persists, tell the agent what still fails and ask it to investigate and test further, then repeat the `jacket` search/);
+    assert.doesNotMatch(debug, /Do not declare success while the running app still fails/);
     assert.doesNotMatch(debug, /Review mode|Catalog__AsOfDate/);
     assert.match(guidance, /assigned subscription from \*\*Resources\*\*/);
     assert.match(guidance, /do not create resources or change permissions/);
     assert.doesNotMatch(source, /@lab\.Variable\(CaldovaWebAppUrl\)|automated URL setup|automatic URL setup|What is the Caldova web app URL\?/);
     assert.match(guidance, /A source-code pull request is not a deployment/);
+    assert.match(urlFallback, /ask it to investigate and test further, then repeat the `jacket` search/);
     assert.match(guidance, /Returning an empty result set is not recovery/);
     assert.doesNotMatch(source, /@lab\.CloudResourceTemplate.*Outputs|@lab\.Variable\(CaldovaAppUrl\)/);
 });

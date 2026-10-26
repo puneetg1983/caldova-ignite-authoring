@@ -236,7 +236,7 @@ This exercise connects a real customer symptom with telemetry, code, and a verif
 4. Send the message, follow the investigation, and answer the agent's questions.
 5. Return to the app tab and repeat the same `jacket` search. Confirm matching products appear and catalog browsing still works.
 
-Investigation and deployment can take time. After answering any pending questions or approvals, continue to the independent scheduled-task or live-report exercise and return to verify recovery. Do not declare success while the running app still fails.
+Investigation and deployment can take time. After answering any pending questions or approvals, continue to the independent scheduled-task or live-report exercise and return to verify recovery. If the issue persists, tell the agent what still fails and ask it to investigate and test further, then repeat the `jacket` search.
 
 ## 8. Schedule a weekly cost review
 
@@ -390,7 +390,7 @@ Example only: `https://caldova-webapp-<unique-suffix>.azurewebsites.net`. Your s
 
 If search already works, tell the facilitator; do not break the app yourself. Verify recovery by repeating the search in the app.
 
-A source-code pull request is not a deployment. If the running app still fails after a proposed fix, tell the agent the result and ask it to restore live search. Returning an empty result set is not recovery for the `jacket` search.
+A source-code pull request is not a deployment. If the running app still fails after a proposed fix, tell the agent the result and ask it to investigate and test further, then repeat the `jacket` search. Returning an empty result set is not recovery for the `jacket` search.
 
 ### Schedule a weekly cost review
 
