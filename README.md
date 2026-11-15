@@ -60,7 +60,7 @@ firefighting and more time building.
 ## About the lab
 
 This lab was created by **Puneet Gupta** (Principal Software Engineer) and
-**Shamir Abdul Aziz**, with help from Azure SRE Agent.
+**Shamir Abdul Aziz** (Principal Product Manager), with help from Azure SRE Agent.
 
 - [Puneet Gupta](https://www.linkedin.com/in/meetpuneetg)
 - [Shamir Abdul Aziz](https://www.linkedin.com/in/meetshamir/)
