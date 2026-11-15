@@ -62,8 +62,8 @@ firefighting and more time building.
 This lab was created by **Puneet Gupta** (Principal Software Engineer) and
 **Shamir Abdul Aziz**, with help from Azure SRE Agent.
 
-- **Puneet Gupta** [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/meetpuneetg)
-- **Shamir Abdul Aziz** [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/meetshamir/)
+- [Puneet Gupta](https://www.linkedin.com/in/meetpuneetg)
+- [Shamir Abdul Aziz](https://www.linkedin.com/in/meetshamir/)
 
 We'd love to hear how you're using Azure SRE Agent. If you're planning to
 adopt it or would like guidance on setting it up for your own environment,
